@@ -1,6 +1,6 @@
 :: first disable `vgtray.exe` in Task Manager's startup.
 :: run this to have control & stop Valorant (Tencent) from spying when you're not playing.
-:: create shortcut, get an ico file replace the startmenu valorant shortcut with this one.
+:: create shortcut, get an ico file, replace the startmenu valorant shortcut with this one.
 
 @echo off
 
