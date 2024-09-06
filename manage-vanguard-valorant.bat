@@ -46,6 +46,7 @@ echo This deep integration with Windows means a restart is required to safely lo
 echo.
 echo ===================================================
 echo.
+
 echo [1] Check Current STATUS of Vanguard services
 echo [2] STOP Vanguard services (vgc, vgk, vgtray)
 echo [3] START Vanguard services (vgc, vgk)
@@ -54,6 +55,7 @@ echo [5] ENABLE Vanguard services (vgc, vgk)
 echo [6] RESTART Your System
 echo [7] Exit
 echo.
+
 set /p choice=Choose an option: 
 
 if %choice%==1 goto check_status
@@ -85,11 +87,16 @@ echo ==========================
 echo STOPPING VANGUARD SERVICES
 echo ==========================
 net stop vgc
+echo.
 echo vgc service stopped.
 net stop vgk
+echo.
 echo vgk service stopped.
+echo.
 taskkill /IM vgtray.exe /T /F
+echo.
 echo vgtray.exe and its child processes have been killed.
+echo.
 echo ===================================================
 echo Stopped Vanguard services, you can continue your normal work.
 ::echo NOTE: You may still need to restart your PC before playing Valorant again.
@@ -102,9 +109,12 @@ echo ==========================
 echo STARTING VANGUARD SERVICES
 echo ==========================
 sc start vgc
+echo.
 echo vgc service started.
 sc start vgk
+echo.
 echo vgk service started.
+echo.
 echo ===================================================
 echo NOTE: You may need to restart your PC before playing Valorant again.
 pause
@@ -116,9 +126,12 @@ echo ===========================
 echo DISABLING VANGUARD SERVICES
 echo ===========================
 sc config vgc start= disabled
+echo.
 echo vgc service disabled.
 sc config vgk start= disabled
+echo.
 echo vgk service disabled.
+echo.
 echo ===================================================
 echo Stopped auto-start of Vanguard services.
 pause
@@ -130,9 +143,12 @@ echo ==========================
 echo ENABLING VANGUARD SERVICES
 echo ==========================
 sc config vgc start= demand
+echo.
 echo vgc service enabled (manual start).
 sc config vgk start= system
+echo.
 echo vgk service enabled (system start).
+echo.
 echo ===================================================
 echo Vanguard services enabled. Restart needed.
 pause
@@ -143,6 +159,7 @@ cls
 echo ======================
 echo RESTARTING YOUR SYSTEM
 echo ======================
+echo.
 echo System will restart in 11 seconds. Save your work!
 shutdown /r /t 11
 goto menu
