@@ -141,9 +141,9 @@ goto menu
 
 :restart_system
 cls
-echo ===================================================
-echo        RESTARTING YOUR SYSTEM
-echo ===================================================
+echo ======================
+echo RESTARTING YOUR SYSTEM
+echo ======================
 echo System will restart in 11 seconds. Save your work!
 shutdown /r /t 11
 goto menu
