@@ -71,7 +71,6 @@ echo CHECKING CURRENT STATUS OF VANGUARD
 echo ===================================
 sc query vgc
 echo ---------------------------------------------------
-echo.
 sc query vgk
 echo ---------------------------------------------------
 echo.
