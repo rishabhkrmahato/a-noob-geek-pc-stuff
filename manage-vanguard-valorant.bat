@@ -22,6 +22,7 @@ echo VALORANT CONTROL SCRIPT - Manage Vanguard
 echo =========================================
 echo.
 echo This program helps you manage Valorant's Vanguard anti-cheat system.
+echo.
 echo Purpose: 
 echo To stop or disable Vanguard services to avoid them running in the background when you're not gaming.
 echo.
