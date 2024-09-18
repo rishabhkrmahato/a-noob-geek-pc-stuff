@@ -1,5 +1,5 @@
 Windows Registry Editor Version 5.00
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\b1-Win64-Shipping.exe]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\b1-Win64-Shipping.exe\PerfOptions]
 
-"Priority"=dword:00000002
+"CpuPriorityClass"=dword:00000003
