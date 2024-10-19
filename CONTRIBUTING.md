@@ -68,10 +68,10 @@ It is a user-friendly way to manage your repositories without needing to use com
 **Quality Code:**  
 Keep it clean and easy to read.
 
-**Documentation:** 
+**Documentation:**
 If you add something new, update the README or comments in the scripts to help others.
 
-**Testing:** 
+**Testing:**
 If you add features, include test cases to ensure they work.
 
 ### Reporting Issues
