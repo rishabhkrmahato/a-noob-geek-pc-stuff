@@ -65,12 +65,14 @@ It is a user-friendly way to manage your repositories without needing to use com
 
 ### What I am Looking For
 
-   **Quality Code:**  
-   Keep it clean and easy to read.
-   **Documentation:** 
-   If you add something new, update the README or comments in the scripts to help others.
-   **Testing:** 
-   If you add features, include test cases to ensure they work.
+**Quality Code:**  
+Keep it clean and easy to read.
+
+**Documentation:** 
+If you add something new, update the README or comments in the scripts to help others.
+
+**Testing:** 
+If you add features, include test cases to ensure they work.
 
 ### Reporting Issues
 
