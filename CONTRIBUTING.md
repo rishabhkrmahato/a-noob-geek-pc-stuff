@@ -1,9 +1,11 @@
 ## Contributing to
-#  a-noob-geek-pc-stuff
+# a-noob-geek-pc-stuff
 
 
 Hey there! Thanks for stopping by my little corner of the coding universe. 
+
 This repo is packed with scripts designed to make life easier for PC users and fellow coding enthusiasts. 
+
 If you have got the skills and want to help me take these scripts to the next level, you are in the right place!
 
 
@@ -25,17 +27,17 @@ Before you start coding, create a new branch for your changes:
 **Or you can use GitHub Desktop to create a new branch easily.**
 
 
-- **Make Your Changes: **
+- **Make Your Changes:**
 Feel free to dive in! Tweak, enhance, and optimize the existing scripts. You can:
 
    +Improve performance.
    +Add error handling or new features.
    +Update comments or documentation for clarity.
 
-- **Test It Out: **
+- **Test It Out:**
 Make sure everything runs smoothly after your changes.
 
-- **Commit Your Changes: **
+- **Commit Your Changes:**
 Keep your commit messages clear so I know what you did:
 
 `git commit -m "Made improvements to [script_name]"`
@@ -48,10 +50,11 @@ Keep your commit messages clear so I know what you did:
 
 - **Or just click the "Push origin" button in GitHub Desktop.**
 
-- **Create a Pull Request: **
+- **Create a Pull Request:**
 Go back to the original repo and click "New Pull Request." Let me know what you changed and why.
 
 ### Using GitHub Desktop
+
 If you are not super comfortable with the command line, no worries! 
 You can use the GitHub Desktop app for all these steps. 
 It is a user-friendly way to manage your repositories without needing to use command-line tools.
@@ -62,9 +65,12 @@ It is a user-friendly way to manage your repositories without needing to use com
 
 ### What I am Looking For
 
-   **Quality Code:** Keep it clean and easy to read.
-   **Documentation: **If you add something new, update the README or comments in the scripts to help others.
-   **Testing:** If you add features, include test cases to ensure they work.
+   **Quality Code:**  
+   Keep it clean and easy to read.
+   **Documentation:** 
+   If you add something new, update the README or comments in the scripts to help others.
+   **Testing:** 
+   If you add features, include test cases to ensure they work.
 
 ### Reporting Issues
 
@@ -74,4 +80,5 @@ The more detail, the better!
 ## Code of Conduct
 
 Let’s keep this space friendly and respectful. Everyone’s welcome here!
+
 Thanks for considering contributing! Your expertise could help make these scripts even more awesome!❤️
