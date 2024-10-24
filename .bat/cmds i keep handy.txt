@@ -1,0 +1,19 @@
+fsutil file createnew
+
+
+sudo apt update && sudo apt upgrade -y
+
+
+
+ffmpeg -i xyz.xyz -c copy -map 0 -segment_time A*60 -f segment -reset_timestamps 1 -start_number 1 output%03d.xyz
+
+
+
+yt-dlp -f bestvideo+bestaudio -o "C:\Users\mahat\Videos\%(title)s.%(ext)s" <video_url>
+
+
+
+iex(irm is.gd/idm_reset)
+
+
+irm https://get.activated.win | iex
