@@ -1,0 +1,49 @@
+File Split and Join Program
+
+Overview
+This program enables you to split and join files at a binary level, working universally on any file type.
+
+⚠️ Memory Intensive
+Please note: This program is memory-hungry.
+
+Functionality
+This tool provides an alternative method for splitting files, offering a similar experience to traditional "tar" archiving and splitting.
+However, unlike tar, the individual split files will not be usable on their own; they must be joined back together to access the original content.
+
+Use Case Example
+If you need to send a large file, eg. "a.a", which is 476 MB, through a platform like Discord (which limits file sizes to 10 MB), you can use this program to split the file into smaller parts.
+
+Example Steps:
+
+    Calculate Required Parts: [ you do this yourself :) ]
+    To split a 476 MB file into parts smaller than 10 MB:
+        Divide 476 MB by 10 MB → 47.6
+        Round up to 48 parts. (each file will be less than 10mb)
+
+    Split the File:
+    Use split-files-binary.py:
+    prompt-1: Enter the file name (with extension): a.a
+    prompt-2: Enter the number of parts to split into: 48
+    .
+    .   [you can watch the bytes written to each file, the output will be verbosed for each written file]
+    .   [output will be named a_part1.a, a_part2.a and so on]
+    .
+    Wait for the process to complete.
+
+Send the Files:
+Send the 48 split files along with the join-files-binary.py script via Discord.
+
+Join the Files:
+The recipient can then reassemble the file using join-files-binary.py:
+
+    Using join-files-binary.py
+    prompt-1: Enter the full file name (with extension) of the original file: a.a
+    prompt-2: Enter the number of parts: 48
+    .
+    .   [verbosed sequentially: the parts written to the main file]
+    .
+    Wait for the process to complete.
+
+DONE !
+
+Note: Ensure that both the split files and the joining script are sent to the receiver for successful reassembly.
