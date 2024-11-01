@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# RUN THIS SCRIPT USING " bash path-to-this-file.sh " command in termux:
+
+# termux-setup-storage
+
+# cd /storage/emulated/0/Download
+
+# bash this-script.sh
+
+# or If you use a full path to this script, no need to cd 
+
+# ---eg. bash /storage/emulated/0/Download/yt-dlp+termux-downloader-android.sh (but make sure u run termux-setup-storage first)
+
 # Title: yt-dlp+termux-downloader-andorid
 
 # Description: Script to install and configure yt-dlp on Termux for Android
@@ -14,15 +26,13 @@
 #      using `yt-dlp` with best video and audio settings.
 #    - Requires an active internet connection.
 #    - After setup, simply use: `ydl <video_url>` to download any video.
-#    - Output will be saved to the default download location for Termux, 
-#      defualt for termux is `/data/data/com.termux/files/home/storage/downloads`.
+#    - Output will be saved to downloads (/storage/emulated/0/Download) folder of the phone,  
+#      otherwise defualt for termux is `/data/data/com.termux/files/home/storage/downloads`.
 
 # 4. for **Updating**:
 #    - Update `yt-dlp` anytime using: `yt-dlp -U`
 #    - Check help commands with `yt-dlp -h`
 # 5. **Update Packages**: If using Termux after a long time, run `pkg update && pkg upgrade -y`
-
-# RUN THIS SCRIPT USING " bash yt-dlp+termux-downloader-android.sh " command in termux.
 
 echo "Starting setup for yt-dlp in Termux..."
 
@@ -60,7 +70,7 @@ echo " Setup Complete!"
 echo "=============================="
 echo "Instructions:"
 echo " - To download a video, use: ydl <video_url>"
-echo " - Videos will be saved to: ~/storage/downloads/"
+echo " - Videos will be saved to: /storage/emulated/0/Download/"
 echo " - For updating yt-dlp: yt-dlp -U"
 echo " - To view yt-dlp help: yt-dlp -h"
 echo "=============================="
