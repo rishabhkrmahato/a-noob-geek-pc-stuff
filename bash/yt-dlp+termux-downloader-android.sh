@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 
 # RUN THIS SCRIPT USING " bash path-to-this-file.sh " command in termux:
 
