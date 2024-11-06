@@ -41,4 +41,7 @@ Licensed under the [LICENSE](LICENSE) provided.
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=rishabhkrmahato&style=flat-square)
 
-Thanks for visiting my profile! 😊
+[![Steam](https://img.shields.io/badge/Steam-000000?style=for-the-badge&logo=steam&logoColor=white)](https://steamcommunity.com/id/rishabhkrm/)
+[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@rishabhkrm)
+
+Thanks for visiting my [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rishabhkrmahato) profile! 😊
