@@ -13,6 +13,7 @@ git add .
 git commit -m "%commit_msg%"
 
 :: Push changes to the 'main' branch
+:: you will need to verify and authorise git on your machine for the first time you use this
 git push origin main
 
 echo Commit and push completed successfully!
