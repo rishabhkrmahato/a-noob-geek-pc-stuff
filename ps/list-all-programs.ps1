@@ -1,11 +1,20 @@
 # powershell script to get all apps+softwares+custom-start-menu-shortcuts+chrome-web-apps list from your pc, change the paths accordingly
 # creates Installed_Apps.csv file on user desktop
-# RUN AS ADMIN for best resutls
+# runs as admin for best resutls
 
+# Check if the script is running as Administrator
+$runAsAdmin = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+$adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
+
+if (-not ($runAsAdmin.Groups -contains (New-Object System.Security.Principal.SecurityIdentifier($adminRole)))) {
+    # If not running as admin, re-launch the script with admin rights
+    $arguments = "& '" + $myinvocation.MyCommand.Definition + "'"
+    Start-Process powershell -Verb runAs -ArgumentList $arguments
+    Exit
+}
 
 # Define the output file
 $outputFile = "$env:UserProfile\Desktop\Installed_Apps.csv"
-
 
 # Get installed applications from registry (32-bit and 64-bit)
 $installedApps = Get-ItemProperty -Path `
