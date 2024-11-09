@@ -17,3 +17,6 @@ iex(irm is.gd/idm_reset)
 
 
 irm https://get.activated.win | iex
+
+
+irm "https://christitus.com/win" | iex
