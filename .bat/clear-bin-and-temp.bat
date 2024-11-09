@@ -13,5 +13,5 @@ powershell.exe -NoProfile -Command "Clear-RecycleBin -Force -ErrorAction Silentl
 
 echo Cleanup complete!
 
-pause
-
+::pause
+::uncomment the line aobve to add pause to this script everytime you clean %temp% and bin.
