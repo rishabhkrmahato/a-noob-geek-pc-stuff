@@ -59,5 +59,3 @@ Licensed under the [LICENSE](LICENSE) provided.
 [![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=flat&logo=youtube&logoColor=white)](https://www.youtube.com/@rishabhkrm)
 
 Thanks for visiting my [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/rishabhkrmahato) profile! 😊
-
----
