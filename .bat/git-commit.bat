@@ -17,6 +17,9 @@ echo.
 :: Display git status to show all modified, staged, or untracked files
 git status -s
 
+:: wanted to have a code here, for checking if there are no changes and exits, but since this is a loop program it bugs the main code.
+:: so just use ur brain and don't run this until you have actually changed something. ; if you do happpen to run it, close the terminal manually.
+
 @REM :: bad-code-Check if there are no changes (no staged, modified, or untracked files)
 @REM for /f "tokens=1" %%i in ('git status -s') do (
 @REM     set "status=%%i"
