@@ -10,6 +10,7 @@ if (-not ($runAsAdmin.Groups -contains (New-Object System.Security.Principal.Sec
     # If not running as admin, re-launch the script with admin rights
     $arguments = "& '" + $myinvocation.MyCommand.Definition + "'"
     Start-Process powershell -Verb runAs -ArgumentList $arguments
+    Start-Sleep -Seconds 2
     Exit
 }
 
@@ -35,11 +36,12 @@ $allApps = $installedApps + $storeApps
 # Include custom batch script shortcuts
 $customShortcutsPath1 = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
 $customShortcutsPath2 = "C:\Users\mahat\AppData\Roaming\Microsoft\Windows\Start Menu\Programs"
-$customShortcutsPath3 = "C:\Users\mahat\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Chrome Apps"
-$customShortcuts = Get-ChildItem -Path $customShortcutsPath1, $customShortcutsPath2, $customShortcutsPath3 -Filter *.lnk | 
+#to include custom chrome web apps, but i don't use chrome anymore, firefox is far better.
+#$customShortcutsPath3 = "C:\Users\mahat\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Chrome Apps"
+#$customShortcuts = Get-ChildItem -Path $customShortcutsPath1, $customShortcutsPath2, $customShortcutsPath3 -Filter *.lnk | 
+$customShortcuts = Get-ChildItem -Path $customShortcutsPath1, $customShortcutsPath2 -Filter *.lnk | 
     Select-Object Name, FullName
     
-
 # Add custom shortcuts to the result
 $allApps += $customShortcuts | Select-Object @{Name="DisplayName";Expression={$_.Name}}, 
     @{Name="InstallLocation";Expression={$_.FullName}}, 
