@@ -17,14 +17,28 @@ echo.
 :: Display git status to show all modified, staged, or untracked files
 git status -s
 
+@REM :: Check if there are no changes (no staged, modified, or untracked files)
+@REM for /f "tokens=1" %%i in ('git status -s') do (
+@REM     set "status=%%i"
+@REM     if not defined status (
+@REM         echo No changes detected. Exiting script.
+@REM         timeout /t 2
+@REM         exit /b
+@REM     )
+@REM )
+
 :: Check if there are no changes (no staged, modified, or untracked files)
+set "changes_detected=false"
 for /f "tokens=1" %%i in ('git status -s') do (
-    set "status=%%i"
-    if not defined status (
-        echo No changes detected. Exiting script.
-        timeout /t 2
-        exit /b
-    )
+    set "changes_detected=true"
+    goto :skip_no_changes_check
+)
+
+:skip_no_changes_check
+if "%changes_detected%"=="false" (
+    echo No changes detected. Exiting script.
+    timeout /t 3
+    exit /b
 )
 
 :: List all modified files with numbering and status tracking
