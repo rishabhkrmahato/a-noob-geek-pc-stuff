@@ -14,11 +14,6 @@ echo ==========================
 echo Git Commit Script
 echo ==========================
 echo.
-@REM echo D  - deleted files, 
-@REM echo M  - modified files, 
-@REM echo ?? - untracked files;
-@REM echo.
-
 :: Display git status to show all modified, staged, or untracked files
 git status -s
 
@@ -59,15 +54,30 @@ for %%s in (%selection%) do (
     if defined file%%s (
         set "selected_files=!selected_files! !file%%s!"
         git add "!file%%s!"
-        echo Added: !file%%s!
+        
+        :: Check if the file was successfully added
+        git diff --cached --name-only | findstr /i "!file%%s!" >nul
+        if errorlevel 1 (
+            echo ERROR: Failed to add !file%%s!.
+        ) else (
+            echo Added: !file%%s!
+        )
     ) else (
         echo Invalid selection '%%s'. Skipping.
     )
 )
 
 :: Prompt for commit message for the selected files
+echo.
 set /p "commit_msg=Enter commit message for selected files: "
 git commit -m "!commit_msg!"
+
+:: Error handling after commit
+if errorlevel 1 (
+    echo ERROR: Commit failed. Please check the commit message or file status.
+    pause
+    goto main_menu
+)
 echo Committed selected files with message: "!commit_msg!"
 pause
 
@@ -76,9 +86,18 @@ goto main_menu
 :push_changes
 :: Confirm and push all changes
 git push origin main
+
+:: Error handling after push
+if errorlevel 1 (
+    echo ERROR: Push failed. Please check your internet connection or repository settings.
+    pause
+    goto main_menu
+)
+
 echo.
 echo All changes have been pushed successfully!
-echo Opening rishabhkrmahato github repo . . .
+echo.
+echo Opening rishabhkrmahato GitHub repo . . .
 
 :: Wait before closing terminal
 timeout /t 2
