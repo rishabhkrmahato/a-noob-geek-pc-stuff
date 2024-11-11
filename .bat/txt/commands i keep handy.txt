@@ -17,6 +17,7 @@ iex(irm is.gd/idm_reset)
 
 
 irm https://get.activated.win | iex
+https://massgrave.dev/genuine-installation-media
 
 
 irm "https://christitus.com/win" | iex
