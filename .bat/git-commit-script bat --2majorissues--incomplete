@@ -55,6 +55,7 @@ for /f "tokens=1,* delims= " %%i in ('git status -s') do (
     set "file_path=%%j"
     
     :: Echo file status and path correctly
+    @REM cannot handle filenames with spaces :(
     if "!status!"=="??" (
         echo !count!: UNTRACKED - !file_path!
     ) else if "!status!"=="D" (
