@@ -1,3 +1,6 @@
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\nssm\win64", [EnvironmentVariableTarget]::Machine)
+#(powershell command to quickly add a path to %PATH% as env. var.)
+
 fsutil file createnew
 
 
