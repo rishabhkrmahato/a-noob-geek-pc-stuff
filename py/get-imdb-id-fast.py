@@ -13,6 +13,7 @@
 # Usage:
 # Run this script in the background while working with IMDb links.
 # Copy an IMDb link, and the script will process it automatically.
+# --------------------------------------------
 
 import pyperclip
 import re
@@ -57,7 +58,8 @@ try:
 
 except KeyboardInterrupt:
     print("\nStopped monitoring clipboard. Goodbye!")
-
+    
+# --------------------------------------------
 # EG. USAGE: (in the same directory)
 # py get-imdb-id-fast.py (run)
 # (output below)
