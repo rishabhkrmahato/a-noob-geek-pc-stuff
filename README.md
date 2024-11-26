@@ -8,22 +8,23 @@ Built for convenience, each tool focuses on making small improvements to the sys
 
 ## Repository Structure 📁🔧📂
 
-- **Batch Scripts (.bat/)**: 
+- **Batch Scripts ([.bat/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/.bat)
+)**: 
 
 Automate repetitive actions like clearing temp files, toggling network settings, and brightness adjustments.
-- **Bash Scripts (bash/)**:
+- **Bash Scripts ([bash/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/bash))**:
 
 Useful scripts for linux eg. downloading content on Android using Termux(yt-dlp).
-- **PowerShell Scripts (ps/)**:
+- **PowerShell Scripts ([ps/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/ps))**:
 
 Scripts for Windows management, like listing all installed programs.
-- **Python Scripts (py/)**:
+- **Python Scripts ([py/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/py))**:
 
 Small programs for tasks like file manipulation, password generation, and file splitting/joining.
-- **C Programs (c/)**:
+- **C Programs ([c/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/c))**:
 
 Hello World! :)
-- **Miscellaneous (misc/)**:
+- **Miscellaneous ([misc/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/misc))**:
 
 Config files, registry tweaks, and additional tools for Windows management.
 
@@ -32,7 +33,7 @@ Config files, registry tweaks, and additional tools for Windows management.
 To get started, follow these simple steps:
 
 1. **Download my repository**:  
-   [Click here to download the latest version](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip)
+   [__Click here__ to download the latest version](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip)
 
 2. **Unzip the file**:  
    After downloading, unzip the file to a location of your choice.
