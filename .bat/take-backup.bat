@@ -45,6 +45,8 @@ echo Backup of Documents completed.
 robocopy "%USERPROFILE%\Downloads" "%backupFolder%\Downloads" /MIR /A-:SH /XD "%USERPROFILE%\Downloads\TORRENT DOWNLOADS" >> "%logFile%" 2>&1
 echo.
 echo Backup of Downloads completed.
+echo Backup Complete ! (moving to Compresssion section ...)
+pause
 
 @REM :: Compress the backup folder using 7-Zip
 @REM :: Set zipfile location
@@ -62,11 +64,13 @@ echo.
 echo Compressing Backup ...
 echo.
 "C:\Program Files\7-Zip\7z.exe" a -t7z -mx=9 "%zipFile%" "%backupFolder%" >> "%logFile%" 2>&1
-echo Compression completed at R:\
+echo Compression completed at R:\ (moving to COPY-to-USB section ...)
+pause 
 
 :: Move the archive to D:\ 
+echo.
 echo Copying to USB ...
-robocopy "%R%" "%D%" "%zipFile%" >> "%logFile%" 2>&1
+robocopy "R:\" "D:\" "%zipFile%" >> "%logFile%" 2>&1
 
 @REM del "%zipFile%"  :: Delete the 7z file from the R drive after moving
 :: uncomment line above to move it, currently only copies. 
@@ -76,10 +80,11 @@ echo Copied archive to Ventoy USB (D:\)
 
 :: Final message
 echo.
-echo Backup and compression complete!
+echo BACKUP, COMPRESSION, and COPY complete!
 echo Script LOGGED at %USERPROFILE%\backup-script-verbosed.log 
-pause
 echo.
+echo Close Terminal 'or' continue to display LOG output here ...
+pause
 
 :: Display output in terminal
 echo.
