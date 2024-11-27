@@ -51,8 +51,8 @@ __EXPLORE !__ each folder for individual tools and
 
 ## Contributing & License 🤝📝⚖️
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) if you want to help improve or expand these tools.  
-Licensed under the [LICENSE](LICENSE) provided.
+See [CONTRIBUTING.md](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/blob/main/.github/CONTRIBUTING.md) if you want to help improve or expand these tools.  
+Licensed under the [LICENSE](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/blob/main/LICENSE) provided.
 
 ---
 
