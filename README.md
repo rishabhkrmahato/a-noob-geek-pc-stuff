@@ -1,6 +1,6 @@
 # 👨‍💻 Hi Fellow Nerd! 👨‍💻
 
-# 🤖 a-noob-geek-pc-stuff 🤖 
+# [🤖 a-noob-geek-pc-stuff 🤖](https://rishabhkrmahato.github.io/a-noob-geek-pc-stuff/) 
 
 This repository hosts a variety of scripts and small programs that help automate and simplify daily tasks on a Windows PC. 
 
