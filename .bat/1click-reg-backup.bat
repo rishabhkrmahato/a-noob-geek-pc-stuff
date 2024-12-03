@@ -43,7 +43,7 @@ if errorlevel 1 (
 
 echo Registry backup successfully compressed and saved to %SevenZipFile%.
 
-:: Uncomment lines below if you don't have 7z installed.
+:: Uncomment lines below, if you want to use native windows ZIP (less compression) instead.
 @REM :: Compress Backup File into ZIP with Timestamp
 @REM echo Compressing %RegFile% into %ZipFile%...
 @REM powershell -Command "Compress-Archive -Path '%RegFile%' -DestinationPath '%ZipFile%' -Force"
