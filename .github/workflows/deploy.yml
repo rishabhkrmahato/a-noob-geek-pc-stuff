@@ -1,17 +1,38 @@
+# name: Deploy GitHub Pages
+
+# on:
+#   workflow_dispatch: # Trigger workflow manually via GitHub Actions
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest # The virtual machine to run the workflow
+
+#     steps:
+#     - name: Checkout Repository
+#       uses: actions/checkout@v3 # Pull the repository's code
+
+#     - name: Deploy GitHub Pages
+#       uses: actions/deploy-pages@v2 # Built-in action for deploying to GitHub Pages
+#       with:
+#         token: ${{ secrets.GITHUB_TOKEN }} # Authenticates the deployment
+
 name: Deploy GitHub Pages
 
 on:
-  workflow_dispatch: # Trigger workflow manually via GitHub Actions
+  workflow_dispatch:  # Trigger workflow manually via GitHub Actions
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # The virtual machine to run the workflow
+    runs-on: ubuntu-latest  # The virtual machine to run the workflow
+
+    permissions:
+      id-token: write  # Ensure this permission is granted
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3 # Pull the repository's code
+      - name: Checkout Repository
+        uses: actions/checkout@v3  # Pull the repository's code
 
-    - name: Deploy GitHub Pages
-      uses: actions/deploy-pages@v2 # Built-in action for deploying to GitHub Pages
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }} # Authenticates the deployment
+      - name: Deploy GitHub Pages
+        uses: actions/deploy-pages@v2  # Built-in action for deploying to GitHub Pages
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Authenticates the deployment
