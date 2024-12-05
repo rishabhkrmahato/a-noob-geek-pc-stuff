@@ -43,9 +43,15 @@ ________   ___  __     _____ ______           _________   ________   ________   
 
 "@
 
+# Ensure the directory exists
+$directoryPath = "C:\temp-rkm-tools"
+if (-not (Test-Path $directoryPath)) {
+    New-Item -ItemType Directory -Path $directoryPath
+}
+
 do {
     # Display Menu
-    Write-Host "Welcome to rkm-tools" -ForegroundColor Cyan
+    Write-Host "Welcome to rkm-tools" -ForegroundColor Red
     # Write-Host "`nPlease choose an option from the menu below:`n"
     Write-Host ""
 
@@ -59,7 +65,7 @@ do {
     Write-Host "[0] EXIT"
 
     # User Prompt
-    Write-Host "`nChoose a menu option using your keyboard (1,2,3,4,5,6, 0): " -ForegroundColor Green -NoNewline
+    Write-Host "`nChoose a menu option using your keyboard: " -ForegroundColor Green -NoNewline
     $choice = Read-Host
 
     # Handle User Choice
@@ -67,6 +73,126 @@ do {
     {
         "1" 
         {   
+            Clear-Host
+            Write-Host "Batch Script Options" -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "[1] network-refresh.bat"
+            Write-Host "[2] toggle-ethernet-admin.bat"
+            Write-Host "[3] nircmd-set-brightness.bat"
+            Write-Host "[4] end-task-edge.bat"
+            Write-Host "[5] convert-mkv-to-mp4.bat"
+            Write-Host "[6] list-imp-files.bat"
+            Write-Host "[7] 1click-nircmd-set-brightness.bat"
+            Write-Host "[8] yt-dlp_downloader.bat"
+            Write-Host "[9] split-video-by-mins-lossless.bat"
+            Write-Host "[10] open-chatgpt-replace-copilot_key.bat"
+            Write-Host "[11] create-file.bat"
+            Write-Host "[12] disable-recall.bat"
+            Write-Host "[13] update-choco-scoop-pip-npm-installs.bat"
+            Write-Host "[14] git-commit-all-changes.bat"
+            Write-Host "[15] list-all-files-full-paths.bat"
+            Write-Host "[16] clear-bin-and-temp.bat"
+            Write-Host "[17] aio-package-updater.bat"
+            Write-Host "[18] take-backup.bat"
+            Write-Host "[19] 1click-reg-backup.bat"
+            Write-Host ""
+            Write-Host "[0] Back to Main Menu"
+            Write-Host ""
+
+            Write-Host "Choose a bash script option using your keyboard: " -ForegroundColor Green -NoNewline
+            $batChoice = Read-Host
+
+            Switch ($batChoice)
+            {
+                "1"
+                {
+
+                }
+                "2"
+                {
+                }
+                "3"
+                {
+                }
+                "4"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/end-task-edge.bat"
+                    $scriptPath = "$directoryPath\end-task-edge.bat"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        & $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                    # # Create the directory if it doesn't exist
+                    # if (-not (Test-Path "C:\Scripts")) {
+                    #     New-Item -ItemType Directory -Path "C:\Scripts"
+                    # }
+                    # # Download the script to C:\Scripts
+                    # Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    # # Check if the script was successfully downloaded
+                    # if (Test-Path $scriptPath) {
+                    #     # Run the downloaded script
+                    #     & $scriptPath
+                    # } else {
+                    #     Write-Host "Failed to download the script." -ForegroundColor Red
+                    # }
+                }
+                "5"
+                {
+                }
+                "6"
+                {
+                }
+                "7"
+                {
+                }
+                "8"
+                {
+                }
+                "9"
+                {
+                }
+                "10"
+                {
+                }
+                "11"
+                {
+                }
+                "12"
+                {
+                }
+                "13"
+                {
+                }
+                "14"
+                {
+                }
+                "15"
+                {
+                }
+                "16"
+                {
+                }
+                "17"
+                {
+                }
+                "18"
+                {
+                }
+                "19"
+                {
+                }
+                "0"
+                {
+                }
+                Default
+                {
+                    Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+                    Write-Host ""
+                }
+            }
+
         }
         "2" 
         {    
@@ -81,7 +207,7 @@ do {
             Write-Host ""
 
             # Nested Menu Prompt
-            Write-Host "Choose a bash script option using your keyboard (1,2,3,0): " -ForegroundColor Green -NoNewline
+            Write-Host "Choose a bash script option using your keyboard: " -ForegroundColor Green -NoNewline
             $bashChoice = Read-Host
 
             Switch ($bashChoice)
@@ -101,6 +227,7 @@ do {
                 Default
                 {
                     Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+                    Write-Host ""
                 }
             }
         }
@@ -121,13 +248,15 @@ do {
             # Exit
             Write-Host "Exiting... Goodbye!" -ForegroundColor Cyan
             break
-        }
-        
+        }        
         Default 
         {
             Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+            Write-Host ""
         }
     }
+Write-Host ""
+Start-Sleep -Seconds 1
 } while ($choice -ne "0")
 
 
