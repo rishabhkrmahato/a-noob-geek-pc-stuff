@@ -6,6 +6,50 @@ This repository hosts a variety of scripts and small programs that help automate
 
 Built for convenience, each tool focuses on making small improvements to the system experience.
 
+---
+
+## Getting Started 🚀💡📘
+
+<!-- To get started, follow these simple steps: -->
+
+To get started with my tools, you have two easy options:
+
+#### **! UNDER-CONSTRUCTION ! -- Option 1: Quick One-Liner (Recommended)**
+You can instantly run my tools without downloading the repository by using the following PowerShell command:
+
+__RUN-AS-ADMIN__ ; as some tools require admin permissions.
+
+_Terminal(admin) > powershell > run-this command_
+
+```powershell
+irm https://bit.ly/rkm-tools-raw | iex
+```
+
+Alternatively, use the full URL:
+
+```powershell
+irm https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/rkm-tools.ps1 | iex
+```
+
+#### **! USE-THIS ! -- Option 2: Download the Repository**
+
+1. **Download my repository**:  
+   [__Click here__ to download the latest version](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip)
+
+2. **Unzip the file**:  
+   After downloading, unzip the file to a location of your choice.
+
+3. **Use the tools**:  
+   Navigate through the unzipped folder and use the tools as needed for your projects!
+
+***
+
+__EXPLORE !__ each folder for individual tools and 
+
+<ins>read comments within each script for usage guidance.</ins>
+
+***
+
 ## Repository Structure 📁🔧📂
 
 - **Batch Scripts ([.bat/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/.bat)
@@ -28,26 +72,7 @@ Hello World! :)
 
 Config files, registry tweaks, and additional tools for Windows management.
 
-## Getting Started 🚀💡📘
-
-To get started, follow these simple steps:
-
-1. **Download my repository**:  
-   [__Click here__ to download the latest version](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip)
-
-2. **Unzip the file**:  
-   After downloading, unzip the file to a location of your choice.
-
-3. **Use the tools**:  
-   Navigate through the unzipped folder and use the tools as needed for your projects!
-
-***
-
-__EXPLORE !__ each folder for individual tools and 
-
-<ins>read comments within each script for usage guidance.</ins>
-
-***
+---
 
 ## Contributing & License 🤝📝⚖️
 
