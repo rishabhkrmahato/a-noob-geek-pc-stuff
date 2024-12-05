@@ -1,14 +1,13 @@
 <#
 .SYNOPSIS
-RKM-Tools: A collection of handy scripts and tools for PC automation and optimization.
+rkm-Tools: These are personal tools I’ve created and use regularly on my PC ❤️.
 
 .DESCRIPTION
-This script serves as a launcher and menu system for various PowerShell scripts hosted in the 
-RKM GitHub repository. It provides easy access to tasks like system cleanup, software installation, 
-network troubleshooting, and more.
+https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/blob/main/README.md
 
 .AUTHOR
 Rishabh Kumar Mahato (Sonu)
+https://rishabhkrmahato.github.io/a-noob-geek-pc-stuff/
 
 .VERSION
 1.0.0
@@ -17,15 +16,14 @@ Rishabh Kumar Mahato (Sonu)
 GitHub Repository: https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff
 
 .NOTES
-- Always run this script with administrative privileges for optimal functionality.
+- *** Always run this script with administrative privileges for optimal functionality. ***
 - Ensure you have an active internet connection to fetch and run remote scripts.
-
 #>
 
 # Set Console Colors
 # $Host.UI.RawUI.BackgroundColor = 'DarkMagenta' # Purple Background
-$Host.UI.RawUI.ForegroundColor = 'Yellow'      # Yellow Foreground
-Clear-Host                                     # Clear screen to apply colors
+$Host.UI.RawUI.ForegroundColor = 'Yellow'       # Yellow Foreground
+Clear-Host                                    
 
 # ASCII Art
 Write-Host @"
