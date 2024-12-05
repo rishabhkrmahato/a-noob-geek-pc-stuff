@@ -1,9 +1,9 @@
 # Jekyll Themes for GitHub Pages
 
-# theme: jekyll-theme-cayman
+theme: jekyll-theme-cayman
 # theme: jekyll-theme-minimal
 # theme: jekyll-theme-architect
-theme: jekyll-theme-hacker
+# theme: jekyll-theme-hacker
 # theme: jekyll-theme-leap-day
 # theme: jekyll-theme-merlot
 # theme: jekyll-theme-midnight
