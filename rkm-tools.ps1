@@ -93,7 +93,7 @@ do {
             Write-Host "[15] list-all-files-full-paths.bat"
             Write-Host "[16] clear-bin-and-temp.bat"
             Write-Host "[17] aio-package-updater.bat"
-            Write-Host "[18] take-backup.bat"
+            Write-Host "[18] take-backup-compress-copy.bat"
             Write-Host "[19] 1click-reg-backup.bat"
             Write-Host ""
             Write-Host "[0] Back to Main Menu"
