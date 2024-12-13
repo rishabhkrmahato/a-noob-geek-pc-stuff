@@ -1,3 +1,8 @@
+"C:\Program Files\7-Zip\7z.exe" a -ttar -v2000m "%USERPROFILE%\Desktop\ARCHIVE_NAME.tar" "PATH_TO_FILE_OR_FOLDER"
+
+
+ffmpeg -i video.<video_ext> -i audio.<audio_ext> -c:v copy -c:a copy output.<output_ext>
+
 [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\nssm\win64", [EnvironmentVariableTarget]::Machine)
 #(powershell command to quickly add a path to %PATH% as env. var.)
 
