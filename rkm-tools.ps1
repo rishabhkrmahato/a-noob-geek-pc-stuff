@@ -99,7 +99,7 @@ do {
             Write-Host "[0] Back to Main Menu"
             Write-Host ""
 
-            Write-Host "Choose a bash script option using your keyboard: " -ForegroundColor Green -NoNewline
+            Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
             $batChoice = Read-Host
 
             Switch ($batChoice)
@@ -350,7 +350,7 @@ do {
             Write-Host ""
 
             # Nested Menu Prompt
-            Write-Host "Choose a bash script option using your keyboard: " -ForegroundColor Green -NoNewline
+            Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
             $bashChoice = Read-Host
 
             Switch ($bashChoice)
@@ -386,8 +386,8 @@ do {
                 }
                 "3"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/bash/yt-dlp-termux-downloader-android.sh"
+                    $scriptPath = "$directoryPath\yt-dlp-termux-downloader-android.sh"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Write-Host "Script saved to: $scriptPath" -ForegroundColor Green
@@ -398,6 +398,7 @@ do {
                 }
                 "0"
                 {
+                    break
                 }
                 Default
                 {
@@ -408,9 +409,293 @@ do {
         }
         "3" 
         {
+            Clear-Host
+            Write-Host "Powershell Script Options" -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "[1] list-all-programs.ps1"
+            Write-Host "[2] get-repo-raw-links.ps1"
+            Write-Host "[3] remove-lines.ps1"
+            Write-Host ""
+            Write-Host "[0] Back to Main Menu"
+            Write-Host ""
+
+            Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
+            $psChoice = Read-Host
+
+            Switch ($psChoice)
+            {
+                "1"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/list-all-programs.ps1"
+                    $scriptPath = "$directoryPath\list-all-programs.ps1"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Unblock-File -Path $scriptPath
+                        & PowerShell.exe -ExecutionPolicy Bypass -File $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "2"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/get-repo-raw-links.ps1"
+                    $scriptPath = "$directoryPath\get-repo-raw-links.ps1"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Unblock-File -Path $scriptPath
+                        & PowerShell.exe -ExecutionPolicy Bypass -File $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "3"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/remove-lines.ps1"
+                    $scriptPath = "$directoryPath\remove-lines.ps1"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Unblock-File -Path $scriptPath
+                        & PowerShell.exe -ExecutionPolicy Bypass -File $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "0"
+                {
+                    break
+                }
+                Default
+                {
+                    Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+                    Write-Host ""
+                }
+            }
+# # FUNCTION can be used, instead of same repeat codes
+# "3" 
+# {
+#     Clear-Host
+#     Write-Host "Powershell Script Options" -ForegroundColor Cyan
+#     Write-Host ""
+#     Write-Host "[1] list-all-programs.ps1"
+#     Write-Host "[2] get-repo-raw-links.ps1"
+#     Write-Host "[3] remove-lines.ps1"
+#     Write-Host ""
+#     Write-Host "[0] Back to Main Menu"
+#     Write-Host ""
+
+#     Write-Host "Choose a PowerShell script option using your keyboard: " -ForegroundColor Green -NoNewline
+#     $psChoice = Read-Host
+
+#     # Define a function to download, unblock, and execute the script
+#     Function Run-Script {
+#         param (
+#             [string]$url,
+#             [string]$fileName
+#         )
+#         $scriptPath = "$directoryPath\$fileName"
+#         try {
+#             Write-Host "`nDownloading script: $fileName..." -ForegroundColor Yellow
+#             Invoke-WebRequest -Uri $url -OutFile $scriptPath -ErrorAction Stop
+
+#             if (Test-Path $scriptPath) {
+#                 Write-Host "Script downloaded successfully to: $scriptPath" -ForegroundColor Green
+
+#                 Write-Host "Unblocking and executing the script..." -ForegroundColor Cyan
+#                 Unblock-File -Path $scriptPath
+#                 & PowerShell.exe -ExecutionPolicy Bypass -File $scriptPath
+#             } else {
+#                 Write-Host "Failed to download the script." -ForegroundColor Red
+#             }
+#         } catch {
+#             Write-Host "An error occurred: $_" -ForegroundColor Red
+#         }
+#     }
+
+#     # Process user input
+#     Switch ($psChoice) {
+#         "1" { Run-Script -url "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/list-all-programs.ps1" -fileName "list-all-programs.ps1" }
+#         "2" { Run-Script -url "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/get-repo-raw-links.ps1" -fileName "get-repo-raw-links.ps1" }
+#         "3" { Run-Script -url "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/remove-lines.ps1" -fileName "remove-lines.ps1" }
+#         "0" { break }
+#         Default {
+#             Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+#             Write-Host ""
+#         }
+#     }
+# }
         }
         "4" 
         {
+            # Notify the user about Python installation requirement
+            Clear-Host
+            Write-Host "IMPORTANT: These scripts requires Python to be installed and *added to the PATH* to work." -ForegroundColor Yellow
+            Write-Host "If Python is not installed, download it from https://www.python.org/downloads/" -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "Press any key to continue..." -ForegroundColor Green
+            Read-Host
+
+            Clear-Host
+            Write-Host "Python Script Options" -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "[1] real-time-mouse-co-ord.py"
+            Write-Host "[2] get-imdb-id-fast.py"
+            Write-Host "[3] folder-real-time-monitor.py"
+            Write-Host "[4] xml-extract-details.py"
+            Write-Host "[5] password-generator.py"
+            Write-Host "[6] get-first-boot-time.py"
+            Write-Host "[7] file-hide-extract.py"
+            Write-Host ""
+            Write-Host "[8] split-join-files program"
+            Write-Host ""
+            Write-Host "[0] Back to Main Menu"
+            Write-Host ""
+
+            Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
+            $pyChoice = Read-Host
+
+            Switch ($pyChoice)
+            {
+                "1"
+                {
+                    $url = ""
+                    $scriptPath = "$directoryPath\"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "2"
+                {
+                    $url = ""
+                    $scriptPath = "$directoryPath\"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "3"
+                {
+                    $url = ""
+                    $scriptPath = "$directoryPath\"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "4"
+                {
+                    $url = ""
+                    $scriptPath = "$directoryPath\"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "5"
+                {
+                    $url = ""
+                    $scriptPath = "$directoryPath\"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "6"
+                {
+                    $url = ""
+                    $scriptPath = "$directoryPath\"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "7"
+                {
+                    $url = ""
+                    $scriptPath = "$directoryPath\"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+
+                "8"
+                {
+                    Clear-Host
+                    Write-Host "Split-Join-Files Program Options" -ForegroundColor Cyan
+                    Write-Host ""
+                    Write-Host "[1] info.txt - *MUST READ FIRST*"
+                    Write-Host "[2] split-files-binary.py"
+                    Write-Host "[3] join-files-binary.py"
+                    Write-Host ""
+                    Write-Host "[0] Back to Main Menu"
+                    Write-Host ""
+        
+                    Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
+                    $sjfChoice = Read-Host
+        
+                    Switch ($sjfChoice)
+                    {
+                        "1"
+                        {
+                            $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/split-join-files/info.txt"
+                            $scriptPath = "$directoryPath\info.txt"
+                            Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                            if (Test-Path $scriptPath) {
+                                Start-Process "notepad.exe" -ArgumentList $scriptPath
+                            } else {
+                                Write-Host "Failed to download the file." -ForegroundColor Red
+                            }
+                        }
+                        "2"
+                        {
+                            $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/split-join-files/split-files-binary.py"
+                            $scriptPath = "$directoryPath\split-files-binary.py"
+                            Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                            if (Test-Path $scriptPath) {
+                                Start-Process python -ArgumentList $scriptPath
+                            } else {
+                                Write-Host "Failed to download the script." -ForegroundColor Red
+                            }
+                        }
+                        "3"
+                        {
+                            $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/split-join-files/join-files-binary.py"
+                            $scriptPath = "$directoryPath\join-files-binary.py"
+                            Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                            if (Test-Path $scriptPath) {
+                                Start-Process python -ArgumentList $scriptPath
+                            } else {
+                                Write-Host "Failed to download the script." -ForegroundColor Red
+                            }                            
+                        }
+                    }
+                }
+
+                "0"
+                {
+                    break
+                }
+                Default
+                {
+                    Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+                    Write-Host ""
+                }                
+            }
         }
         "5" 
         {
