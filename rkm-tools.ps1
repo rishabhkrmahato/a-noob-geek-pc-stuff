@@ -22,8 +22,10 @@ GitHub Repository: https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff
 
 # Check if the script is running as Administrator
 If (-NOT ([Security.Principal.WindowsPrincipal]([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Host "This script requires administrative privileges to run." -ForegroundColor Red
-    Write-Host "Right-click on the PowerShell file and select 'Run as Administrator'." -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "This script runs best with administrative privileges." -ForegroundColor Red
+    Write-Host "Please re-Run as Admin !" -ForegroundColor Yellow
+    Write-Host ""
     Exit
 }
 
