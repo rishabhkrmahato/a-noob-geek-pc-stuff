@@ -14,7 +14,7 @@ Built for convenience, each tool focuses on making small improvements to the sys
 
 To get started with my tools, you have two easy options:
 
-#### **! UNDER-CONSTRUCTION ! -- Option 1: Quick One-Liner (Recommended)**
+#### **--Option 1: Quick One-Liner ! RECOMMENDED !**
 You can instantly run my tools without downloading the repository by using the following PowerShell command:
 
 __RUN-AS-ADMIN__ ; as some tools require admin permissions.
@@ -31,7 +31,7 @@ Alternatively, use the full URL:
 irm https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/rkm-tools.ps1 | iex
 ```
 
-#### **! USE-THIS ! -- Option 2: Download the Repository**
+#### **-- Option 2: Download the Repository**
 
 1. **Download my repository**:  
    [__Click here__ to download the latest version](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip)
