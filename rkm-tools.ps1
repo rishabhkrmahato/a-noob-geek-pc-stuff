@@ -59,7 +59,7 @@ do {
     Write-Host "[2] bash/"
     Write-Host "[3] ps/"
     Write-Host "[4] py/"
-    Write-Host "[5] c/"
+    Write-Host "[5] c/helloC++"
     Write-Host "[6] misc/"
     Write-Host ""
     Write-Host "[0] EXIT"
@@ -469,60 +469,7 @@ do {
                     Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
                     Write-Host ""
                 }
-            }
-# # FUNCTION can be used, instead of same repeat codes
-# "3" 
-# {
-#     Clear-Host
-#     Write-Host "Powershell Script Options" -ForegroundColor Cyan
-#     Write-Host ""
-#     Write-Host "[1] list-all-programs.ps1"
-#     Write-Host "[2] get-repo-raw-links.ps1"
-#     Write-Host "[3] remove-lines.ps1"
-#     Write-Host ""
-#     Write-Host "[0] Back to Main Menu"
-#     Write-Host ""
-
-#     Write-Host "Choose a PowerShell script option using your keyboard: " -ForegroundColor Green -NoNewline
-#     $psChoice = Read-Host
-
-#     # Define a function to download, unblock, and execute the script
-#     Function Run-Script {
-#         param (
-#             [string]$url,
-#             [string]$fileName
-#         )
-#         $scriptPath = "$directoryPath\$fileName"
-#         try {
-#             Write-Host "`nDownloading script: $fileName..." -ForegroundColor Yellow
-#             Invoke-WebRequest -Uri $url -OutFile $scriptPath -ErrorAction Stop
-
-#             if (Test-Path $scriptPath) {
-#                 Write-Host "Script downloaded successfully to: $scriptPath" -ForegroundColor Green
-
-#                 Write-Host "Unblocking and executing the script..." -ForegroundColor Cyan
-#                 Unblock-File -Path $scriptPath
-#                 & PowerShell.exe -ExecutionPolicy Bypass -File $scriptPath
-#             } else {
-#                 Write-Host "Failed to download the script." -ForegroundColor Red
-#             }
-#         } catch {
-#             Write-Host "An error occurred: $_" -ForegroundColor Red
-#         }
-#     }
-
-#     # Process user input
-#     Switch ($psChoice) {
-#         "1" { Run-Script -url "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/list-all-programs.ps1" -fileName "list-all-programs.ps1" }
-#         "2" { Run-Script -url "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/get-repo-raw-links.ps1" -fileName "get-repo-raw-links.ps1" }
-#         "3" { Run-Script -url "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/remove-lines.ps1" -fileName "remove-lines.ps1" }
-#         "0" { break }
-#         Default {
-#             Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
-#             Write-Host ""
-#         }
-#     }
-# }
+            } # # FUNCTIONs can also be used, instead of same repeat codes
         }
         "4" 
         {
@@ -557,8 +504,8 @@ do {
             {
                 "1"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/real-time-mouse-co-ord.py"
+                    $scriptPath = "$directoryPath\real-time-mouse-co-ord.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Start-Process python -ArgumentList $scriptPath
@@ -568,8 +515,8 @@ do {
                 }
                 "2"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/get-imdb-id-fast.py"
+                    $scriptPath = "$directoryPath\get-imdb-id-fast.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Start-Process python -ArgumentList $scriptPath
@@ -579,8 +526,8 @@ do {
                 }
                 "3"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/folder-real-time-monitor.py"
+                    $scriptPath = "$directoryPath\folder-real-time-monitor.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Start-Process python -ArgumentList $scriptPath
@@ -590,8 +537,8 @@ do {
                 }
                 "4"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/xml-extract-details.py"
+                    $scriptPath = "$directoryPath\xml-extract-details.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Start-Process python -ArgumentList $scriptPath
@@ -601,8 +548,8 @@ do {
                 }
                 "5"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/password-generator.py"
+                    $scriptPath = "$directoryPath\password-generator.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Start-Process python -ArgumentList $scriptPath
@@ -612,8 +559,8 @@ do {
                 }
                 "6"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/get-first-boot-time.py"
+                    $scriptPath = "$directoryPath\get-first-boot-time.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Start-Process python -ArgumentList $scriptPath
@@ -623,8 +570,8 @@ do {
                 }
                 "7"
                 {
-                    $url = ""
-                    $scriptPath = "$directoryPath\"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/file-hide-extract.py"
+                    $scriptPath = "$directoryPath\file-hide-extract.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Start-Process python -ArgumentList $scriptPath
@@ -632,7 +579,6 @@ do {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
                 }
-
                 "8"
                 {
                     Clear-Host
@@ -683,9 +629,17 @@ do {
                                 Write-Host "Failed to download the script." -ForegroundColor Red
                             }                            
                         }
+                        "0"
+                        {
+                            break                            
+                        }
+                        Default
+                        {
+                            Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+                            Write-Host ""
+                        }
                     }
                 }
-
                 "0"
                 {
                     break
@@ -699,14 +653,106 @@ do {
         }
         "5" 
         {
+            $url = "https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/raw/refs/heads/main/c/hello-with-systempause.exe"
+            $exePath = "$directoryPath\hello-with-systempause.exe"
+            Invoke-WebRequest -Uri $url -OutFile $exePath
+            if (Test-Path $exePath) {
+                Start-Process -FilePath $exePath
+            } else {
+                Write-Host "Failed to download the .exe file." -ForegroundColor Red
+            }
         }
         "6" 
         {
+            Clear-Host
+            Write-Host "Miscellaneous Tools" -ForegroundColor Cyan
+            Write-Host ""
+            Write-Host "[1] set wukong to high priority.reg"
+            Write-Host "[2] remove wukong high priority.reg"
+            Write-Host "[3] kill-valorant.bat"
+            Write-Host "[4] all-my-bookmarks.7z"
+            Write-Host "[5] get-imdb-id-link_in_A-id_in_B.xlsx"
+            Write-Host ""
+            Write-Host "[0] Back to Main Menu"
+            Write-Host ""
+
+            Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
+            $miscChoice = Read-Host
+
+            Switch ($miscChoice)
+            {
+                "1"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/set%20wukong%20to%20high%20priority.reg/set-wukong-to-high-priority.reg"
+                    $regPath = "$directoryPath\set-wukong-to-high-priority.reg"
+                    Invoke-WebRequest -Uri $url -OutFile $regPath
+                    if (Test-Path $regPath) {
+                        Start-Process -FilePath "regedit.exe" -ArgumentList "/s", $regPath -Wait
+                    } else {
+                        Write-Host "Failed to download the .reg file." -ForegroundColor Red
+                    }
+                }
+                "2"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/set%20wukong%20to%20high%20priority.reg/remove-wukong-high-priority.reg"
+                    $regPath = "$directoryPath\remove-wukong-high-priority.reg"
+                    Invoke-WebRequest -Uri $url -OutFile $regPath
+                    if (Test-Path $regPath) {
+                        Start-Process -FilePath "regedit.exe" -ArgumentList "/s", $regPath -Wait
+                    } else {
+                        Write-Host "Failed to download the .reg file." -ForegroundColor Red
+                    }
+                }
+                "3"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/valo%20bs/kill-valorant.bat"
+                    $batPath = "$directoryPath\kill-valorant.bat"
+                    Invoke-WebRequest -Uri $url -OutFile $batPath
+                    if (Test-Path $batPath) {
+                        Start-Process -FilePath $batPath
+                    } else {
+                        Write-Host "Failed to download the .bat file." -ForegroundColor Red
+                    }
+                }
+                "4"
+                {
+                    $desktopPath = [Environment]::GetFolderPath("Desktop")
+                    $url = "https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/raw/refs/heads/main/misc/all-my-bookmarks.7z"
+                    $archivePath = "$desktopPath\all-my-bookmarks.7z"
+                    Invoke-WebRequest -Uri $url -OutFile $archivePath
+                    if (Test-Path $archivePath) {
+                        Write-Host ""
+                        Write-Host "The file has been saved to your Desktop." -ForegroundColor Cyan
+                    } else {
+                        Write-Host "Failed to download the .7z file." -ForegroundColor Red
+                    }
+                }
+                "5"
+                {
+                    $url = "https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/raw/refs/heads/main/misc/get-imdb-id-link_in_A-id_in_B.xlsx"
+                    $xlsxPath = "$directoryPath\get-imdb-id-link_in_A-id_in_B.xlsx"
+                    Invoke-WebRequest -Uri $url -OutFile $xlsxPath
+                    if (Test-Path $xlsxPath) {
+                        Start-Process -FilePath $xlsxPath
+                    } else {
+                        Write-Host "Failed to download the .xlsx file." -ForegroundColor Red
+                    }
+                }
+                "0"
+                {
+                    break
+                }
+                Default
+                {
+                    Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
+                    Write-Host ""
+                }
+            }
         }
         "0" 
         {
             # Exit
-            Write-Host "Exiting... Goodbye!" -ForegroundColor Cyan
+            Write-Host "Exiting... Goodbye!" -ForegroundColor Blue
             break
         }        
         Default 
