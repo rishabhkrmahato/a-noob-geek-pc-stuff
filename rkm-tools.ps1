@@ -20,12 +20,17 @@ GitHub Repository: https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff
 - Ensure you have an active internet connection to fetch and run remote scripts.
 #>
 
-# Set Console Colors
+# Check if the script is running as Administrator
+If (-NOT ([Security.Principal.WindowsPrincipal]([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "This script requires administrative privileges to run." -ForegroundColor Red
+    Write-Host "Right-click on the PowerShell file and select 'Run as Administrator'." -ForegroundColor Yellow
+    Exit
+}
+
 # $Host.UI.RawUI.BackgroundColor = 'DarkMagenta' # Purple Background
 $Host.UI.RawUI.ForegroundColor = 'Yellow'       # Yellow Foreground
 Clear-Host                                    
 
-# ASCII Art
 Write-Host @"
 
 
@@ -43,16 +48,13 @@ ________   ___  __     _____ ______           _________   ________   ________   
 
 "@
 
-# Ensure the directory exists
 $directoryPath = "C:\temp-rkm-tools"
 if (-not (Test-Path $directoryPath)) {
     New-Item -ItemType Directory -Path $directoryPath
 }
 
-do {
-    # Display Menu
+do {   
     Write-Host "Welcome to rkm-tools" -ForegroundColor Red
-    # Write-Host "`nPlease choose an option from the menu below:`n"
     Write-Host ""
 
     Write-Host "[1] .bat/"
@@ -64,11 +66,9 @@ do {
     Write-Host ""
     Write-Host "[0] EXIT"
 
-    # User Prompt
     Write-Host "`nChoose a menu option using your keyboard: " -ForegroundColor Green -NoNewline
     $choice = Read-Host
 
-    # Handle User Choice
     Switch ($choice) 
     {
         "1" 
@@ -146,20 +146,7 @@ do {
                         & $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
-                    }
-                    # # Create the directory if it doesn't exist
-                    # if (-not (Test-Path "C:\Scripts")) {
-                    #     New-Item -ItemType Directory -Path "C:\Scripts"
-                    # }
-                    # # Download the script to C:\Scripts
-                    # Invoke-WebRequest -Uri $url -OutFile $scriptPath
-                    # # Check if the script was successfully downloaded
-                    # if (Test-Path $scriptPath) {
-                    #     # Run the downloaded script
-                    #     & $scriptPath
-                    # } else {
-                    #     Write-Host "Failed to download the script." -ForegroundColor Red
-                    # }
+                    } 
                 }
                 "5"
                 {
