@@ -20,19 +20,10 @@ GitHub Repository: https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff
 - Ensure you have an active internet connection to fetch and run remote scripts.
 #>
 
-# Check if the script is running as Administrator
-If (-NOT ([Security.Principal.WindowsPrincipal]([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Host ""
-    Write-Host "This script runs best with administrative privileges." -ForegroundColor Red
-    Write-Host "Please re-Run as Admin !" -ForegroundColor Yellow
-    Write-Host ""
-    Exit
-}
-
 # $Host.UI.RawUI.BackgroundColor = 'DarkMagenta' # Purple Background
 $Host.UI.RawUI.ForegroundColor = 'Yellow'       # Yellow Foreground
 Clear-Host                                    
-
+# Start-Sleep -Milliseconds 100
 Write-Host @"
 
 
@@ -45,21 +36,33 @@ ________   ___  __     _____ ______           _________   ________   ________   
     \|__|\|__| \|__| \|__| \|__|     \|__|            \|__|   \|_______| \|_______| \|_______||\_________\
                                                                                               \|_________|
                                                                                                           
-                                                                                                          
-011100100110101101101101 0101010001001111010011110100110001010011 
-
 "@
+Write-Host "011100100110101101101101 0101010001001111010011110100110001010011" -ForegroundColor DarkGray
+
+# Check if the script is running as Administrator
+If (-NOT ([Security.Principal.WindowsPrincipal]([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Start-Sleep -Seconds 1 
+    Write-Host ""
+    # Write-Host "----------------------------------------------------"
+    Write-Host "> The script runs best with administrative privileges." -ForegroundColor Green
+    Write-Host ">> Please re-Run as Admin !" -ForegroundColor Magenta
+    Write-Host ""
+    Exit
+}
 
 $directoryPath = "C:\temp-rkm-tools"
 if (-not (Test-Path $directoryPath)) {
     New-Item -ItemType Directory -Path $directoryPath
 }
 
-do {   
-    Write-Host "Welcome to rkm-tools" -ForegroundColor White
+do {
+    Start-Sleep -Milliseconds 800
+    Write-Host ""   
+    Write-Host "Welcome to rkm-tools" -ForegroundColor Red
     Write-Host ""
 
     [Console]::ForegroundColor = 'Magenta'
+    # Start-Sleep -Milliseconds 500
     Write-Host "[1] .bat/"
     Write-Host "[2] bash/"
     Write-Host "[3] ps/"
@@ -81,6 +84,7 @@ do {
             Write-Host ""
             Write-Host "Batch Script Options" -ForegroundColor Cyan
             Write-Host ""
+            Start-Sleep -Milliseconds 300
             Write-Host "[1] network-refresh.bat"
             Write-Host "[2] toggle-ethernet-admin.bat"
             Write-Host "[3] nircmd-set-brightness.bat"
@@ -335,6 +339,7 @@ do {
             Write-Host ""
             Write-Host "Bash Script Options" -ForegroundColor Cyan
             Write-Host ""
+            Start-Sleep -Milliseconds 300
             Write-Host "[1] install-must-have-pkgs.sh"
             Write-Host "[2] termux-install-must-have-pkgs.sh"
             Write-Host "[3] yt-dlp-termux-downloader-android.sh"
@@ -412,6 +417,7 @@ do {
             Write-Host ""
             Write-Host "Powershell Script Options" -ForegroundColor Cyan
             Write-Host ""
+            Start-Sleep -Milliseconds 300
             Write-Host "[1] list-all-programs.ps1"
             Write-Host "[2] get-repo-raw-links.ps1"
             Write-Host "[3] remove-lines.ps1"
@@ -486,6 +492,7 @@ do {
             Write-Host ""
             Write-Host "Python Script Options" -ForegroundColor Cyan
             Write-Host ""
+            Start-Sleep -Milliseconds 300
             Write-Host "[1] real-time-mouse-co-ord.py"
             Write-Host "[2] get-imdb-id-fast.py"
             Write-Host "[3] folder-real-time-monitor.py"
@@ -587,6 +594,7 @@ do {
                     Write-Host ""
                     Write-Host "Split-Join-Files Program Options" -ForegroundColor Cyan
                     Write-Host ""
+                    Start-Sleep -Milliseconds 300
                     Write-Host "[1] info.txt - *MUST READ FIRST*"
                     Write-Host "[2] split-files-binary.py"
                     Write-Host "[3] join-files-binary.py"
@@ -671,6 +679,7 @@ do {
             Write-Host ""
             Write-Host "Miscellaneous Tools" -ForegroundColor Cyan
             Write-Host ""
+            Start-Sleep -Milliseconds 300
             Write-Host "[1] set wukong to high priority.reg"
             Write-Host "[2] remove wukong high priority.reg"
             Write-Host "[3] kill-valorant.bat"
@@ -766,5 +775,5 @@ do {
         }
     }
 Write-Host ""
-Start-Sleep -Seconds 1
+# Start-Sleep -Seconds 1
 } while ($choice -ne "0")
