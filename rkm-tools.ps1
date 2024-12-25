@@ -55,24 +55,22 @@ if (-not (Test-Path $directoryPath)) {
     New-Item -ItemType Directory -Path $directoryPath
 }
 
-do {
-    $Host.UI.RawUI.ForegroundColor = 'Yellow'   #need to writea gain for the do loop
+do {    
     Start-Sleep -Milliseconds 800
     Write-Host ""   
     Write-Host "Welcome to rkm-tools" -ForegroundColor Red
     Write-Host ""
 
-    [Console]::ForegroundColor = 'Magenta'
-    # Start-Sleep -Milliseconds 500
-    Write-Host "[1] .bat/"
-    Write-Host "[2] bash/"
-    Write-Host "[3] ps/"
-    Write-Host "[4] py/"
-    Write-Host "[5] c/helloC++"
-    Write-Host "[6] misc/"
+    # [Console]::ForegroundColor = 'Magenta'    
+    Write-Host "[1] .bat/"          -ForegroundColor Magenta
+    Write-Host "[2] bash/"          -ForegroundColor Magenta
+    Write-Host "[3] ps/"            -ForegroundColor Magenta
+    Write-Host "[4] py/"            -ForegroundColor Magenta
+    Write-Host "[5] c/helloC++"     -ForegroundColor Magenta
+    Write-Host "[6] misc/"          -ForegroundColor Magenta
     Write-Host ""
     Write-Host "[0] EXIT" -ForegroundColor Blue
-    [Console]::ResetColor()
+    # [Console]::ResetColor()
 
     Write-Host "`nChoose a menu option using your keyboard: " -ForegroundColor Green -NoNewline
     $choice = Read-Host
