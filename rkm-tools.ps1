@@ -56,9 +56,10 @@ if (-not (Test-Path $directoryPath)) {
 }
 
 do {   
-    Write-Host "Welcome to rkm-tools" -ForegroundColor Red
+    Write-Host "Welcome to rkm-tools" -ForegroundColor White
     Write-Host ""
 
+    [Console]::ForegroundColor = 'Magenta'
     Write-Host "[1] .bat/"
     Write-Host "[2] bash/"
     Write-Host "[3] ps/"
@@ -66,7 +67,8 @@ do {
     Write-Host "[5] c/helloC++"
     Write-Host "[6] misc/"
     Write-Host ""
-    Write-Host "[0] EXIT"
+    Write-Host "[0] EXIT" -ForegroundColor Blue
+    [Console]::ResetColor()
 
     Write-Host "`nChoose a menu option using your keyboard: " -ForegroundColor Green -NoNewline
     $choice = Read-Host
@@ -76,6 +78,7 @@ do {
         "1" 
         {   
             Clear-Host
+            Write-Host ""
             Write-Host "Batch Script Options" -ForegroundColor Cyan
             Write-Host ""
             Write-Host "[1] network-refresh.bat"
@@ -98,7 +101,7 @@ do {
             Write-Host "[18] take-backup-compress-copy.bat"
             Write-Host "[19] 1click-reg-backup.bat"
             Write-Host ""
-            Write-Host "[0] Back to Main Menu"
+            Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
 
             Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
@@ -329,13 +332,14 @@ do {
         "2" 
         {    
             Clear-Host
+            Write-Host ""
             Write-Host "Bash Script Options" -ForegroundColor Cyan
             Write-Host ""
             Write-Host "[1] install-must-have-pkgs.sh"
             Write-Host "[2] termux-install-must-have-pkgs.sh"
             Write-Host "[3] yt-dlp-termux-downloader-android.sh"
             Write-Host ""
-            Write-Host "[0] Back to Main Menu"
+            Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
 
             # Nested Menu Prompt
@@ -355,8 +359,10 @@ do {
 
                     # Notify the user about the saved script
                     if (Test-Path $scriptPath) {
+                        Write-Host ""
                         Write-Host "Script saved to: $scriptPath" -ForegroundColor Green
                         Write-Host "Note: Use this script on a compatible OS, such as Linux."
+                        Write-Host ""
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -367,8 +373,10 @@ do {
                     $scriptPath = "$directoryPath\termux-install-must-have-pkgs.sh"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
+                        Write-Host ""
                         Write-Host "Script saved to: $scriptPath" -ForegroundColor Green
                         Write-Host "Note: Use this script on a compatible env./OS, such as Termux, Linux."
+                        Write-Host ""
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -379,8 +387,10 @@ do {
                     $scriptPath = "$directoryPath\yt-dlp-termux-downloader-android.sh"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
+                        Write-Host ""
                         Write-Host "Script saved to: $scriptPath" -ForegroundColor Green
                         Write-Host "Note: Use this script on a compatible env./OS, such as Termux, Linux."
+                        Write-Host ""
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -399,13 +409,14 @@ do {
         "3" 
         {
             Clear-Host
+            Write-Host ""
             Write-Host "Powershell Script Options" -ForegroundColor Cyan
             Write-Host ""
             Write-Host "[1] list-all-programs.ps1"
             Write-Host "[2] get-repo-raw-links.ps1"
             Write-Host "[3] remove-lines.ps1"
             Write-Host ""
-            Write-Host "[0] Back to Main Menu"
+            Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
 
             Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
@@ -464,6 +475,7 @@ do {
         {
             # Notify the user about Python installation requirement
             Clear-Host
+            Write-Host ""
             Write-Host "IMPORTANT: These scripts requires Python to be installed and *added to the PATH* to work." -ForegroundColor Yellow
             Write-Host "If Python is not installed, download it from https://www.python.org/downloads/" -ForegroundColor Cyan
             Write-Host ""
@@ -471,6 +483,7 @@ do {
             Read-Host
 
             Clear-Host
+            Write-Host ""
             Write-Host "Python Script Options" -ForegroundColor Cyan
             Write-Host ""
             Write-Host "[1] real-time-mouse-co-ord.py"
@@ -483,7 +496,7 @@ do {
             Write-Host ""
             Write-Host "[8] split-join-files program"
             Write-Host ""
-            Write-Host "[0] Back to Main Menu"
+            Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
 
             Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
@@ -571,13 +584,14 @@ do {
                 "8"
                 {
                     Clear-Host
+                    Write-Host ""
                     Write-Host "Split-Join-Files Program Options" -ForegroundColor Cyan
                     Write-Host ""
                     Write-Host "[1] info.txt - *MUST READ FIRST*"
                     Write-Host "[2] split-files-binary.py"
                     Write-Host "[3] join-files-binary.py"
                     Write-Host ""
-                    Write-Host "[0] Back to Main Menu"
+                    Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
                     Write-Host ""
         
                     Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
@@ -654,6 +668,7 @@ do {
         "6" 
         {
             Clear-Host
+            Write-Host ""
             Write-Host "Miscellaneous Tools" -ForegroundColor Cyan
             Write-Host ""
             Write-Host "[1] set wukong to high priority.reg"
@@ -662,7 +677,7 @@ do {
             Write-Host "[4] all-my-bookmarks.7z"
             Write-Host "[5] get-imdb-id-link_in_A-id_in_B.xlsx"
             Write-Host ""
-            Write-Host "[0] Back to Main Menu"
+            Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
 
             Write-Host "Choose an option using your keyboard: " -ForegroundColor Green -NoNewline
@@ -753,5 +768,3 @@ do {
 Write-Host ""
 Start-Sleep -Seconds 1
 } while ($choice -ne "0")
-
-
