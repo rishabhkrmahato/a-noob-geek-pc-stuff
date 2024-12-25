@@ -765,6 +765,7 @@ do {
         {
             # Exit
             Write-Host "Exiting... Goodbye!" -ForegroundColor Blue
+            Start-Sleep -Seconds 1
             break
         }        
         Default 
