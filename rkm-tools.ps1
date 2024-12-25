@@ -56,6 +56,7 @@ if (-not (Test-Path $directoryPath)) {
 }
 
 do {
+    $Host.UI.RawUI.ForegroundColor = 'Yellow'   #need to writea gain for the do loop
     Start-Sleep -Milliseconds 800
     Write-Host ""   
     Write-Host "Welcome to rkm-tools" -ForegroundColor Red
