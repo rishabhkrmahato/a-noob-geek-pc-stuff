@@ -25,6 +25,8 @@ _Terminal(admin) > powershell > run-this command_
 irm https://bit.ly/rkm-tools-raw | iex
 ```
 
+![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7fc176c3-4870-4ebe-842e-21b0e7cbcb22)
+
 Alternatively, use the full URL:
 
 ```powershell
