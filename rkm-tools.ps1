@@ -499,8 +499,9 @@ do {
             Write-Host "[5] password-generator.py"
             Write-Host "[6] get-first-boot-time.py"
             Write-Host "[7] file-hide-extract.py"
+            Write-Host "[8] split-anything-by-size.py"
             Write-Host ""
-            Write-Host "[8] split-join-files program"
+            Write-Host "[9] split-join-files program"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -588,6 +589,17 @@ do {
                     }
                 }
                 "8"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/split-anything-by-size.py"
+                    $scriptPath = "$directoryPath\split-anything-by-size.py"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "9"
                 {
                     Clear-Host
                     Write-Host ""
