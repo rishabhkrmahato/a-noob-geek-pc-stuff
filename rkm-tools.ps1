@@ -499,7 +499,7 @@ do {
             Write-Host "[5] password-generator.py"
             Write-Host "[6] get-first-boot-time.py"
             Write-Host "[7] file-hide-extract.py"
-            Write-Host "[8] split-anything-by-size.py"
+            Write-Host "[8] split-anything-by-size.py - NOT WORKING AS EXPECTED - WILL FIX - CHECK CODE"
             Write-Host ""
             Write-Host "[9] split-join-files program"
             Write-Host ""
