@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
+echo.
 title HIDE ANYTHING IN PLAIN SIGHT - Reverses file names and extensions
 
 echo.
