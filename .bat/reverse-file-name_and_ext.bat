@@ -1,7 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo HIDE ANYTHING IN PLAIN SIGHT - Reverses file names and extensions
+title HIDE ANYTHING IN PLAIN SIGHT - Reverses file names and extensions
+
 echo.
 echo Please enter the file path(s) or drag and drop file(s) into this window.
 echo Multiple files should be separated by spaces.
