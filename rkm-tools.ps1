@@ -103,6 +103,7 @@ do {
             Write-Host "[17] aio-package-updater.bat"
             Write-Host "[18] take-backup-compress-copy.bat"
             Write-Host "[19] 1click-reg-backup.bat"
+            Write-Host "[20] reverse-file-name_and_ext.bat"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -317,6 +318,17 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         & $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "20" 
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/reverse-file-name_and_ext.bat"
+                    $scriptPath = "$directoryPath\reverse-file-name_and_ext.bat"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Start-Process -FilePath $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -696,6 +708,7 @@ do {
             Write-Host "[3] kill-valorant.bat"
             Write-Host "[4] all-my-bookmarks.7z"
             Write-Host "[5] get-imdb-id-link_in_A-id_in_B.xlsx"
+            Write-Host "[6] lock-unlock-pswrd-folder.bat"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -760,6 +773,19 @@ do {
                         Start-Process -FilePath $xlsxPath
                     } else {
                         Write-Host "Failed to download the .xlsx file." -ForegroundColor Red
+                    }
+                }
+                "6"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/lock-unlock-pswrd-folder.bat"
+                    $batPath = "$directoryPath\lock-unlock-pswrd-folder.bat"
+                    Invoke-WebRequest -Uri $url -OutFile $batPath
+                    if (Test-Path $batPath) {
+                        Write-Host ""
+                        Write-Host "The script creates a password-protected "f o l d e r" on the desktop, locks or unlocks it on subsequent runs, and enhances security with hidden and system attributes."
+                        & $batPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
                     }
                 }
                 "0"
