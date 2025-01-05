@@ -19,7 +19,6 @@ set "vbs=%temp%\promptpwd.vbs"
 set "pwdfile=%folder%\.password"
 
 if not exist "%folder%" (
-    mkdir "%folder%"
     call :setpassword
 ) else (
     call :checkpassword
@@ -30,8 +29,18 @@ exit /b
 :setpassword
 echo Set objShell = CreateObject("WScript.Shell") > "%vbs%"
 echo password = InputBox("Set a password for the folder:","Set Password","") >> "%vbs%"
-echo WScript.Echo password >> "%vbs%"
+echo If password = "" Then >> "%vbs%"
+echo     WScript.Echo "CANCELLED" >> "%vbs%"
+echo Else >> "%vbs%"
+echo     WScript.Echo password >> "%vbs%"
+echo End If >> "%vbs%"
 for /f "delims=" %%a in ('cscript //nologo "%vbs%"') do set "pwd=%%a"
+if "!pwd!"=="CANCELLED" (
+    echo MsgBox "Password creation cancelled. Folder will not be created.", vbInformation, "Cancelled" > "%vbs%"
+    cscript //nologo "%vbs%"
+    exit /b
+)
+mkdir "%folder%"
 echo !pwd!> "%pwdfile%"
 attrib +h +s "%pwdfile%"
 call :hidefolder
@@ -40,8 +49,17 @@ exit /b
 :checkpassword
 echo Set objShell = CreateObject("WScript.Shell") > "%vbs%"
 echo password = InputBox("Enter the password to access the folder:","Enter Password","") >> "%vbs%"
-echo WScript.Echo password >> "%vbs%"
+echo If password = "" Then >> "%vbs%"
+echo     WScript.Echo "CANCELLED" >> "%vbs%"
+echo Else >> "%vbs%"
+echo     WScript.Echo password >> "%vbs%"
+echo End If >> "%vbs%"
 for /f "delims=" %%a in ('cscript //nologo "%vbs%"') do set "input=%%a"
+if "!input!"=="CANCELLED" (
+    echo MsgBox "Operation cancelled.", vbInformation, "Cancelled" > "%vbs%"
+    cscript //nologo "%vbs%"
+    exit /b
+)
 set /p pwd=<"%pwdfile%"
 if "!input!"=="!pwd!" (
     call :togglefolder
