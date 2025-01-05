@@ -21,6 +21,9 @@ GitHub Repository: https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff
 #>
 
 # $Host.UI.RawUI.BackgroundColor = 'DarkMagenta' # Purple Background
+$rkmt = "rkm-tools"
+# $host.UI.RawUI.WindowTitle = "rkm-tools"
+$host.UI.RawUI.WindowTitle = "$rkmt - Running"
 $Host.UI.RawUI.ForegroundColor = 'Yellow'       # Yellow Foreground
 Clear-Host                                    
 # Start-Sleep -Milliseconds 100
@@ -813,5 +816,8 @@ do {
         }
     }
 Write-Host ""
-# Start-Sleep -Seconds 1
+
 } while ($choice -ne "0")
+
+$host.UI.RawUI.WindowTitle = "$rkmt - Completed"
+Start-Sleep -Seconds 1
