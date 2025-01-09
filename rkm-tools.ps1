@@ -435,6 +435,7 @@ do {
             Write-Host "[1] list-all-programs.ps1"
             Write-Host "[2] get-repo-raw-links.ps1"
             Write-Host "[3] remove-lines.ps1"
+            Write-Host "[4] text-combine-scripts.ps1"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -480,6 +481,19 @@ do {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
                 }
+                "4"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/text-combine-scripts.ps1"
+                    $scriptPath = "$directoryPath\text-combine-scripts.ps1"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Write-Host ""
+                        Unblock-File -Path $scriptPath
+                        & PowerShell.exe -ExecutionPolicy Bypass -File $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
                 "0"
                 {
                     break
@@ -515,8 +529,9 @@ do {
             Write-Host "[6] get-first-boot-time.py"
             Write-Host "[7] file-hide-extract.py"
             Write-Host "[8] split-anything-by-size.py"
+            Write-Host "[9] list-file-extensions.py"
             Write-Host ""
-            Write-Host "[9] split-join-files program"
+            Write-Host "[10] split-join-files program"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -532,7 +547,8 @@ do {
                     $scriptPath = "$directoryPath\real-time-mouse-co-ord.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -543,7 +559,8 @@ do {
                     $scriptPath = "$directoryPath\get-imdb-id-fast.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -565,7 +582,8 @@ do {
                     $scriptPath = "$directoryPath\xml-extract-details.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -576,7 +594,8 @@ do {
                     $scriptPath = "$directoryPath\password-generator.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -587,7 +606,8 @@ do {
                     $scriptPath = "$directoryPath\get-first-boot-time.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -598,7 +618,8 @@ do {
                     $scriptPath = "$directoryPath\file-hide-extract.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -609,12 +630,25 @@ do {
                     $scriptPath = "$directoryPath\split-anything-by-size.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
                 }
                 "9"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/list-file-extensions.py"
+                    $scriptPath = "$directoryPath\list-file-extensions.py"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "10"
                 {
                     Clear-Host
                     Write-Host ""
