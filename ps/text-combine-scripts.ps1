@@ -45,7 +45,7 @@ if (Test-Path $outputFile) {
 }
 
 # Supported file extensions (add or remove extensions as needed)
-$supportedExtensions = @("*.bat", "*.ps1", "*.py", "*.cpp", "*.sh", "*.txt")
+$supportedExtensions = @("*.bat", "*.ps1", "*.py", "*.cpp", "*.sh", "*.txt", "*.ahk", "*.reg", "*.yml")
 
 # Process each file and combine the contents
 foreach ($extension in $supportedExtensions) {
