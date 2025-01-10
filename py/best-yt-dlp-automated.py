@@ -1,3 +1,51 @@
+"""
+==============================================================================================
+
+Description:
+
+BEST SIMPLE CLEAR YouTube Video Downloader
+
+This script downloads a YouTube video in the best available 
+video and audio quality using the `yt-dlp` utility. It validates 
+the YouTube link, fetches available formats, and combines 
+video and audio streams into a single file.
+
+Key Features:
+- Validates YouTube video links and ensures they are not playlists.
+- Checks if `yt-dlp` is installed and updates or installs it as needed.
+- Fetches available video and audio formats from YouTube.
+- Automatically selects the best video and audio formats based on bitrate.
+- Downloads and merges video and audio streams.
+- Provides clear and color-coded terminal outputs for each step.
+
+Usage:
+1. Run the script in a Python environment (installed python on system and added to path). 
+   (IN TERMINAL: python best-yt-dlp-automated.py)
+2. Enter a valid YouTube video link when prompted.
+3. The script will handle the rest, including format selection and downloading.
+
+Dependencies:
+- Python 3.x
+- `yt-dlp` Python module (automatically installed/updated by the script).
+- `requests` (to fetch the latest version info from GitHub).
+- `packaging` (for version comparisons).
+
+Output:
+- Downloads the YouTube video in the best available quality and saves it 
+  in the current working directory.
+
+Error Handling:
+- Displays detailed error messages if a step fails.
+- Exits gracefully if invalid inputs or unexpected issues occur.
+
+Notes:
+- Ensure an active internet connection for fetching and downloading resources.
+- The downloaded file will be saved with its title as the filename in the 
+  current working directory.
+
+==============================================================================================
+"""
+
 import os
 import sys
 import subprocess
