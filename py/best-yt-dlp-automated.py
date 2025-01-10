@@ -181,7 +181,6 @@ def download_video(link, video_id, audio_id):
         # output_directory = os.getcwd()  # Get the current working directory
         # print_color(f"Download completed! Files are saved in the directory: {output_directory}", Colors.OKGREEN)
 
-        # UNCOMMENT THESE LINES BELOW TO AVOID ISSUES WITH NON-ENG VIDEO NAMES
         downloaded_files = glob.glob(os.path.join(os.getcwd(), "*.*"))
         if downloaded_files:
             latest_file = max(downloaded_files, key=os.path.getctime)  # Gets the latest file by creation time
