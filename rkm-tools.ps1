@@ -548,8 +548,8 @@ do {
                     $scriptPath = "$directoryPath\real-time-mouse-co-ord.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
+                        # python $scriptPath
+                        Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
