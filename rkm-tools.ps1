@@ -530,8 +530,9 @@ do {
             Write-Host "[7] file-hide-extract.py"
             Write-Host "[8] split-anything-by-size.py"
             Write-Host "[9] list-file-extensions.py"
+            Write-Host "[10] best-yt-dlp-automated.py"
             Write-Host ""
-            Write-Host "[10] split-join-files program"
+            Write-Host "[11] split-join-files program"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -649,6 +650,18 @@ do {
                     }
                 }
                 "10"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/best-yt-dlp-automated.py"
+                    $scriptPath = "$directoryPath\best-yt-dlp-automated.py"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "11"
                 {
                     Clear-Host
                     Write-Host ""
