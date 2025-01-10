@@ -55,6 +55,10 @@ import requests
 from shutil import which
 from packaging import version
 
+# import os
+# os.system('chcp 65001 >nul')  # Set encoding to UTF-8 for the session
+# sys.stdout.reconfigure(encoding='utf-8')  # Ensure Python stdout is UTF-8
+
 # Colors for terminal output
 class Colors:
     HEADER = '\033[95m'
@@ -93,7 +97,8 @@ def is_valid_youtube_link(link):
     Validates a YouTube video link and ensures it's not a playlist.
     """
     print_color("\nValidating YouTube link...", Colors.HEADER)
-    if not re.match(r"^https?://(www\.)?(youtube\.com/watch\?v=|youtu\.be/)", link):
+    if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/)|youtu\.be/)", link):
+    # if not re.match(r"^https?://(www\.)?(youtube\.com/watch\?v=|youtu\.be/)", link):
         print_color("Invalid YouTube URL. Please enter a valid video link.", Colors.FAIL)
         sys.exit(1)
     if "list=" in link:
@@ -165,17 +170,25 @@ def download_video(link, video_id, audio_id):
     """
     print_color("\nStarting download...", Colors.HEADER)
     output_template = os.path.join(os.getcwd(), "%(title)s.%(ext)s")
-    command = f'yt-dlp -f "{video_id}+{audio_id}" -o "{output_template}" {link}'
+    command = f'yt-dlp -f "{video_id}+{audio_id}" -o "{output_template}" "{link}"'
+    # command = f'yt-dlp -f "{video_id}+{audio_id}" -o "{output_template}" {link}' 
     try:
         subprocess.run(command, shell=True, check=True)
         print("================================================================================================")
         print()
+
+        # UNCOMMENT THESE LINES BELOW TO ONLY SHOW THE DIRECTORY NAME
+        # output_directory = os.getcwd()  # Get the current working directory
+        # print_color(f"Download completed! Files are saved in the directory: {output_directory}", Colors.OKGREEN)
+
+        # UNCOMMENT THESE LINES BELOW TO AVOID ISSUES WITH NON-ENG VIDEO NAMES
         downloaded_files = glob.glob(os.path.join(os.getcwd(), "*.*"))
         if downloaded_files:
             latest_file = max(downloaded_files, key=os.path.getctime)  # Gets the latest file by creation time
             print_color(f"Download completed! File saved to: {latest_file}", Colors.OKGREEN)
         else:
             print_color("Download completed, but the output file could not be located.", Colors.WARNING)
+
         print()
     except subprocess.CalledProcessError:
         print_color("Download failed. Please check the link and try again.", Colors.FAIL)
