@@ -26,7 +26,8 @@ irm https://bit.ly/rkm-tools-raw | iex
 ```
 
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7fc176c3-4870-4ebe-842e-21b0e7cbcb22) -->
-![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7dc98ed5-edd2-48fd-b994-6079d6d1e8c0)
+<!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7dc98ed5-edd2-48fd-b994-6079d6d1e8c0) -->
+![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/317af3b0-4348-4c24-b0a9-1e5785a9d02c)
 
 Alternatively, use the full URL:
 
