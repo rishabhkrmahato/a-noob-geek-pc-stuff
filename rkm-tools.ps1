@@ -436,6 +436,7 @@ do {
             Write-Host "[2] get-repo-raw-links.ps1"
             Write-Host "[3] remove-lines.ps1"
             Write-Host "[4] text-combine-scripts.ps1"
+            Write-Host "[5] shut-sleep-wake-restart-bsod-counter.ps1"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -485,6 +486,19 @@ do {
                 {
                     $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/text-combine-scripts.ps1"
                     $scriptPath = "$directoryPath\text-combine-scripts.ps1"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Write-Host ""
+                        Unblock-File -Path $scriptPath
+                        & PowerShell.exe -ExecutionPolicy Bypass -File $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "5"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/ps/shut-sleep-wake-restart-bsod-counter.ps1"
+                    $scriptPath = "$directoryPath\shut-sleep-wake-restart-bsod-counter.ps1"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         Write-Host ""
