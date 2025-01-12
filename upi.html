@@ -1,10 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="0; url=upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU" />
-    <title>Redirecting...</title>
+    <title>Redirecting to UPI Payment...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #000000, #4b0082, #9370db, #ffffff);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.8);
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            color: #007BFF;
+            font-weight: bold;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            text-decoration: none;
+            background: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        a:hover {
+            background: #0056b3;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <p>If you are not redirected to an UPI-app, <a href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU">click here</a>.</p>
+    <div class="container">
+        <h1>Redirecting to UPI Payment</h1>
+        <p>
+            This link is meant to be opened in a <span class="highlight">mobile phone UPI app</span>.
+            If you're seeing this message, you are probably on a <span class="highlight">non-mobile environment</span>.
+        </p>
+        <p>Your UPI ID: <span class="highlight">dr.rishabhkrm@axisbank</span></p>
+        <p>
+            To proceed manually, click the link below:
+            <br>
+            <a href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU">Open in UPI App</a>
+        </p>
+    </div>
+    <footer>
+        &copy; 2025 RISHABH KR. MAHATO. All Rights Reserved.
+    </footer>
 </body>
 </html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU" />
+    <title>UPI Payment</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #4e54c8, #8f94fb);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        a:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .upi-link {
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            word-wrap: break-word;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>UPI Payment</h1>
+    <p>This link is meant to open in a mobile UPI-compatible app.</p>
+    <p>If you are not redirected automatically, <a href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU">click here</a>.</p>
+    <div class="upi-link">
+        <strong>UPI Link:</strong> <br>
+        <code>upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU</code>
+    </div>
+</body>
+</html> -->
