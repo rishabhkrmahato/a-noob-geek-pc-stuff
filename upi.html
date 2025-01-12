@@ -4,11 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="0; url=upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU" />
+    <title>UPI Payment Redirect</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #121212;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .card {
+            background: #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        .card h1 {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        .card p {
+            font-size: 1rem;
+            color: #b0b0b0;
+            margin: 10px 0;
+        }
+        .card .upi-highlight {
+            color: #00ff7f;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            padding: 2px 0;
+        }
+        .card .upi-highlight::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+            transition: all 0.5s;
+        }
+        .card .upi-highlight:hover::after {
+            left: 100%;
+        }
+        .highlighted {
+            color: #4fc3f7;
+            font-weight: bold;
+        }
+        .card a {
+            display: inline-block;
+            background: #ffd700;
+            color: #000;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .card a:hover {
+            background: #f7c600;
+            transform: translateY(-3px);
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        @media (min-width: 768px) {
+            .card {
+                width: 400px;
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>UPI Payment Redirect</h1>
+        <p>This link is intended to be opened on a <span class="highlighted">mobile UPI app</span>.</p>
+        <p>If you are seeing this message, you may be using a <span class="highlighted">desktop or unsupported environment</span>.</p>
+        <p>Destination UPI ID:</p>
+        <p class="upi-highlight">dr.rishabhkrm@axisbank</p>
+        <a href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU">Proceed to UPI App</a>
+        <div class="footer">&copy; 2025 RISHABH KR. MAHATO. All Rights Reserved.</div>
+    </div>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU" />
     <title>Redirecting to UPI Payment...</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #000000, #4b0082, #9370db, #ffffff);
+            background: linear-gradient(135deg, #000000, #4b0082, #ff69b4, #ffffff);
             color: #333;
             margin: 0;
             padding: 0;
@@ -65,7 +171,7 @@
             This link is meant to be opened in a <span class="highlight">mobile phone UPI app</span>.
             If you're seeing this message, you are probably on a <span class="highlight">non-mobile environment</span>.
         </p>
-        <p>Your UPI ID: <span class="highlight">dr.rishabhkrm@axisbank</span></p>
+        <p>To UPI ID: <span class="highlight">dr.rishabhkrm@axisbank</span></p>
         <p>
             To proceed manually, click the link below:
             <br>
@@ -76,7 +182,8 @@
         &copy; 2025 RISHABH KR. MAHATO. All Rights Reserved.
     </footer>
 </body>
-</html>
+</html> -->
+
 
 <!-- <!DOCTYPE html>
 <html lang="en">
