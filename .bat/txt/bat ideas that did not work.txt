@@ -1,7 +1,0 @@
-create-restore-point-customised
-
-git-commit-script; 
-made one finally but, still runs even if no changes are there. 
-                 and, could not handle files with spaces during git add
----want: if no changes, simply just exits, but this mechanism bugs the loop structure of the code.
-         handle filenames with spaces with git add :(

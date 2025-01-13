@@ -3,8 +3,11 @@
 
 ffmpeg -i video.<video_ext> -i audio.<audio_ext> -c:v copy -c:a copy output.<output_ext>
 
-[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\nssm\win64", [EnvironmentVariableTarget]::Machine)
-#(powershell command to quickly add a path to %PATH% as env. var.)
+
+[System.Environment]::SetEnvironmentVariable("Path", $([System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";<ADD_YOUR_DIRECTORY_HERE>"), "Machine")
+
+---(powershell command above; always use ps commands after entering powershell only; many syntaxing issues occur if u call ps in cmd)---
+
 
 fsutil file createnew
 
