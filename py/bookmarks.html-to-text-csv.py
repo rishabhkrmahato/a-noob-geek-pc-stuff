@@ -1,3 +1,44 @@
+"""
+==============================================================================================
+Description:
+
+Firefox/Chrome Bookmarks HTML to Text and CSV Converter
+
+This script extracts bookmarks from a Firefox-exported HTML file 
+and saves them into two formats:
+1. A plain text file (`bookmarks.txt`)
+2. A CSV file (`bookmarks.csv`)
+
+Key Features:
+- Parses the HTML file to extract bookmarks with site names and URLs.
+- Saves bookmarks in both text and CSV formats for easy access and usage.
+- Provides clear console messages for progress and error handling.
+
+Usage:
+1. Export bookmarks from Firefox as an HTML file.
+2. Provide the path to the exported HTML file when prompted.
+3. The script will generate `bookmarks.txt` and `bookmarks.csv` in the same directory as the input file.
+
+Dependencies:
+- Python 3.x
+- `BeautifulSoup` from `bs4` (for HTML parsing)
+- `csv` (standard library module for CSV file handling)
+
+Output:
+- `bookmarks.txt`: A plain text file with each bookmark in the format:
+  `<Site Name> - <Site URL>`
+- `bookmarks.csv`: A CSV file with two columns: "Site Name" and "Site URL".
+
+Error Handling:
+- Displays an error message if the input file is not found or inaccessible.
+- Handles exceptions when writing to output files.
+
+Notes:
+- Ensure the HTML file is a valid export from Firefox bookmarks.
+- The script supports UTF-8 encoding for compatibility with international characters.
+==============================================================================================
+"""
+
 from bs4 import BeautifulSoup
 import os
 import sys
