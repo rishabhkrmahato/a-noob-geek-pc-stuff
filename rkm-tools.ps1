@@ -545,8 +545,9 @@ do {
             Write-Host "[8] split-anything-by-size.py"
             Write-Host "[9] list-file-extensions.py"
             Write-Host "[10] best-yt-dlp-automated.py"
+            Write-Host "[11] bookmarks.html-to-text-csv.py"
             Write-Host ""
-            Write-Host "[11] split-join-files program"
+            Write-Host "[12] split-join-files program"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -676,6 +677,18 @@ do {
                     }
                 }
                 "11"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/bookmarks.html-to-text-csv.py"
+                    $scriptPath = "$directoryPath\bookmarks.html-to-text-csv.py"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "12"
                 {
                     Clear-Host
                     Write-Host ""
