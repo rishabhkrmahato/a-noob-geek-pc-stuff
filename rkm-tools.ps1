@@ -53,9 +53,10 @@ If (-NOT ([Security.Principal.WindowsPrincipal]([Security.Principal.WindowsIdent
     Exit
 }
 
-$directoryPath = "C:\temp-rkm-tools"
+$systemDrive = $env:SystemDrive  # Dynamically get the system drive
+$directoryPath = "$systemDrive\temp-rkm-tools"
 if (-not (Test-Path $directoryPath)) {
-    New-Item -ItemType Directory -Path $directoryPath
+    New-Item -ItemType Directory -Path $directoryPath | Out-Null
 }
 
 do {    
