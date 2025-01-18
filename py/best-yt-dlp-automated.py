@@ -73,24 +73,128 @@ class Colors:
 def print_color(message, color):
     print(f"{color}{message}{Colors.ENDC}")
 
+# def check_yt_dlp():
+#     """
+#     Checks if yt-dlp is installed, up-to-date, and in PATH. Installs or updates if necessary.
+#     """
+#     print_color("\nChecking yt-dlp installation...", Colors.HEADER)
+#     yt_dlp_installed = which("yt-dlp")
+#     if yt_dlp_installed is None:
+#         print_color("yt-dlp not found. Installing...", Colors.WARNING)
+#         subprocess.run(["pip", "install", "yt-dlp"], check=True)
+#     else:
+#         print_color("yt-dlp is installed. Verifying version...", Colors.OKBLUE)
+#         current_version = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True).stdout.strip()
+#         latest_version = requests.get("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest").json()["tag_name"]
+#         if version.parse(current_version) < version.parse(latest_version):
+#             print_color(f"Updating yt-dlp to the latest version {latest_version}...", Colors.WARNING)
+#             subprocess.run(["pip", "install", "--upgrade", "yt-dlp"], check=True)
+#         else:
+#             print_color("yt-dlp is up-to-date!", Colors.OKGREEN)
+
 def check_yt_dlp():
     """
-    Checks if yt-dlp is installed, up-to-date, and in PATH. Installs or updates if necessary.
+    Checks if yt-dlp is installed and up-to-date.
+    If outdated, it opens a new elevated Python script to update yt-dlp using Chocolatey.
     """
     print_color("\nChecking yt-dlp installation...", Colors.HEADER)
+
+    # Check if yt-dlp is installed
     yt_dlp_installed = which("yt-dlp")
     if yt_dlp_installed is None:
-        print_color("yt-dlp not found. Installing...", Colors.WARNING)
-        subprocess.run(["pip", "install", "yt-dlp"], check=True)
+        print_color("yt-dlp not found. Installing via Chocolatey in elevated mode...", Colors.WARNING)
+        open_elevated_updater()
+        return
+
+    # Check the current version of yt-dlp
+    print_color("yt-dlp is installed. Verifying version...", Colors.OKBLUE)
+    current_version = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True).stdout.strip()
+    latest_version = requests.get("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest").json()["tag_name"]
+
+    if version.parse(current_version) < version.parse(latest_version):
+        print_color(f"Updating yt-dlp to the latest version {latest_version} via Chocolatey...", Colors.WARNING)
+        open_elevated_updater()
     else:
-        print_color("yt-dlp is installed. Verifying version...", Colors.OKBLUE)
-        current_version = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True).stdout.strip()
-        latest_version = requests.get("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest").json()["tag_name"]
-        if version.parse(current_version) < version.parse(latest_version):
-            print_color(f"Updating yt-dlp to the latest version {latest_version}...", Colors.WARNING)
-            subprocess.run(["pip", "install", "--upgrade", "yt-dlp"], check=True)
+        print_color("yt-dlp is up-to-date!", Colors.OKGREEN)
+
+def open_elevated_updater():
+    """
+    Opens a new elevated Python script to update yt-dlp using Chocolatey.
+    Waits for the elevated process to finish before continuing.
+    Deletes the temporary script after execution.
+    """
+    print_color("Opening elevated Python script to update yt-dlp...", Colors.HEADER)
+    
+    # Path to the new Python script
+    updater_script = "update_yt_dlp.py"
+
+    # Write the updater script
+    with open(updater_script, "w", encoding="utf-8") as f:
+        f.write(
+            '''import os
+import time
+import subprocess
+
+def print_message(message):
+    print(f"\\033[92m{message}\\033[0m")
+
+def print_warning(message):
+    print(f"\\033[93m{message}\\033[0m")
+
+def install_choco():
+    """
+    Checks if Chocolatey is installed. If not, installs it.
+    """
+    try:
+        # Check if Chocolatey is available via `choco -v`
+        subprocess.run(["choco", "-v"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        print_message("Chocolatey is already installed.")
+    except subprocess.CalledProcessError:
+        # If `choco` command fails, check the file path
+        if not os.path.exists(r"C:\\ProgramData\\chocolatey\\bin\\choco.exe"):
+            print_message("Chocolatey not found. Installing...")
+            subprocess.run([
+                "powershell",
+                "-NoProfile",
+                "-ExecutionPolicy", "Bypass",
+                "-Command",
+                "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; "
+                "iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+            ], check=True)
         else:
-            print_color("yt-dlp is up-to-date!", Colors.OKGREEN)
+            print_warning("WARNING: Chocolatey was found at the expected path, but the 'choco' command is not functional.")
+            print_warning("You may need to add Chocolatey to your PATH environment variable or fix the installation.")
+
+def update_yt_dlp():
+    print_message("Updating yt-dlp via Chocolatey...")
+    subprocess.run(["choco", "upgrade", "yt-dlp", "-y"], check=True)
+
+if __name__ == "__main__":
+    try:
+        install_choco()
+        update_yt_dlp()
+        print_message("Update completed. Waiting for 5 seconds before closing...")
+        time.sleep(5)
+    except subprocess.CalledProcessError as e:
+        print(f"\\033[91mError: {e}\\033[0m")
+        time.sleep(5)
+
+    # Delete the script after execution
+    script_path = os.path.abspath(__file__)
+    print_message(f"Deleting script: {script_path}")
+    os.remove(script_path)
+    '''
+        )
+
+    # Open the new script in an elevated terminal and wait for it to complete
+    subprocess.run([
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        f"Start-Process python -ArgumentList '{updater_script}' -Verb RunAs -Wait"
+    ], check=True)
+
+    print_color("Elevated updater script executed. Continuing main script...", Colors.OKGREEN)
 
 def is_valid_youtube_link(link):
     """
