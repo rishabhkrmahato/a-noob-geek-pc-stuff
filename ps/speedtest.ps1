@@ -1,3 +1,39 @@
+# ================================================================================================
+# Description:
+# 
+# Speedtest CLI Downloader and Executor
+#
+# This PowerShell script automates the download, extraction, and execution 
+# of the Speedtest CLI utility from Ookla. It performs a network speed test 
+# with minimal user intervention and cleans up temporary files afterward.
+#
+# Key Features:
+# - Downloads the Speedtest CLI utility ZIP file from the official source.
+# - Extracts the downloaded ZIP file into a temporary folder.
+# - Executes the Speedtest CLI with the license auto-accepted if required.
+# - Cleans up temporary files after execution (optional).
+#
+# Usage:
+# - Run the script in a PowerShell terminal.
+# - The script automatically handles downloading, extracting, and running the Speedtest CLI.
+#
+# Dependencies:
+# - Windows PowerShell 5.1 or later.
+# - Internet connection for downloading the Speedtest CLI.
+#
+# Output:
+# - Displays download, extraction, and speed test progress in the terminal.
+# - Outputs network speed test results directly in the terminal.
+#
+# Error Handling:
+# - Exits with error messages if download, extraction, or execution fails.
+# - Continues execution if cleanup fails but warns the user.
+#
+# Notes:
+# - Temporary files are stored in the `%SystemDrive%\temp-rkm-tools` folder.
+# - Ensure sufficient permissions to create and manage temporary files.
+# ================================================================================================
+
 # Write-Host "=========================================" -ForegroundColor Cyan
 # Write-Host "              Speedtest CLI              " -ForegroundColor Green
 # Write-Host "=========================================" -ForegroundColor Cyan
