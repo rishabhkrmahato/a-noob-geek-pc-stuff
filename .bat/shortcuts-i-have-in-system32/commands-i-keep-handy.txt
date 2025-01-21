@@ -16,7 +16,13 @@ sudo apt update && sudo apt upgrade -y
 
 
 
-ffmpeg -i [file.ext] -c copy -map 0 -segment_time [time-in-secs-eg-1320] -f segment -reset_timestamps 1 -start_number 1 [output-%03d.ext]
+ffmpeg -i [file.ext] -c copy -map 0 -segment_time [time-in-secs] -f segment -reset_timestamps 1 -avoid_negative_ts make_zero [output-%03d.ext]
+{
+- Universally supports videos, audio, and files with multiple streams (subtitles, metadata, etc.) in common formats like .mp4, .mkv, and .mp3.  
+- Ensures lossless quality using `-c copy`, avoiding re-encoding.  
+- Provides seamless splits with no data loss, though perfect cuts depend on original keyframes.  
+- Resolves irregular timestamps with `-avoid_negative_ts`, preventing playback issues.
+}
 
 
 
