@@ -1,0 +1,22 @@
+1. nano editor (awesome , just edit in cli only)
+
+eg. 
+type nul > test.bat
+nano test.bat 
+code and save and exit 
+continue in CLI 
+
+active maintainer: 
+https://github.com/lhmouse/nano-win
+
+2. colorls (best way to list files in the directory)
+better than eza (exa fork) or ls (default Linux)
+
+install it via ruby (get ruby via choco)
+ridk install
+gem install colorls
+
+using ll.bat in system32 having colorls -la %* command 
+just type ll in cli and have your colourful listed files with all details. (better but a bit slower)
+or you can use doskey and autorun a alias-list.cmd everytime (nerdy complicated way)
+
