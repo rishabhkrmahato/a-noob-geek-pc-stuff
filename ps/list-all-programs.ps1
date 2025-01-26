@@ -1,3 +1,57 @@
+# ================================================================================================
+# 
+# Description:
+# 
+# LIST ALL PROGRAMS.ps1
+# 
+# This PowerShell script collects and exports detailed information about 
+# installed applications, custom shortcuts, and package manager-installed 
+# programs on a Windows system. It consolidates data from multiple sources 
+# into a single CSV file for easy analysis.
+#
+# Key Features:
+# - Ensures the script runs with administrative privileges.
+# - Scans the following sources for installed applications:
+#   1. Windows Registry (traditional applications).
+#   2. Microsoft Store apps.
+#   3. Common installation directories (e.g., Program Files).
+#   4. Custom Start Menu shortcuts, including Chrome web apps.
+#   5. Package manager-installed programs (Chocolatey, Scoop, npm, pip).
+# - Supports global Python scripts and executables detection.
+# - Outputs the results as a CSV file on the desktop.
+#
+# Usage:
+# - Run this script in a PowerShell terminal with administrator privileges.
+# - The output CSV file is saved as `all-programs.csv` on the desktop.
+#
+# Dependencies:
+# - Windows PowerShell 5.1 or later.
+# - Package managers (optional): Chocolatey, Scoop, npm, pip.
+#
+# Output:
+# - CSV file containing details of discovered applications and packages with columns:
+#   - DisplayName
+#   - DisplayVersion
+#   - Publisher
+#   - InstallDate
+#   - InstallLocation
+#
+# Error Handling:
+# - Logs errors encountered during data collection or export.
+# - Skips sections if errors occur and continues with the remaining processes.
+# - Displays warnings for missing dependencies (e.g., package managers).
+#
+# Notes:
+# - Verbose logging can be enabled by uncommenting the `Start-Transcript`
+#   and `Stop-Transcript` lines.
+# - Ensure Python, npm, pip, and other dependencies are properly installed 
+#   for accurate package detection.
+# ================================================================================================
+
+
+
+
+
 # Uncomment the lines below (& one at the end-of-file) to enable verbose logging to a file
 # Start-Transcript -Path "$env:UserProfile\Desktop\PowerShell_Log.txt" -Append
 
