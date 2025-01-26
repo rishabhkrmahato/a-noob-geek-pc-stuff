@@ -559,7 +559,7 @@ do {
             Write-Host "[7] file-hide-extract.py"
             Write-Host "[8] split-anything-by-size.py"
             Write-Host "[9] list-file-extensions.py"
-            Write-Host "[10] best-yt-dlp-automated.py"
+            Write-Host "[10] best-youtube-downloader.py"
             Write-Host "[11] bookmarks.html-to-text-csv.py"
             Write-Host ""
             Write-Host "[12] split-join-files program"
@@ -681,8 +681,8 @@ do {
                 }
                 "10"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/best-yt-dlp-automated.py"
-                    $scriptPath = "$directoryPath\best-yt-dlp-automated.py"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/best-youtube-downloader.py"
+                    $scriptPath = "$directoryPath\best-youtube-downloader.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
