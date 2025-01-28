@@ -561,8 +561,9 @@ do {
             Write-Host "[9] list-file-extensions.py"
             Write-Host "[10] best-youtube-downloader.py"
             Write-Host "[11] bookmarks.html-to-text-csv.py"
+            Write-Host "[12] ytmusic-multi-search.py"
             Write-Host ""
-            Write-Host "[12] split-join-files program"
+            Write-Host "[13] split-join-files program"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -704,6 +705,18 @@ do {
                     }
                 }
                 "12"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/ytmusic-multi-search.py"
+                    $scriptPath = "$directoryPath\ytmusic-multi-search.py"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "13"
                 {
                     Clear-Host
                     Write-Host ""
