@@ -1,50 +1,63 @@
 """
 ==============================================================================================
-
 Description:
 
-BEST SIMPLE CLEAR YouTube Video Downloader
+YouTube Video & Playlist Downloader
 
-This script downloads a YouTube video in the best available 
-video and audio quality using the `yt-dlp` utility. It validates 
-the YouTube link, fetches available formats, and combines 
-video and audio streams into a single file.
+This Python script automates downloading YouTube videos and playlists 
+using `yt-dlp`. It validates links, fetches available formats, selects 
+the best video and audio formats, and downloads the content. If `yt-dlp` 
+is outdated or missing, it installs or updates it via Chocolatey.
 
 Key Features:
-- Validates YouTube video links and ensures they are not playlists.
-- Checks if `yt-dlp` is installed and updates or installs it as needed.
-- Fetches available video and audio formats from YouTube.
-- Automatically selects the best video and audio formats based on bitrate.
-- Downloads and merges video and audio streams.
-- Provides clear and color-coded terminal outputs for each step.
+- Validates YouTube links (video or playlist).
+- Checks if `yt-dlp` is installed and up-to-date.
+- Extracts all videos from a playlist if the user chooses to download it.
+- Fetches available video and audio formats.
+- Automatically selects the best format based on quality.
+- Downloads and merges the selected video and audio.
+- Provides detailed logs and color-coded output.
 
 Usage:
-1. Run the script in a Python environment (installed python on system and added to path). 
-   (IN TERMINAL: python best-yt-dlp-automated.py)
-2. Enter a valid YouTube video link when prompted.
-3. The script will handle the rest, including format selection and downloading.
+1. Run the script in a Python environment.
+2. Enter a YouTube video or playlist link when prompted.
+3. If a playlist is detected, the user is asked whether to download the entire playlist.
+4. The script downloads the selected content.
+
+Hard-Coded Details:
+- Uses `yt-dlp` for YouTube downloads.
+- Installs or updates `yt-dlp` using Chocolatey if missing.
+- Uses `yt-dlp` to extract playlist URLs.
+
+Steps to Update Hard-Coded Details:
+1. Update the `yt-dlp` installation method if using a different package manager.
+2. Modify `TAB_DELAY` if a different delay is needed between downloading multiple files.
+3. Adjust `CHROME_PATH` in case of a non-standard Chrome installation.
 
 Dependencies:
 - Python 3.x
-- `yt-dlp` Python module (automatically installed/updated by the script).
-- `requests` (to fetch the latest version info from GitHub).
-- `packaging` (for version comparisons).
+- `yt-dlp` (installed automatically if missing)
+- `requests` (for checking the latest `yt-dlp` version)
+- `packaging` (for version comparison)
+- `Chocolatey` (for managing `yt-dlp` installation)
 
 Output:
-- Downloads the YouTube video in the best available quality and saves it 
-  in the current working directory.
+- Downloads YouTube videos or playlists in the best available format.
+- Saves downloaded files to the current working directory.
 
 Error Handling:
-- Displays detailed error messages if a step fails.
-- Exits gracefully if invalid inputs or unexpected issues occur.
+- Displays error messages for invalid YouTube URLs.
+- Handles errors if `yt-dlp` is missing or outdated.
+- Skips failed downloads and continues with remaining videos.
 
 Notes:
-- Ensure an active internet connection for fetching and downloading resources.
-- The downloaded file will be saved with its title as the filename in the 
-  current working directory.
+- Ensure an active internet connection for fetching dependencies and downloading videos.
+- The script supports UTF-8 encoding for compatibility with non-English characters.
 
 ==============================================================================================
 """
+
+
 
 import os
 import sys
@@ -196,24 +209,6 @@ if __name__ == "__main__":
 
     print_color("Elevated updater script executed. Continuing main script...", Colors.OKGREEN)
 
-def is_valid_youtube_link(link):
-    """
-    Validates a YouTube video link and ensures it's not a playlist.
-    """
-    print_color("\nValidating YouTube link...", Colors.HEADER)
-    if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/)|youtu\.be/)", link):
-    # if not re.match(r"^https?://(www\.)?(youtube\.com/watch\?v=|youtu\.be/)", link):
-        print_color("Invalid YouTube URL. Please enter a valid video link.", Colors.FAIL)
-        sys.exit(1)
-    if "list=" in link:
-        print_color("The link is for a playlist. Please provide a single video link.", Colors.FAIL)
-        sys.exit(1)
-    response = requests.get(link)
-    if response.status_code != 200:
-        print_color("The video link is not accessible. Please check the URL.", Colors.FAIL)
-        sys.exit(1)
-    print_color("YouTube link is valid!", Colors.OKGREEN)
-
 def fetch_formats(link):
     """
     Uses yt-dlp to fetch available video and audio formats.
@@ -297,30 +292,165 @@ def download_video(link, video_id, audio_id):
         print_color("Download failed. Please check the link and try again.", Colors.FAIL)
         sys.exit(1)
 
+# def is_valid_youtube_link(link):
+#     """
+#     Validates a YouTube video link and ensures it's not a playlist.
+#     """
+#     print_color("\nValidating YouTube link...", Colors.HEADER)
+#     if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/)|youtu\.be/)", link):
+#     # if not re.match(r"^https?://(www\.)?(youtube\.com/watch\?v=|youtu\.be/)", link):
+#         print_color("Invalid YouTube URL. Please enter a valid video link.", Colors.FAIL)
+#         sys.exit(1)
+#     if "list=" in link:
+#         print_color("The link is for a playlist. Please provide a single video link.", Colors.FAIL)
+#         sys.exit(1)
+#     response = requests.get(link)
+#     if response.status_code != 200:
+#         print_color("The video link is not accessible. Please check the URL.", Colors.FAIL)
+#         sys.exit(1)
+#     print_color("YouTube link is valid!", Colors.OKGREEN)
+
+# if __name__ == "__main__":
+#     print()
+#     print_color("YouTube Video Downloader Script", Colors.BOLD)
+
+#     # Step 1: Get YouTube video link from the user
+#     print()
+#     youtube_link = input(f"{Colors.OKCYAN}Enter a YouTube video link: {Colors.ENDC}").strip()
+
+#     # Step 2: Validate YouTube link
+#     print()
+#     is_valid_youtube_link(youtube_link)
+
+#     # Step 3: Check and setup yt-dlp
+#     print()
+#     check_yt_dlp()
+
+#     # Step 4: Fetch available formats
+#     print()
+#     formats = fetch_formats(youtube_link)
+
+#     # Step 5: Select best video and audio formats
+#     print()
+#     video_format_id, audio_format_id = select_formats(formats)
+
+#     # Step 6: Download video
+#     print()
+#     download_video(youtube_link, video_format_id, audio_format_id)
+
+# def is_valid_youtube_link(link):
+#     """
+#     Validates a YouTube link and checks if it is a video or a playlist.
+#     """
+#     print_color("\nValidating YouTube link...", Colors.HEADER)
+    
+#     if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/|playlist\?list=)|youtu\.be/)", link):
+#         print_color("Invalid YouTube URL. Please enter a valid video or playlist link.", Colors.FAIL)
+#         sys.exit(1)
+    
+#     response = requests.get(link)
+#     if response.status_code != 200:
+#         print_color("The video/playlist link is not accessible. Please check the URL.", Colors.FAIL)
+#         sys.exit(1)
+
+#     if "list=" in link:
+#         print_color("Playlist detected! Extracting video links...", Colors.OKBLUE)
+#         return "playlist"
+#     else:
+#         print_color("YouTube video link is valid!", Colors.OKGREEN)
+#         return "video"
+
+def is_valid_youtube_link(link):
+    """
+    Validates a YouTube link and checks if it is a video or a playlist.
+    If a playlist link is detected, the user is asked if they want to download the full playlist.
+    If they choose 'No', the URL is cleaned to remove the playlist part.
+    """
+    print_color("\nValidating YouTube link...", Colors.HEADER)
+
+    if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/|playlist\?list=)|youtu\.be/)", link):
+        print_color("Invalid YouTube URL. Please enter a valid video or playlist link.", Colors.FAIL)
+        sys.exit(1)
+
+    response = requests.get(link)
+    if response.status_code != 200:
+        print_color("The video/playlist link is not accessible. Please check the URL.", Colors.FAIL)
+        sys.exit(1)
+
+    if "list=" in link:
+        print_color("\nThis link belongs to a playlist.", Colors.WARNING)
+        user_choice = input(f"{Colors.BOLD}Do you want to download the entire playlist? (y/n): {Colors.ENDC}").strip().lower()
+
+        if user_choice == "y":
+            print_color("Downloading the entire playlist...", Colors.OKGREEN)
+            return "playlist", link  # Return the original playlist URL
+
+        elif user_choice == "n":
+            # Clean URL to remove playlist ID but keep the video ID
+            cleaned_url = re.sub(r"[&?]list=[^&]+", "", link)
+            print_color(f"\nProceeding with the single video: {cleaned_url}", Colors.OKGREEN)
+            return "video", cleaned_url  # Return the cleaned URL for a single video
+
+        else:
+            print_color("Invalid choice. Please enter 'y' or 'n'.", Colors.FAIL)
+            sys.exit(1)
+
+    print_color("YouTube video link is valid!", Colors.OKGREEN)
+    return "video", link  # Return original link if it's not a playlist
+
+def get_playlist_videos(playlist_url):
+    """
+    Extracts all video links from a playlist using yt-dlp.
+    """
+    print_color("\nExtracting video links from the playlist...", Colors.HEADER)
+    
+    try:
+        result = subprocess.run(
+            ["yt-dlp", "--flat-playlist", "--print", "%(webpage_url)s", playlist_url],
+            capture_output=True,
+            text=True,
+            check=True
+        ).stdout.splitlines()
+        
+        if not result:
+            print_color("Failed to extract video links. Check the playlist URL.", Colors.FAIL)
+            sys.exit(1)
+        
+        print_color(f"Found {len(result)} videos in the playlist!", Colors.OKGREEN)
+        return result
+    
+    except subprocess.CalledProcessError:
+        print_color("Error extracting videos from playlist. Ensure yt-dlp is working.", Colors.FAIL)
+        sys.exit(1)
+
 if __name__ == "__main__":
     print()
     print_color("YouTube Video Downloader Script", Colors.BOLD)
 
-    # Step 1: Get YouTube video link from the user
     print()
-    youtube_link = input(f"{Colors.OKCYAN}Enter a YouTube video link: {Colors.ENDC}").strip()
+    youtube_link = input(f"{Colors.OKCYAN}Enter a YouTube video or playlist link: {Colors.ENDC}").strip()
 
-    # Step 2: Validate YouTube link
     print()
-    is_valid_youtube_link(youtube_link)
+    link_type, youtube_link = is_valid_youtube_link(youtube_link)  # Get link type and URL
 
-    # Step 3: Check and setup yt-dlp
     print()
     check_yt_dlp()
 
-    # Step 4: Fetch available formats
     print()
-    formats = fetch_formats(youtube_link)
+    video_links = [youtube_link]  # Default list (single video)
 
-    # Step 5: Select best video and audio formats
-    print()
-    video_format_id, audio_format_id = select_formats(formats)
+    if link_type == "playlist":  # If it's a playlist, extract all video links
+        video_links = get_playlist_videos(youtube_link)
 
-    # Step 6: Download video
-    print()
-    download_video(youtube_link, video_format_id, audio_format_id)
+    for index, video_url in enumerate(video_links, start=1):
+        print()
+        print_color(f"Processing Video {index}/{len(video_links)}: {video_url}", Colors.BOLD)
+
+        print()
+        formats = fetch_formats(video_url)
+
+        print()
+        video_format_id, audio_format_id = select_formats(formats)
+
+        print()
+        download_video(video_url, video_format_id, audio_format_id)
