@@ -1,10 +1,10 @@
-	MOONLIGHT
-
-	SUNSHINE
+	MOONLIGHT & SUNSHINE
 
 	JELLYFIN
 
-	torbox.app (BEST SEEDBOX literally)
+	torbox.app (BEST SEEDBOX)
 
-	pairdrop (snapdrop)
+	PAIRDROP (SNAPDROP)
+
+	UNIGETUI (https://github.com/marticliment/UniGetUI)
 
