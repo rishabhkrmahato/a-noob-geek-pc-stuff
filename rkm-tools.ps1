@@ -559,7 +559,7 @@ do {
             Write-Host "[7] file-hide-extract.py"
             Write-Host "[8] split-anything-by-size.py"
             Write-Host "[9] list-file-extensions.py"
-            Write-Host "[10] best-youtube-downloader.py"
+            Write-Host "[10] BEST-YOUTUBE-DOWNLOADER.py"
             Write-Host "[11] bookmarks.html-to-text-csv.py"
             Write-Host "[12] ytmusic-multi-search.py"
             Write-Host ""
@@ -579,8 +579,8 @@ do {
                     $scriptPath = "$directoryPath\real-time-mouse-co-ord.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        # python $scriptPath
-                        Start-Process python -ArgumentList $scriptPath
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -682,8 +682,8 @@ do {
                 }
                 "10"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/best-youtube-downloader.py"
-                    $scriptPath = "$directoryPath\best-youtube-downloader.py"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/BEST-YOUTUBE-DOWNLOADER.py"
+                    $scriptPath = "$directoryPath\BEST-YOUTUBE-DOWNLOADER.py"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
