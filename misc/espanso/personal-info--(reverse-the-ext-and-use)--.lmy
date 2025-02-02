@@ -1,0 +1,30 @@
+matches:
+  - trigger: ";name"
+    replace: "your name"
+
+  - trigger: ";NAME"
+    replace: "YOUR NAME"
+
+  - trigger: ";mn"
+    replace: "mobile no."
+  
+  - trigger: ":hmn"
+    replace: "home mobile no"
+
+  - trigger: ";adr"
+    replace: "your address"
+
+  - trigger: ";adr"
+    replace: "work address"
+
+  - trigger: ";mail"
+    replace: "your mail"
+
+  - trigger: ";bio"
+    replace: "your long cringy bio :)"
+
+  - trigger: ";me"
+    replace: "your own website/social link"
+
+  - trigger: ";ghr"
+    replace: "your github repo link"
