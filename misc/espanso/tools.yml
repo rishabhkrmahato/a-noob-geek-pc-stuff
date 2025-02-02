@@ -1,0 +1,75 @@
+matches:
+  - trigger: "inr"
+    replace: "₹"
+
+  - trigger: ";ascii"
+    replace: "{{choice}}"
+    vars:
+      - name: choice
+        type: choice
+        params:
+          values:
+            - '¯\\_(ツ)_/¯'
+            # - '(╯°□°）╯︵ ┻━┻'
+            - '( ͡ಠ ʖ̯ ͡ಠ)'
+            - '☉ ‿ ⚆'
+            # - 'ʕ•ᴥ•ʔ'
+            # - '⋆｡˚ ☁︎ ˚｡⋆｡˚☽˚｡⋆'
+            # - '◤◢◣◥◤◢◣◥'
+            - '(づᵔ◡ᵔ)づ'
+            - '|ᵔ‿ᵔ|'
+            - '⤜(*﹏*)⤏'
+            - 'ツ'
+
+  - trigger: ";bnp"
+    replace: "data:text/html,<body contenteditable bgcolor=black text=white style=\"font-family: monospace; font-size: 1.5rem; line-height: 1.8; padding: 2rem; margin: 0; max-width: 800px;\">"
+
+  - trigger: ";ip6"
+    replace: "{{ip}}"
+    vars:
+      - name: ip
+        type: shell
+        params:
+          cmd: "cmd.exe /c curl -s ifconfig.me"
+
+  - trigger: ";ip4"
+    replace: "{{ipv4}}"
+    vars:
+      - name: ipv4
+        type: shell
+        params:
+          cmd: "cmd.exe /c curl -s ifconfig.me -4"
+
+  - trigger: ";wtr"
+    replace: "{{weather}}"
+    vars:
+      - name: weather
+        type: shell
+        params:
+          cmd: "cmd.exe /c curl -s wttr.in?format=3"
+
+  - trigger: ;joke
+    replace: "{{joke}}"
+    vars:
+    - name: joke
+      type: shell
+      params:
+        cmd: powershell -Command "(Invoke-WebRequest -Uri
+          'https://v2.jokeapi.dev/joke/Any?type=single' -UseBasicParsing |
+          ConvertFrom-Json).joke"
+
+  - trigger: ";quote"
+    replace: "{{quote}}"
+    vars:
+    - name: quote
+      type: shell
+      params:
+        cmd: "C:\\Windows\\System32\\curl.exe -k -s https://api.quotable.io/random | ConvertFrom-Json | Select-Object -ExpandProperty content"
+
+  - trigger: ";12time"
+    replace: "{{time}}"
+    vars:
+      - name: time
+        type: date
+        params:
+          format: "%I:%M %p"
