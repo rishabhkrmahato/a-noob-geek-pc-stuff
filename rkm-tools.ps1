@@ -815,6 +815,8 @@ do {
             Write-Host "[5] get-imdb-id-link_in_A-id_in_B.xlsx"
             Write-Host "[6] lock-unlock-pswrd-folder.bat"
             Write-Host ""
+            Write-Host "[7] my-espanso-config/package"
+            Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
 
@@ -892,6 +894,63 @@ do {
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
+                }
+                "7"
+                {
+                    Write-Host "Fetching and zipping the contents of Espanso..."
+                    # Define the destination path
+                    $destPath = "$env:USERPROFILE\Desktop\espanso-rkm-pkg.zip"
+                    # Download the repo contents
+                    $repoUrl = "https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip"
+                    $tempZip = "$env:TEMP\espanso_temp.zip"
+                    $tempExtract = "$env:TEMP\espanso_extract"
+                    # Download the ZIP file
+                    Invoke-WebRequest -Uri $repoUrl -OutFile $tempZip
+                    # Extract the downloaded zip
+                    Expand-Archive -Path $tempZip -DestinationPath $tempExtract -Force
+                    # Define the source folder inside the extracted archive
+                    $espansoPath = "$tempExtract\a-noob-geek-pc-stuff-main\misc\espanso"
+                    # Zip only the espanso folder
+                    Compress-Archive -Path $espansoPath -DestinationPath $destPath -Force
+                    # Cleanup
+                    Remove-Item -Path $tempZip -Force
+                    Remove-Item -Path $tempExtract -Recurse -Force
+                    # Show the path of the saved ZIP file
+                    Write-Host "Espanso backup saved at: $destPath"
+
+
+                    # Write-Host "Fetching individual files and creating Espanso package..."
+                    # # Define the destination for the ZIP file
+                    # $zipFilePath = "$env:USERPROFILE\Desktop\espanso-rishabhkrm-package.zip"
+                    # $tempDir = "$env:TEMP\espanso_package"
+                    # Remove-Item -Recurse -Force $tempDir -ErrorAction SilentlyContinue
+                    # New-Item -ItemType Directory -Path $tempDir | Out-Null
+                    # # Array of file URLs
+                    # $fileUrls = @(
+                    #     "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/espanso/tools.yml",
+                    #     "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/espanso/thank-you-espanso.url",
+                    #     "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/espanso/personal-info--(reverse-the-ext-and-use)--.lmy",
+                    #     "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/espanso/dateandtime.yml"
+                    # )
+                    # # Download each file
+                    # foreach ($fileUrl in $fileUrls) {
+                    #     try {
+                    #         # Extract file name from URL
+                    #         $fileName = [System.IO.Path]::GetFileName($fileUrl)
+                    #         $destinationPath = Join-Path -Path $tempDir -ChildPath $fileName
+                    #         # Download the file
+                    #         Invoke-WebRequest -Uri $fileUrl -OutFile $destinationPath
+                    #         Write-Host "Downloaded: $fileName"
+                    #     } catch {
+                    #         Write-Host "Failed to download: $fileUrl" -ForegroundColor Red
+                    #     }
+                    # }
+                    # # Create the ZIP file
+                    # Compress-Archive -Path "$tempDir\*" -DestinationPath $zipFilePath -Force
+                    # # Cleanup temporary directory
+                    # Remove-Item -Recurse -Force $tempDir
+                    # # Display the saved ZIP path
+                    # Write-Host "Espanso package saved at: $zipFilePath"
                 }
                 "0"
                 {
