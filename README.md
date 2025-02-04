@@ -13,7 +13,7 @@ Built for convenience, each tool focuses on making small improvements to the sys
 ### [BEST-YOUTUBE-DOWNLOADER.py](py/BEST-YOUTUBE-DOWNLOADER.py)
 
 <!-- **Description:**   -->
-A Python script that automates downloading YouTube videos and playlists using yt-dlp, ensuring it's installed and up-to-date, while selecting the best video and audio formats for high-quality downloads.
+A Python script that automates the downloading of YouTube videos and playlists using [yt-dlp](https://github.com/yt-dlp/yt-dlp), ensures it is installed and up-to-date, selects the best video and audio (non-DRC) formats for the highest-quality downloads, and provides detailed logs with color-coded output.
 
 ---
 
