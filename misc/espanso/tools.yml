@@ -73,3 +73,24 @@ matches:
         type: date
         params:
           format: "%I:%M %p"
+
+  - trigger: ";ffsplit"
+    replace: >
+      ffmpeg -i [file.ext] -c copy -map 0 -segment_time [time-in-secs] -f segment -reset_timestamps 1 -avoid_negative_ts make_zero [output-%03d.ext]
+
+  - trigger: ";tyseed"
+    replace: "Awesome release! Definitely seeding this to at least 10:1. Thanks a ton for the effort!"
+
+  - trigger: ";+path"
+    replace: >
+      [System.Environment]::SetEnvironmentVariable("Path", $([System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";<ADD_YOUR_DIRECTORY_HERE>"), "Machine")
+
+  - trigger: ";rkmt"
+    replace: >
+      irm https://bit.ly/rkm-tools-raw | iex
+
+  - trigger: ";tarsplit"
+    replace: >
+      "C:\Program Files\7-Zip\7z.exe" a -ttar -v2000m "%USERPROFILE%\Desktop\archive.tar" "PATH_TO_FILE_OR_FOLDER"
+
+  
