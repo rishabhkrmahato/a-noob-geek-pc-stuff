@@ -8,3 +8,4 @@
 
 	UNIGETUI (https://github.com/marticliment/UniGetUI)
 
+	SHAREX (fkin best!; https://github.com/ShareX/ShareX)
