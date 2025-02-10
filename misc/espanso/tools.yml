@@ -2,6 +2,9 @@ matches:
   - trigger: "inr"
     replace: "₹"
 
+  - trigger: "rs."
+    replace: "₹"
+
   - trigger: ";ascii"
     replace: "{{choice}}"
     vars:
