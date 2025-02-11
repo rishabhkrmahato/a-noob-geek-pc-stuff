@@ -73,6 +73,9 @@ do {
     Write-Host "[5] c/helloC++"     -ForegroundColor Magenta
     Write-Host "[6] misc/"          -ForegroundColor Magenta
     Write-Host ""
+    Write-Host "[M] Microsoft Safety Scanner" -ForegroundColor Magenta
+    Write-Host "[E] ESET Online Scanner" -ForegroundColor Magenta
+    Write-Host ""
     Write-Host "[0] EXIT" -ForegroundColor Blue
     # [Console]::ResetColor()
 
@@ -963,13 +966,47 @@ do {
                 }
             }
         }
+        "M" 
+        {
+            Clear-Host
+            Write-Host "Downloading and running Microsoft Safety Scanner..." -ForegroundColor Cyan
+            $mssUrl = "https://go.microsoft.com/fwlink/?LinkId=212732"
+            $mssPath = "$directoryPath\msert.exe"
+            Invoke-WebRequest -Uri $mssUrl -OutFile $mssPath
+            if (Test-Path $mssPath) {
+                # Start-Process -FilePath $mssPath -ArgumentList "/q" -Wait
+                Start-Process -FilePath $mssPath
+            } else {
+                Write-Host "Failed to download Microsoft Safety Scanner." -ForegroundColor Red
+            }
+        }
+        "E" 
+        {
+            Clear-Host
+            Write-Host "Downloading and running ESET Online Scanner..." -ForegroundColor Cyan
+            $esetUrl = "https://download.eset.com/com/eset/tools/online_scanner/latest/esetonlinescanner.exe"
+            $esetPath = "$directoryPath\esetonlinescanner.exe"
+            Invoke-WebRequest -Uri $esetUrl -OutFile $esetPath
+            if (Test-Path $esetPath) {
+                Start-Process -FilePath $esetPath
+            } else {
+                Write-Host "Failed to download ESET Online Scanner." -ForegroundColor Red
+            }
+        }
         "0" 
         {
+            Start-Sleep -Seconds 1
+            # Delete the temp folder before exiting
+            if (Test-Path $directoryPath) {
+                Remove-Item -Path $directoryPath -Recurse
+                Write-Host "Temporary folder deleted." -ForegroundColor Red
+            }
             # Exit
+            Write-Host ""
             Write-Host "Exiting... Goodbye!" -ForegroundColor Blue
             Start-Sleep -Seconds 1
             break
-        }        
+        }
         Default 
         {
             Write-Host "`nInvalid choice. Please try again." -ForegroundColor Red
