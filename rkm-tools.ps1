@@ -811,12 +811,12 @@ do {
             Write-Host "Miscellaneous Tools" -ForegroundColor Cyan
             Write-Host ""
             Start-Sleep -Milliseconds 300
-            Write-Host "[1] set wukong to high priority.reg"
-            Write-Host "[2] remove wukong high priority.reg"
+            Write-Host "[1] set-wukong-to-high-priority.reg"
+            Write-Host "[2] remove-wukong-high-priority.reg"
             Write-Host "[3] kill-valorant.bat"
             Write-Host "[4] all-my-bookmarks.7z"
             Write-Host "[5] get-imdb-id-link_in_A-id_in_B.xlsx"
-            Write-Host "[6] lock-unlock-pswrd-folder.bat"
+            Write-Host "[6] drawn-me.png"
             Write-Host ""
             Write-Host "[7] my-espanso-config/package"
             Write-Host ""
@@ -830,7 +830,7 @@ do {
             {
                 "1"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/set%20wukong%20to%20high%20priority.reg/set-wukong-to-high-priority.reg"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/set-wukong-to-high-priority.reg/set-wukong-to-high-priority.reg"
                     $regPath = "$directoryPath\set-wukong-to-high-priority.reg"
                     Invoke-WebRequest -Uri $url -OutFile $regPath
                     if (Test-Path $regPath) {
@@ -841,7 +841,7 @@ do {
                 }
                 "2"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/set%20wukong%20to%20high%20priority.reg/remove-wukong-high-priority.reg"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/set-wukong-to-high-priority.reg/remove-wukong-high-priority.reg"
                     $regPath = "$directoryPath\remove-wukong-high-priority.reg"
                     Invoke-WebRequest -Uri $url -OutFile $regPath
                     if (Test-Path $regPath) {
@@ -852,7 +852,7 @@ do {
                 }
                 "3"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/valo%20bs/kill-valorant.bat"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/valo-bullsht/kill-valorant.bat"
                     $batPath = "$directoryPath\kill-valorant.bat"
                     Invoke-WebRequest -Uri $url -OutFile $batPath
                     if (Test-Path $batPath) {
@@ -887,15 +887,13 @@ do {
                 }
                 "6"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/misc/lock-unlock-pswrd-folder.bat"
-                    $batPath = "$directoryPath\lock-unlock-pswrd-folder.bat"
-                    Invoke-WebRequest -Uri $url -OutFile $batPath
-                    if (Test-Path $batPath) {
-                        Write-Host ""
-                        Write-Host "The script creates a password-protected "f o l d e r" on the desktop, locks or unlocks it on subsequent runs, and enhances security with hidden and system attributes."
-                        & $batPath
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/main/misc/drawn-me.png"
+                    $imagePath = "$directoryPath\drawn-me.png"
+                    Invoke-WebRequest -Uri $url -OutFile $imagePath
+                    if (Test-Path $imagePath) {
+                        Start-Process -FilePath $imagePath
                     } else {
-                        Write-Host "Failed to download the script." -ForegroundColor Red
+                        Write-Host "Failed to download the .png file." -ForegroundColor Red
                     }
                 }
                 "7"
@@ -920,7 +918,6 @@ do {
                     Remove-Item -Path $tempExtract -Recurse -Force
                     # Show the path of the saved ZIP file
                     Write-Host "Espanso backup saved at: $destPath"
-
 
                     # Write-Host "Fetching individual files and creating Espanso package..."
                     # # Define the destination for the ZIP file
@@ -954,6 +951,7 @@ do {
                     # Remove-Item -Recurse -Force $tempDir
                     # # Display the saved ZIP path
                     # Write-Host "Espanso package saved at: $zipFilePath"
+
                 }
                 "0"
                 {
