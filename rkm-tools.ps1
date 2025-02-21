@@ -40,7 +40,7 @@ ________   ___  __     _____ ______           _________   ________   ________   
                                                                                               \|_________|
                                                                                                           
 "@
-Write-Host "011100100110101101101101 0101010001001111010011110100110001010011" -ForegroundColor DarkGray
+Write-Host "010010100110000101101001 0101001101101000011100100110010101100101 010100100110000101101101" -ForegroundColor DarkGray
 
 # Check if the script is running as Administrator
 If (-NOT ([Security.Principal.WindowsPrincipal]([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
