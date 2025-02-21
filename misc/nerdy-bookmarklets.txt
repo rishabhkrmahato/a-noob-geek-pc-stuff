@@ -1,0 +1,19 @@
+1. NOTEPAD
+
+name:
+note
+
+url:
+data:text/html,<body contenteditable bgcolor=black text=white style="font-family: monospace; font-size: 1.5rem; line-height: 1.8; padding: 2rem; margin: 0; max-width: 800px;"><script>document.title = "NOTEPAD";</script>
+
+
+2. COPY GITHUB RAW LINK
+(visit the site, click on this bookmark)
+
+name:
+cp-gh-raw
+
+url:
+javascript:(() => {    const rawLink = window.location.href.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');    navigator.clipboard.writeText(rawLink).then(() => {        alert('%E2%9C%85 Raw link copied to clipboard:\n' + rawLink);    }).catch(() => {        alert('%E2%9D%8C Failed to copy. Your browser may not support clipboard access.');    });})();
+
+
