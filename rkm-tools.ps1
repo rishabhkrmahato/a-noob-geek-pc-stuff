@@ -817,8 +817,9 @@ do {
             Write-Host "[4] all-my-bookmarks.7z"
             Write-Host "[5] get-imdb-id-link_in_A-id_in_B.xlsx"
             Write-Host "[6] drawn-me.png"
+            Write-Host "[7] GET-ALL-TORRENT-TRACKERS"
             Write-Host ""
-            Write-Host "[7] my-espanso-config/package"
+            Write-Host "[8] my-espanso-config/package"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -896,7 +897,35 @@ do {
                         Write-Host "Failed to download the .png file." -ForegroundColor Red
                     }
                 }
-                "7"
+                "7" 
+                {
+                    Clear-Host
+                    Write-Host ""
+                    Write-Host "Downloading and Merging Tracker Lists..."
+                    $url1 = "https://raw.githubusercontent.com/XIU2/TrackersListCollection/refs/heads/master/all.txt"
+                    $url2 = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
+                    $outputPath = "$directoryPath\all-trackers.txt"
+                    try {
+                        $trackers1 = Invoke-WebRequest -Uri $url1 -UseBasicParsing | Select-Object -ExpandProperty Content
+                        $trackers2 = Invoke-WebRequest -Uri $url2 -UseBasicParsing | Select-Object -ExpandProperty Content
+                        $mergedContent = "$trackers1`r`n$trackers2"
+                        $mergedContent | Set-Content -Path $outputPath -Encoding UTF8
+                        # Use clip.exe for full clipboard content
+                        $mergedContent | clip
+                        Write-Host ""
+                        Write-Host "Done. Trackers saved to: $outputPath"
+                        Write-Host "        ...       "
+                        Write-Host "+ COPIED TO CLIPBOARD +" -ForegroundColor Green
+                    } catch {
+                        Write-Host "Error: $($_.Exception.Message)"
+                    }
+                    if (Test-Path $outputPath) {
+                        Start-Process -FilePath $outputPath
+                    } else {
+                        Write-Host "Failed to open all-trackers.txt" -ForegroundColor Red
+                    }
+                }
+                "8"
                 {
                     Write-Host "Fetching and zipping the contents of Espanso..."
                     # Define the destination path
