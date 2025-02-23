@@ -904,7 +904,8 @@ do {
                     Write-Host "Downloading and Merging Tracker Lists..."
                     $url1 = "https://raw.githubusercontent.com/XIU2/TrackersListCollection/refs/heads/master/all.txt"
                     $url2 = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
-                    $outputPath = "$directoryPath\all-trackers.txt"
+                    # $outputPath = "$directoryPath\all-trackers.txt"
+                    $outputPath = "$env:USERPROFILE\Desktop\all-trackers.txt"
                     try {
                         $trackers1 = Invoke-WebRequest -Uri $url1 -UseBasicParsing | Select-Object -ExpandProperty Content
                         $trackers2 = Invoke-WebRequest -Uri $url2 -UseBasicParsing | Select-Object -ExpandProperty Content
