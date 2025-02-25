@@ -1,0 +1,229 @@
+matches:
+
+  - trigger: "u"
+    replace: "you"
+    word: true
+
+  - trigger: "ok"
+    replace: "okay"
+    word: true
+
+  - trigger: "ur"
+    replace: "your"
+    word: true
+
+  - trigger: "pls"
+    replace: "please"
+    word: true
+
+  - trigger: "thx"
+    replace: "thanks"
+    word: true
+
+  - trigger: "ty"
+    replace: "thank you"
+    word: true
+
+  - trigger: "np"
+    replace: "no problem"
+    word: true
+
+  - trigger: "u2"
+    replace: "you too"
+    word: true
+
+  - trigger: "brb"
+    replace: "be right back"
+    word: true
+
+  - trigger: "gtg"
+    replace: "got to go"
+    word: true
+
+  - trigger: "g2g"
+    replace: "got to go"
+    word: true
+
+  - trigger: "ttyl"
+    replace: "talk to you later"
+    word: true
+
+  - trigger: "idk"
+    replace: "I don't know"
+    word: true
+
+  - trigger: "imo"
+    replace: "in my opinion"
+    word: true
+
+  - trigger: "btw"
+    replace: "by the way"
+    word: true
+
+  - trigger: "tbh"
+    replace: "to be honest"
+    word: true
+
+  - trigger: "afaik"
+    replace: "as far as I know"
+    word: true
+
+  - trigger: "irl"
+    replace: "in real life"
+    word: true
+
+  - trigger: "fyi"
+    replace: "for your information"
+    word: true
+
+  - trigger: "asap"
+    replace: "as soon as possible"
+    word: true
+
+  - trigger: "bbl"
+    replace: "be back later"
+    word: true
+
+  - trigger: "lmk"
+    replace: "let me know"
+    word: true
+
+  - trigger: "ikr"
+    replace: "I know right"
+    word: true
+
+  - trigger: "hbu"
+    replace: "how about you?"
+    word: true
+
+  - trigger: "wbu"
+    replace: "what about you?"
+    word: true
+
+  - trigger: "omg"
+    replace: "oh my god"
+    word: true
+
+  - trigger: "oml"
+    replace: "oh my lord"
+    word: true
+
+  - trigger: "omw"
+    replace: "on my way"
+    word: true
+
+  - trigger: "gg"
+    replace: "good game"
+    word: true
+
+  - trigger: "glhf"
+    replace: "good luck, have fun"
+    word: true
+
+  - trigger: "gl"
+    replace: "good luck"
+    word: true
+
+  - trigger: "wyd"
+    replace: "what are you doing?"
+    word: true
+
+  - trigger: "wdym"
+    replace: "what do you mean?"
+    word: true
+
+  - trigger: "nvm"
+    replace: "never mind"
+    word: true
+
+  - trigger: "ggwp"
+    replace: "good game, well played"
+    word: true
+
+  - trigger: "yolo"
+    replace: "you only live once"
+    word: true
+
+  # - trigger: "rofl"
+  #   replace: "rolling on the floor laughing"
+  #   word: true
+
+  # - trigger: "lmao"
+  #   replace: "laughing my ass off"
+  #   word: true
+
+  # - trigger: "lol"
+  #   replace: "laugh out loud"
+  #   word: true
+
+  # - trigger: "xoxo"
+  #   replace: "hugs and kisses"
+  #   word: true
+
+  - trigger: "bff"
+    replace: "best friends forever"
+    word: true
+
+  - trigger: "wtf"
+    replace: "what the fcuk"
+    word: true
+
+  - trigger: "stfu"
+    replace: "shut the fcuk up"
+    word: true
+
+  - trigger: "tldr"
+    replace: "too long; didn't read"
+    word: true
+
+  - trigger: "jk"
+    replace: "just kidding"
+    word: true
+
+  - trigger: "dm"
+    replace: "direct message"
+    word: true
+
+  - trigger: "afk"
+    replace: "away from keyboard"
+    word: true
+
+  - trigger: "bday"
+    replace: "birthday"
+    word: true
+
+  - trigger: "hbd"
+    replace: "Happy Birthday!"
+    word: true
+
+  - trigger: "ily"
+    replace: "I love you"
+    word: true
+
+  - trigger: "msg"
+    replace: "message"
+    word: true
+
+  - trigger: "cya"
+    replace: "see you"
+    word: true
+
+  - trigger: "ez"
+    replace: "easy"
+    word: true
+
+  - trigger: "ezpz"
+    replace: "easy peasy lemon squeezy"
+    word: true
+
+  - trigger: "idc"
+    replace: "I don’t care"
+    word: true
+
+  - trigger: "rip"
+    replace: "rest in peace"
+    word: true
+
+  - triggers: ["gr8", "grt"]
+    replace: "great"
+    word: true
