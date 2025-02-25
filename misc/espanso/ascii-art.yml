@@ -1,0 +1,60 @@
+matches:
+
+  - trigger: ";ascii"
+    replace: "{{choice}}"
+    vars:
+      - name: choice
+        type: choice
+        params:
+          values:
+            - '¯\\_(ツ)_/¯'      # Shrug
+            - '( ͡ಠ ʖ̯ ͡ಠ)'      # Disapproval
+            - '☉ ‿ ⚆'           # Curious face
+            - '(づᵔ◡ᵔ)づ'        # Hug
+            - '|ᵔ‿ᵔ|'           # Happy
+            - '⤜(*﹏*)⤏'        # Distressed
+            - 'ツ'              # Simple smile
+            - 'ಠ_ಠ'             # Disapproval
+            - 'ಠ‿↼'             # Cheeky
+            - 'ಠ‿ಠ'             # Mischievous
+            - '(ง •̀_•́)ง'      # Fight/Determined
+            - '(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'   # Excited
+            - '(ಥ﹏ಥ)'          # Crying
+            - '(＾▽＾)'         # Laughing
+            - 'ヽ(•‿•)ノ'       # Happy dance
+            - '(¬_¬ )'         # Unamused
+            - '(≧◡≦)'          # Happy & excited
+            - '✧･ﾟ: *✧･ﾟ:*'    # Sparkles
+            - 'ʕ•ᴥ•ʔ'           # Bear hug
+            - '(─‿‿─)'          # Content
+            - 'ლ(╹◡╹ლ)'        # Offering hug
+            - '(╯°□°）╯︵ ┻━┻'  # Table flip
+            - '┬─┬ ノ( ゜-゜ノ)' # Fixing table
+            - 'ヽ(｀Д´)ﾉ'       # Angry
+            - '⚆ _ ⚆'           # Blank stare
+            - '⊂(◉‿◉)つ'        # Hugging/Attack pose
+            - '(ᵔᴥᵔ)'           # Dog face
+            - '(☞ﾟヮﾟ)☞'        # Pointing
+            - 'ʕ •́؈•̀ ₎'        # Serious bear
+            - '( •_•)>⌐■-■'     # Putting on glasses (cool)
+            - '(⌐■_■)'          # Cool face
+            - 'ヽ༼ຈل͜ຈ༽ﾉ'       # Raise hands
+            - '(∩^o^)⊃━☆ﾟ.*'    # Magic spark
+            - '(╥_╥)'           # Sad/teary
+            - '◉_◉'             # Shocked
+            - '(๑•̀ㅂ•́)و✧'      # Determined
+            - 'ლ(ಠ益ಠლ)'        # Rage
+            - '乁( •_• )ㄏ'      # Meh shrug
+            - '(≖_≖ )'          # Judging
+            - '(งಠ_ಠ)ง'         # Fight mode
+            - '(ノಠ益ಠ)ノ'       # Rage throw
+            - '(*^_^*)'         # Blushing
+            - '✌(ツ)'            # Peace
+            - '(ﾟ▽ﾟ)/'          # Waving hello
+            - '(o_O)'           # Confused
+            - '(☞ﾟ∀ﾟ)☞'         # Cheeky point
+            - '(ಥ⌣ಥ)'           # Tears of joy
+            - '┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻' # Double table flip
+            - '(ง°ل͜°)ง'         # Let’s fight
+            - '(*≧ω≦)'          # Cute face
+
