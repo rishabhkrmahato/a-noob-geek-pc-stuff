@@ -1,0 +1,17 @@
+matches:
+
+  - trigger: ";ip6"
+    replace: "{{ip}}"
+    vars:
+      - name: ip
+        type: shell
+        params:
+          cmd: "cmd.exe /c curl -s ifconfig.me"
+
+  - trigger: ";ip4"
+    replace: "{{ipv4}}"
+    vars:
+      - name: ipv4
+        type: shell
+        params:
+          cmd: "cmd.exe /c curl -s ifconfig.me -4"
