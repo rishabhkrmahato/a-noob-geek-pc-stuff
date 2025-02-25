@@ -4,6 +4,10 @@ matches:
     replace: "you"
     word: true
 
+  - trigger: "i"
+    replace: "I"
+    word: true
+
   - trigger: "ok"
     replace: "okay"
     word: true
