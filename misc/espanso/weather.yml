@@ -1,0 +1,9 @@
+matches:
+
+  - trigger: ";wtr"
+    replace: "{{weather}}"
+    vars:
+      - name: weather
+        type: shell
+        params:
+          cmd: "cmd.exe /c curl -s wttr.in?format=3"
