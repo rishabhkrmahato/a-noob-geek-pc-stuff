@@ -1,3 +1,23 @@
+# matches:
+
+#   - trigger: ";winabout"
+#     description: "Open Windows About Settings"
+#     replace: ""
+#     vars:
+#       - name: open_about
+#         type: shell
+#         params:
+#           cmd: "start ms-settings:about"
+
+#   - trigger: ";winupdate"
+#     description: "Open Windows Update Settings"
+#     replace: ""
+#     vars:
+#       - name: open_update
+#         type: shell
+#         params:
+#           cmd: "start ms-settings:windowsupdate"
+
 matches:
 
   - trigger: ";winabout"
@@ -6,7 +26,7 @@ matches:
       - name: output
         type: shell
         params:
-          cmd: "powershell -Command Start-Process 'ms-settings:about'"
+          cmd: "powershell -Command Start-Process ms-settings:about"
 
   - trigger: ";winupdate"
     replace: ""
@@ -14,4 +34,4 @@ matches:
       - name: output
         type: shell
         params:
-          cmd: "powershell -Command Start-Process 'ms-settings:windowsupdate'"
+          cmd: "powershell -Command Start-Process ms-settings:windowsupdate"
