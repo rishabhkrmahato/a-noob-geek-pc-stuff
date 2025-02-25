@@ -1,0 +1,17 @@
+matches:
+
+  - trigger: ";winabout"
+    replace: ""
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "powershell -Command Start-Process 'ms-settings:about'"
+
+  - trigger: ";winupdate"
+    replace: ""
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "powershell -Command Start-Process 'ms-settings:windowsupdate'"
