@@ -1,0 +1,19 @@
+matches:
+
+  - trigger: ;joke
+    replace: "{{joke}}"
+    vars:
+    - name: joke
+      type: shell
+      params:
+        cmd: powershell -Command "(Invoke-WebRequest -Uri
+          'https://v2.jokeapi.dev/joke/Any?type=single' -UseBasicParsing |
+          ConvertFrom-Json).joke"
+
+  - trigger: ";quote"
+    replace: "{{quote}}"
+    vars:
+    - name: quote
+      type: shell
+      params:
+        cmd: "C:\\Windows\\System32\\curl.exe -k -s https://api.quotable.io/random | ConvertFrom-Json | Select-Object -ExpandProperty content"
