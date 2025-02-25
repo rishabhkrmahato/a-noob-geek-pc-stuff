@@ -1,0 +1,49 @@
+matches:
+
+  # - trigger: ";windows"
+  #   replace: "C:\\WINDOWS"
+
+  - trigger: ";sys32"
+    replace: "C:\\WINDOWS\\system32"
+
+  - trigger: ";pgfs"
+    replace: "%ProgramFiles%"
+
+  - trigger: ";pgfs86"
+    replace: "%ProgramFiles(x86)%"
+
+  - trigger: ";pgd"
+    replace: "%ProgramData%"
+
+  # - trigger: ";users"
+  #   replace: "C:\\Users"
+
+  - trigger: ";desktop"
+    replace: "%USERPROFILE%\\Desktop"
+
+  - trigger: ";downloads"
+    replace: "%USERPROFILE%\\Downloads"
+
+  - trigger: ";pics"
+    replace: "%USERPROFILE%\\Pictures"
+
+  - trigger: ";docs"
+    replace: "%USERPROFILE%\\Documents"
+
+  - trigger: ";startmenu"
+    replace: "%PROGRAMDATA%\\Microsoft\\Windows\\Start Menu\\Programs"
+
+  - trigger: ";chromeapps"
+    replace: "%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Chrome Apps"
+
+  - trigger: ";user"
+    replace: "%USERPROFILE%"
+
+  # - trigger: ";appdata"
+  #   replace: "%APPDATA%"
+
+  # - trigger: ";temp"
+  #   replace: "%TEMP%"
+
+  - trigger: ";espanso"
+    replace: 'C:\Users\mahat\AppData\Roaming\espanso\match'
