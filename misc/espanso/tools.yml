@@ -1,9 +1,9 @@
 matches:
-  - trigger: "inr"
+  - trigger: ";inr"
     replace: "₹"
 
-  # - trigger: "rs."
-  #   replace: "₹"
+  - trigger: "rupees"
+    replace: "₹"
 
   - trigger: ";ascii"
     replace: "{{choice}}"
@@ -69,14 +69,6 @@ matches:
       type: shell
       params:
         cmd: "C:\\Windows\\System32\\curl.exe -k -s https://api.quotable.io/random | ConvertFrom-Json | Select-Object -ExpandProperty content"
-
-  - trigger: ";12time"
-    replace: "{{time}}"
-    vars:
-      - name: time
-        type: date
-        params:
-          format: "%I:%M %p"
 
   - trigger: ";ffsplit"
     replace: >
