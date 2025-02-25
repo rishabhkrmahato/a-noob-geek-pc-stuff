@@ -1,0 +1,7 @@
+matches:
+  - trigger: ";inr"
+    replace: "₹"
+
+  - triggers: ["rupee", "rupees"]
+    replace: "₹"
+    word: true
