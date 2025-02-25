@@ -1,0 +1,17 @@
+matches:
+  - trigger: ";passgen"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: >
+            python -c "import random, string, pyperclip; 
+            digits = random.choices(string.digits, k=5); 
+            specials = random.choices('!@#$%^&*()-_=+[]{};:,.<>?', k=3); 
+            others = random.choices(string.ascii_letters + string.digits + '!@#$%^&*()-_=+[]{};:,.<>?', k=22); 
+            password = digits + specials + others; 
+            random.shuffle(password); 
+            pwd = ''.join(password); 
+            pyperclip.copy(pwd); 
+            print(pwd)"
