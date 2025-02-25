@@ -15,6 +15,14 @@ matches:
         params:
           format: "%H:%M:%S"
 
+  - trigger: ";12time"
+    replace: "{{time}}"
+    vars:
+      - name: time
+        type: date
+        params:
+          format: "%I:%M %p"
+
   - trigger: ";tstamp"
     replace: "{{timestamp}}"
     vars:
