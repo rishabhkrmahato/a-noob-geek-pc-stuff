@@ -1,0 +1,7 @@
+matches:
+
+  - trigger: ";tyseed"
+    replace: "Awesome release! Definitely seeding this to at least 10:1. Thanks a ton for the effort!"
+
+  - trigger: ";jfin"
+    replce: "http://localhost:8096"
