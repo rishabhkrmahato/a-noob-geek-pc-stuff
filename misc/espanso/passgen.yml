@@ -6,12 +6,31 @@ matches:
         type: shell
         params:
           cmd: >
-            python -c "import random, string, pyperclip; 
-            digits = random.choices(string.digits, k=5); 
-            specials = random.choices('!@#$%^&*()-_=+[]{};:,.<>?', k=3); 
-            others = random.choices(string.ascii_letters + string.digits + '!@#$%^&*()-_=+[]{};:,.<>?', k=22); 
-            password = digits + specials + others; 
-            random.shuffle(password); 
-            pwd = ''.join(password); 
-            pyperclip.copy(pwd); 
+            python -c "import secrets, string, pyperclip;
+            digits = ''.join(secrets.choice(string.digits) for _ in range(5));
+            specials = ''.join(secrets.choice('!@#$%^&*()-_=+[]{};:,.<>?') for _ in range(3));
+            others = ''.join(secrets.choice(string.ascii_letters + string.digits + '!@#$%^&*()-_=+[]{};:,.<>?') for _ in range(22));
+            pwd_list = list(digits + specials + others);
+            secrets.SystemRandom().shuffle(pwd_list);
+            pwd = ''.join(pwd_list);
+            pyperclip.copy(pwd);
             print(pwd)"
+
+
+# matches:
+#   - trigger: ";passgen"
+#     replace: "{{output}}"
+#     vars:
+#       - name: output
+#         type: shell
+#         params:
+#           cmd: >
+#             python -c "import random, string, pyperclip; 
+#             digits = random.choices(string.digits, k=5); 
+#             specials = random.choices('!@#$%^&*()-_=+[]{};:,.<>?', k=3); 
+#             others = random.choices(string.ascii_letters + string.digits + '!@#$%^&*()-_=+[]{};:,.<>?', k=22); 
+#             password = digits + specials + others; 
+#             random.shuffle(password); 
+#             pwd = ''.join(password); 
+#             pyperclip.copy(pwd); 
+#             print(pwd)"
