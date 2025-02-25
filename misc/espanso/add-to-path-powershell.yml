@@ -1,0 +1,5 @@
+matches:
+
+ - trigger: ";+path"
+   replace: >
+    [System.Environment]::SetEnvironmentVariable("Path", $([System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";<ADD_YOUR_DIRECTORY_HERE>"), "Machine")
