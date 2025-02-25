@@ -1,0 +1,5 @@
+matches:
+
+  - trigger: ";bnp"
+    replace: >
+      data:text/html,<body contenteditable bgcolor=black text=white style="font-family: monospace; font-size: 1.5rem; line-height: 1.8; padding: 2rem; margin: 0; max-width: 800px;"><script>document.title = "NOTEPAD";</script>
