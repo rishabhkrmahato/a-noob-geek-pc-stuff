@@ -1,0 +1,5 @@
+matches:
+
+  - trigger: ";ffsplit"
+    replace: >
+      ffmpeg -i [file.ext] -c copy -map 0 -segment_time [time-in-secs] -f segment -reset_timestamps 1 -avoid_negative_ts make_zero [output-%03d.ext]
