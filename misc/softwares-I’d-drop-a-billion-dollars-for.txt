@@ -13,3 +13,5 @@
 	openssh (server&client) - built-in-windows-opt.ft. - TERMIUS/SECURESHELLFISH/SolidExp on phone
 
 	ESPANSO (awesome!)
+
+	KDE Connect 💘
