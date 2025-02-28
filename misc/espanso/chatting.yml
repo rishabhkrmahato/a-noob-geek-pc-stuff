@@ -124,6 +124,10 @@ matches:
     replace: "good game"
     word: true
 
+  - trigger: "GG"
+    replace: "GOOD GAME"
+    word: true
+
   - trigger: "glhf"
     replace: "good luck, have fun"
     word: true
@@ -146,6 +150,10 @@ matches:
 
   - trigger: "ggwp"
     replace: "good game, well played"
+    word: true
+
+  - trigger: "wp"
+    replace: "well played"
     word: true
 
   - trigger: "yolo"
@@ -230,6 +238,14 @@ matches:
 
   - trigger: "rip"
     replace: "rest in peace"
+    word: true
+
+  - trigger: "nt"
+    replace: "nice try"
+    word: true
+
+  - trigger: "sry"
+    replace: "sorry"
     word: true
 
   - triggers: ["gr8", "grt"]
