@@ -1,0 +1,23 @@
+matches:
+
+  - trigger: ";choco"
+    replace: "choco upgrade all -y"
+
+  - trigger: ";scoop"
+    replace: "scoop update"
+
+  - trigger: ";pip"
+    # replace: "pip install --upgrade pip && pip install --upgrade pip-review && pip-review --auto"
+    replace: "pip-review --auto"
+
+  - trigger: ";npm"
+    replace: "npm update -g"
+
+  - trigger: ";gem"
+    replace: "gem update --system && gem update && gem cleanup"
+
+  # - trigger: ";checkwinget"
+  #   replace: "winget upgrade"
+
+  - trigger: ";winget"
+    replace: "winget upgrade --all --silent --accept-source-agreements --accept-package-agreements"
