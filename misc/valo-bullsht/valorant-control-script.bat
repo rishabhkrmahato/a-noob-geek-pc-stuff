@@ -1,29 +1,62 @@
-:: first disable `vgtray.exe` in Task Manager's startup.
-:: run this to have control & stop Valorant (Tencent) from spying when you're not playing.
-:: create shortcut, get an ico file, replace the startmenu valorant shortcut with this one.
+:: ================================================================================================
+:: Description:
+:: Valorant Control Script
+::
+:: This batch script provides basic control over Riot Games' Valorant 
+:: and its Vanguard anti-cheat system. It allows users to start and 
+:: stop Valorant, including Riot Client and Vanguard services.
+::
+:: Key Features:
+:: - Ensures administrative privileges for managing services and processes.
+:: - Provides a menu-driven interface for easy control.
+:: - Starts Vanguard (`vgc`), Riot Client, and Valorant.
+:: - Stops Valorant, Riot Client, and Vanguard-related processes.
+::
+:: Usage:
+:: - Run the script as an administrator.
+:: - Select an option from the menu:
+::   [1] Start Valorant    → Starts Vanguard and Riot Client.
+::   [2] Stop Valorant     → Terminates all related processes.
+::   [3] Exit              → Closes the script.
+::
+:: Hard-Coded Details:
+:: - `"C:\Riot Games\Riot Client\RiotClientServices.exe"`: Path to Riot Client executable.
+::
+:: Steps to Update Hard-Coded Details:
+:: 1. Modify the Riot Client path if Valorant is installed in a different location.
+:: 2. Adjust the `timeout` values if needed for better timing control.
+::
+:: Dependencies:
+:: - Windows with administrative privileges.
+:: - `sc` command for managing Vanguard service.
+:: - `taskkill` for terminating Riot processes.
+::
+:: Output:
+:: - Displays status updates for starting and stopping Valorant services.
+:: - Provides real-time feedback on process terminations.
+::
+:: Error Handling:
+:: - If the script is not run as an administrator, it auto-relaunches with elevated privileges.
+:: - Silent handling of missing processes/services (won't cause script failure).
+::
+:: Notes:
+:: - Disabling `vgtray.exe` from startup is recommended for full control.
+:: - Ensure Riot Client is not already running before starting Valorant.
+:: ================================================================================================
+
 
 @echo off
 
-:: Check for administrative privileges
-net session >nul 2>&1
-if %errorLevel% neq 0 (
-    echo.
-    echo ===========================================
-    echo Requesting administrative privileges...
-    echo ===========================================
-    :: Re-run the script as admin
-    powershell -Command "Start-Process '%~f0' -Verb runAs"
-    exit
-)
+:: Run as Admin
+net session >nul 2>&1 || (powershell -Command "Start-Process '%~f0' -Verb runAs" & exit)
 
 :menu
-echo.
+cls
 echo ========= Valorant Control Script =========
-echo 1. Start Valorant
-echo 2. Stop Valorant
-echo 3. Exit
-echo ===========================================
-set /p choice=Enter your choice (1/2/3): 
+echo [1] Start Valorant
+echo [2] Stop Valorant
+echo [3] Exit
+set /p choice=Enter choice: 
 
 if "%choice%"=="1" goto start_valorant
 if "%choice%"=="2" goto stop_valorant
@@ -35,33 +68,13 @@ echo Starting Vanguard...
 sc start vgc
 timeout /t 5 >nul
 
-echo Starting Riot Client...
+echo Launching Riot Client...
 start "" "C:\Riot Games\Riot Client\RiotClientServices.exe"
 timeout /t 10 >nul
-
-:: not needed just start valorant from riotclient only. (cause not everyone uses always signed in for valorant)
-REM echo Starting Valorant... 
-REM start "" "C:\Riot Games\VALORANT\live\VALORANT.exe"
-goto back_to_menu
+goto menu
 
 :stop_valorant
 echo Stopping Valorant and related processes...
-taskkill /F /IM VALORANT.exe /T
-taskkill /F /IM RiotClientServices.exe /T
-taskkill /F /IM vgc.exe /T
-taskkill /F /IM vgtray.exe /T
-echo Vanguard and Riot Client have been stopped.
-goto back_to_menu
-
-:back_to_menu
-echo ===========================================
-echo Press 4 to go back to the main menu.
-echo Press any other key to exit.
-echo ===========================================
-set /p choice=Enter your choice: 
-if "%choice%"=="4" goto menu
-exit
-
-:end
-echo Done. Press any key to exit...
-pause >nul
+taskkill /F /IM VALORANT.exe /IM RiotClientServices.exe /IM vgc.exe /IM vgtray.exe /T
+echo Vanguard and Riot Client stopped.
+goto menu
