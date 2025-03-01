@@ -44,14 +44,6 @@ matches:
     replace: "be right back"
     word: true
 
-  - trigger: "gtg"
-    replace: "got to go"
-    word: true
-
-  - trigger: "g2g"
-    replace: "got to go"
-    word: true
-
   - trigger: "ttyl"
     replace: "talk to you later"
     word: true
@@ -101,7 +93,7 @@ matches:
     word: true
 
   - trigger: "hbu"
-    replace: "how about you?"
+    replace: "how about you"
     word: true
 
   - trigger: "wbu"
@@ -132,6 +124,10 @@ matches:
     replace: "good luck, have fun"
     word: true
 
+  - trigger: "hf"
+    replace: "have fun"
+    word: true
+
   - trigger: "gl"
     replace: "good luck"
     word: true
@@ -160,21 +156,21 @@ matches:
     replace: "you only live once"
     word: true
 
-  # - trigger: "rofl"
-  #   replace: "rolling on the floor laughing"
-  #   word: true
+  - trigger: "rofl"
+    replace: "rolling on the floor laughing"
+    word: true
 
-  # - trigger: "lmao"
-  #   replace: "laughing my ass off"
-  #   word: true
+  - trigger: "lmao"
+    replace: "laughing my 4ss off"
+    word: true
 
-  # - trigger: "lol"
-  #   replace: "laugh out loud"
-  #   word: true
+  - trigger: "lol"
+    replace: "laugh out loud"
+    word: true
 
-  # - trigger: "xoxo"
-  #   replace: "hugs and kisses"
-  #   word: true
+  - trigger: "xoxo"
+    replace: "hugs and kisses"
+    word: true
 
   - trigger: "bff"
     replace: "best friends forever"
@@ -189,7 +185,7 @@ matches:
     word: true
 
   - trigger: "tldr"
-    replace: "too long; didn't read"
+    replace: "too long, didn't read"
     word: true
 
   - trigger: "jk"
@@ -248,6 +244,22 @@ matches:
     replace: "sorry"
     word: true
 
+  - trigger: "ow2"
+    replace: "overwatch-2"
+    word: true
+
+  - trigger: "cs2"
+    replace: "counter-strike-2"
+    word: true
+
   - triggers: ["gr8", "grt"]
     replace: "great"
+    word: true
+
+  - triggers: ["gtg", "g2g"]
+    replace: "got to go"
+    word: true
+
+  - trigger: "whats"
+    replace: "what's"
     word: true
