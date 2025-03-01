@@ -29,4 +29,4 @@ matches:
       - name: timestamp
         type: date
         params:
-          format: "%Y-%m-%d %H:%M:%S"
+          format: "%d-%m-%Y %H:%M:%S"
