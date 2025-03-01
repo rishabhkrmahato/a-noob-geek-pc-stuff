@@ -1,54 +1,60 @@
+:: ================================================================================================
+:: Description:
+::MKV to MP4 Converter (Using FFmpeg)
+::
+:: This batch script converts an MKV file to MP4 using FFmpeg 
+:: while keeping the original codecs intact (`-c copy`).
+::
+:: Key Features:
+:: - Checks if FFmpeg is installed before proceeding.
+:: - Prompts the user to enter the MKV file path.
+:: - Converts the MKV file to MP4 without re-encoding.
+:: - Automatically generates an output filename based on the input.
+::
+:: Hard-Coded Details:
+:: - `ffmpeg` is expected to be installed and accessible in the system PATH.
+:: - The output file retains the same name but with an `.mp4` extension.
+::
+:: Steps to Update Hard-Coded Details:
+:: 1. Modify the FFmpeg installation check if using a different package manager.
+:: 2. Change the output format if a different container is needed.
+:: 3. Adjust FFmpeg parameters to enable re-encoding if required.
+::
+:: Usage:
+:: - Run the script and enter the full path of the MKV file when prompted.
+:: - FFmpeg will convert the file while preserving audio and video codecs.
+::
+:: Dependencies:
+:: - FFmpeg (install via Chocolatey: `choco install ffmpeg`).
+::
+:: Output:
+:: - The converted MP4 file is saved in the same directory as the input.
+::
+:: Error Handling:
+:: - If FFmpeg is missing, the script suggests installation via Chocolatey.
+:: - If the conversion fails, FFmpeg will output an error message.
+::
+:: Notes:
+:: - This script uses `-c copy` to avoid re-encoding, ensuring a fast conversion.
+:: - If the MKV file contains incompatible codecs, consider using a different FFmpeg command.
+:: ================================================================================================
+
+
 @echo off
-:: Restart the batch script as Administrator if not already started with elevated privileges
-
-:: Check if the script is running with elevated privileges
-openfiles >nul 2>&1
-if '%ERRORLEVEL%' NEQ '0' (
-    echo This script requires administrative privileges.
-    echo.
-    echo Restarting with administrative privileges...
-    echo.
-    :: Restart the script as Administrator
-    powershell -Command "Start-Process cmd -ArgumentList '/c %~f0' -Verb RunAs"
-    exit /b
-)
-
-:: This script converts an MKV file to MP4 using FFmpeg.
-
-:: Checking if FFmpeg is installed by trying to run it
-ffmpeg -version >nul 2>&1
-if %ERRORLEVEL% neq 0 (
-    echo FFmpeg is not installed or not found in PATH.
-    echo.
-    echo Please install FFmpeg to continue.
-    echo You can install FFmpeg using Chocolatey for a simpler method:
-    echo 1. Install Chocolatey if not already installed:
-    echo    - Open Command Prompt as Administrator.
-    echo    - Run the command: @powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "& { $(irm https://chocolatey.org/install.ps1 -UseBasicP) }" 
-    echo    - Restart Command Prompt to refresh environment variables.
-    echo 2. Install FFmpeg using Chocolatey:
-    echo    - Run the command: choco install ffmpeg
-    echo.
-    echo You can also download FFmpeg manually from: https://ffmpeg.org/download.html
-    echo Steps to install manually:
-    echo 1. Download the FFmpeg zip file from the website.
-    echo 2. Extract the contents to a folder, e.g., C:\FFmpeg.
-    echo 3. Add C:\FFmpeg\bin to your system's PATH.
-    echo 4. Then rerun this script after installation.
+:: Check if FFmpeg is installed
+ffmpeg -version >nul 2>&1 || (
+    echo FFmpeg not found! Install it via:
+    echo choco install ffmpeg ^&^& exit /b
     pause
     exit /b
 )
 
-:: Ask user for input MKV file path
-set /p inputPath="Enter the full path of the MKV file: "
+:: Get input file
+set /p inputPath="Enter MKV file path: "
+set "outputPath=%inputPath:.mkv=.mp4%"
 
-:: Determine output file path (same directory, same name but with .mp4 extension)
-set "outputPath=%~dpn1.mp4"
-
-:: Run FFmpeg to convert the file
+:: Convert MKV to MP4
 ffmpeg -i "%inputPath%" -c copy "%outputPath%"
 
-echo.
-echo Conversion complete! The file has been saved as %outputPath%.
+echo Conversion complete: %outputPath%
 pause
-exit /b
