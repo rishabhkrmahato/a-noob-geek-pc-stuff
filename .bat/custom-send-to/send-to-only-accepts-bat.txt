@@ -1,0 +1,1 @@
+make a bat wrapper to call other scripts if needed.
