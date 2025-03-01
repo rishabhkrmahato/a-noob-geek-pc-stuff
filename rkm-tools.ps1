@@ -98,19 +98,19 @@ do {
             Write-Host "[5] convert-mkv-to-mp4.bat"
             Write-Host "[6] list-imp-files.bat"
             Write-Host "[7] 1click-nircmd-set-brightness.bat"
-            Write-Host "[8] yt-dlp_downloader.bat"
-            Write-Host "[9] split-video-by-mins-lossless.bat"
+            Write-Host "[8] "
+            Write-Host "[9] "
             Write-Host "[10] open-chatgpt-replace-copilot_key.bat"
             Write-Host "[11] create-file.bat"
             Write-Host "[12] disable-recall.bat"
-            Write-Host "[13] update-choco-scoop-pip-npm-installs.bat"
+            Write-Host "[13] "
             Write-Host "[14] git-commit-all-changes.bat"
             Write-Host "[15] list-all-files-full-paths.bat"
             Write-Host "[16] clear-bin-and-temp.bat"
             Write-Host "[17] aio-package-updater.bat"
             Write-Host "[18] take-backup-compress-copy.bat"
             Write-Host "[19] 1click-reg-backup.bat"
-            Write-Host "[20] reverse-file-name_and_ext.bat"
+            Write-Host "[20] hide-files-in-plain-sight.bat"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -199,25 +199,11 @@ do {
                 }
                 "8"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/yt-dlp_downloader.bat"
-                    $scriptPath = "$directoryPath\yt-dlp_downloader.bat"
-                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
-                    if (Test-Path $scriptPath) {
-                        & $scriptPath
-                    } else {
-                        Write-Host "Failed to download the script." -ForegroundColor Red
-                    }
+                    Write-Host "Under Construction ..."
                 }
                 "9"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/split-video-by-mins-lossless.bat"
-                    $scriptPath = "$directoryPath\split-video-by-mins-lossless.bat"
-                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
-                    if (Test-Path $scriptPath) {
-                        & $scriptPath
-                    } else {
-                        Write-Host "Failed to download the script." -ForegroundColor Red
-                    }
+                    Write-Host "Under Construction ..."
                 }
                 "10"
                 {
@@ -254,14 +240,7 @@ do {
                 }
                 "13"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/update-choco-scoop-pip-npm-installs.bat"
-                    $scriptPath = "$directoryPath\update-choco-scoop-pip-npm-installs.bat"
-                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
-                    if (Test-Path $scriptPath) {
-                        & $scriptPath
-                    } else {
-                        Write-Host "Failed to download the script." -ForegroundColor Red
-                    }
+                    Write-Host "Under Construction ..."
                 }
                 "14"
                 {
@@ -331,11 +310,11 @@ do {
                 }
                 "20" 
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/reverse-file-name_and_ext.bat"
-                    $scriptPath = "$directoryPath\reverse-file-name_and_ext.bat"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/hide-files-in-plain-sight.bat"
+                    $scriptPath = "$directoryPath\hide-files-in-plain-sight.bat"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
-                        Start-Process -FilePath $scriptPath
+                        & $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
