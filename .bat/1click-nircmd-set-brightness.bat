@@ -1,36 +1,41 @@
 :: ================================================================================================
 :: Description:
-
-@REM 1click Brightness Setter Using NirCmd
-
-:: This script uses NirCmd to set the screen brightness to a 
-:: specified level (CHANGE! in the code below). It checks if NirCmd is 
-:: accessible in the PATH or the current directory and provides 
-:: guidance if it's not found.
+:: Brightness Adjustment (Using NirCMD)
+:: 
+:: This script sets the screen brightness to a predefined level using NirCMD.
+:: It first checks if NirCMD is available before applying the brightness setting.
 ::
 :: Key Features:
-:: - Verifies the availability of NirCmd before proceeding.
-:: - Adjusts screen brightness using NirCmd's `setbrightness` command.
-:: - Displays clear error messages if NirCmd is not found.
+:: - Verifies if `nircmd.exe` is installed and accessible.
+:: - Sets screen brightness to a predefined value (default: 75%).
+:: - Allows users to modify the brightness level easily.
+::
+:: Hard-Coded Details:
+:: - Brightness level is set to `75` by default.
+::
+:: Steps to Update Hard-Coded Details:
+:: 1. Change the brightness value (`nircmd.exe setbrightness 75`) to your preference.
+:: 2. Ensure `nircmd.exe` is added to the system PATH or placed in the script directory.
 ::
 :: Usage:
-:: - Ensure NirCmd is downloaded and accessible in the PATH or 
-::   placed in the script's directory.
-:: - Run the script to set the brightness.
+:: - Run the script to instantly adjust brightness to the specified level.
 ::
 :: Dependencies:
-:: - NirCmd utility (https://www.nirsoft.net/utils/nircmd.html)
+:: - Requires `nircmd.exe` (Download from NirSoft).
 ::
 :: Output:
-:: - Sets screen brightness to the defined level and confirms success.
+:: - Displays confirmation when brightness is adjusted.
 ::
 :: Error Handling:
-:: - Exits with an error message if NirCmd is not found.
+:: - Exits with a message if NirCMD is not found.
+::
+:: Notes:
+:: - Some systems may not support `nircmd.exe setbrightness`, depending on hardware and drivers.
 :: ================================================================================================
+
 
 @echo off
 
-:: Check if nircmd.exe is accessible
 where nircmd.exe >nul 2>&1
 if errorlevel 1 (
     echo NirCmd is not found in the PATH or the current directory.
@@ -39,7 +44,6 @@ if errorlevel 1 (
     exit /b
 )
 
-:: Set brightness
 nircmd.exe setbrightness 75
 echo Brightness set to 75 %.
 
