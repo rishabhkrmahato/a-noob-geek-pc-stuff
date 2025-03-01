@@ -1,8 +1,8 @@
 matches:
 
-  - trigger: ";tarsplit"
-    replace: >
-      "C:\Program Files\7-Zip\7z.exe" a -ttar -v2000m "%USERPROFILE%\Desktop\archive.tar" "PATH_TO_FILE_OR_FOLDER"
-
   # - trigger: ";tarsplit"
-  #   replace: '"C:\Program Files\7-Zip\7z.exe" a -ttar -v2000m "%USERPROFILE%\Desktop\archive.tar" "PATH_TO_FILE_OR_FOLDER"'
+  #   replace: >
+  #     "C:\Program Files\7-Zip\7z.exe" a -ttar -v2000m "%USERPROFILE%\Desktop\archive.tar" "PATH_TO_FILE_OR_FOLDER"
+
+  - trigger: ";tarsplit"
+    replace: '"C:\Program Files\7-Zip\7z.exe" a -ttar -v2000m "%USERPROFILE%\Desktop\archive.tar" "PATH_TO_FILE_OR_FOLDER"'
