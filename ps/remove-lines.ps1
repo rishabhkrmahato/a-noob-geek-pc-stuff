@@ -21,7 +21,7 @@
 #
 # Steps to Update Hard-Coded Details:
 # 1. Update `$filePath` with the full path to your target file.
-# 2. Replace the pattern `'C:\\Users\\mahat\\Documents\\GitHub\\a-noob-geek-pc-stuff\\.git\\objects\\'` 
+# 2. Replace the pattern 'C:\\Users\\mahat\\Documents\\GitHub\\a-noob-geek-pc-stuff\\.git\\objects\\'
 #    with the text pattern you want to remove.
 #
 # Usage:
