@@ -1,145 +1,71 @@
-@echo off
-:: ===================================================================
-:: Script to update all packages for chocolatey, scoop, pip, npm, and winget
-:: Author: rishabhkrm
-:: ===================================================================
+:: ================================================================================================
+:: Description:
+:: Multi-Package Manager Updater
+::
+:: This batch script automates updating multiple package managers 
+:: on Windows. It opens separate elevated terminal windows for each 
+:: package manager and executes their respective update commands.
+::
+:: Key Features:
+:: - Runs update commands for Chocolatey, Scoop, pip, npm, Ruby gems, and winget.
+:: - Uses `Start-Process` in PowerShell to open each command in an elevated terminal.
+:: - Allows additional package managers (e.g., Rust's `rustup` and `cargo`) to be added easily.
+::
+:: Hard-Coded Details:
+:: - `%commands[n]%`: Predefined commands for updating different package managers.
+:: - Currently includes:
+::   - Chocolatey
+::   - Scoop
+::   - pip (Python)
+::   - npm (Node.js)
+::   - gem (Ruby)
+::   - winget (Windows Package Manager)
+::   - Rust (commented out but available for use).
+::
+:: Steps to Update Hard-Coded Details:
+:: 1. Modify the commands list (`set commands[n]=...`) to add/remove package managers.
+:: 2. If using Rust (`rustup` and `cargo`), uncomment `commands[6]` and update the loop range.
+:: 3. Adjust `Start-Process` arguments if needed for different execution behaviors.
+::
+:: Usage:
+:: - Run this script to update all listed package managers.
+:: - Each command runs in a separate elevated terminal window.
+::
+:: Dependencies:
+:: - Windows with administrative privileges.
+:: - Installed package managers (Chocolatey, Scoop, pip, npm, gem, winget, etc.).
+::
+:: Output:
+:: - Each package manager runs in its own command prompt window.
+:: - The user can review updates before closing each window.
+::
+:: Error Handling:
+:: - If a package manager is missing, the respective command will fail silently.
+:: - Users must manually review errors in opened terminals.
+::
+:: Notes:
+:: - The script ensures updates are performed separately to prevent conflicts.
+:: - Commands that require user agreements (`winget`) automatically accept them.
+:: - For interactive updates, modify the commands to remove silent flags.
+:: ================================================================================================
 
-:: Check if the script is running as administrator, if not, prompt to restart as admin
-net session >nul 2>&1
-if %errorLevel% neq 0 (
-    echo.
-    echo ============================================================
-    echo This script requires administrator privileges.
-    echo Please restart it as admin.
-    echo ============================================================
-    pause
-    exit /B
+
+@echo off
+setlocal EnableDelayedExpansion
+
+:: Define commands
+set commands[0]=choco upgrade all -y
+set commands[1]=scoop update
+set commands[2]=pip install --upgrade pip ^&^& pip install --upgrade pip-review ^&^& pip-review --auto
+set commands[3]=npm update -g
+set commands[4]=gem update --system ^&^& gem update ^&^& gem cleanup
+set commands[5]=winget upgrade --all --silent --accept-source-agreements --accept-package-agreements
+@REM set commands[6]=rustup update ^&^& cargo update
+
+:: Loop through each command and open an elevated terminal separately
+@REM for /L %%i in (0,1,6) do (
+for /L %%i in (0,1,5) do (
+    powershell -Command "Start-Process cmd -ArgumentList '/k \"!commands[%%i]! ^& pause ^& exit\"' -Verb RunAs"
 )
 
-:: Intro Section
-echo.
-echo ============================================================
-echo Welcome to the All-in-One Package Updater Script!
-echo This script will update:
-echo   1. Chocolatey packages
-echo   2. Scoop packages
-echo   3. pip Python packages
-echo   4. npm Node.js packages
-echo   5. winget (Windows Package Manager) packages
-echo ============================================================
-echo.
-
-:: Updating Chocolatey packages
-echo ============================================
-echo Updating Chocolatey packages...
-echo ============================================
-choco upgrade all --yes
-echo.
-
-:: Updating Scoop packages
-echo ============================================
-echo Updating Scoop packages...
-echo ============================================
-scoop update --force
-echo.
-
-:: Updating pip packages
-echo ============================================
-echo Updating pip packages...
-echo ============================================
-
-:: Old method for pip update (commented out)
-:: pip list --outdated --format=freeze | findstr /v "pip==" | findstr /v "setuptools==" > outdated.txt
-:: if exist outdated.txt (
-::     for /f "delims==" %%i in (outdated.txt) do (
-::         echo Updating %%i...
-::         pip install --upgrade %%i --upgrade-strategy only-if-needed
-::     )
-::     del outdated.txt
-:: ) else (
-::     echo No outdated pip packages found.
-:: )
-
-pip install pip-review
-pip-review --auto
-echo.
-
-:: Updating npm packages
-echo ============================================
-echo Updating npm packages...
-echo ============================================
-
-:: Old method for npm update (commented out)
-:: npm outdated -g --depth=0 | findstr /v "Package" > npm_outdated.txt
-:: if exist npm_outdated.txt (
-::     for /f "tokens=1" %%j in (npm_outdated.txt) do (
-::         echo Updating %%j...
-::         npm update -g %%j
-::     )
-::     del npm_outdated.txt
-:: ) else (
-::     echo No outdated npm packages found.
-:: )
-
-npm update -g
-echo.
-
-:: Updating winget packages
-echo ============================================
-echo Retrieving list of outdated winget packages...
-echo ============================================
-winget upgrade
-echo.
-echo NOTE: The listed applications will be force-closed for updates.
-echo You have 7 seconds to pause this process if needed.
-echo Press "Ctrl + C" to stop the script.
-timeout /t 7 >nul
-echo.
-
-echo ============================================
-echo Updating winget packages...
-echo ============================================
-winget upgrade --all --silent --force
-echo ============================================
-echo winget updates completed!
-echo ============================================
-
-@REM :: Updating winget packages -complex-logic
-@REM echo ============================================
-@REM echo Updating winget packages...
-@REM echo ============================================
-@REM :: List all outdated packages
-@REM echo Retrieving list of outdated winget packages...
-@REM set "outdated_programs=winget_outdated_list.txt"
-@REM winget upgrade > "%outdated_programs%"
-
-@REM :: Parse the output to get package names
-@REM echo.
-@REM echo The following programs will be updated:
-@REM echo ------------------------------------------------------------
-@REM findstr "Available" "%outdated_programs%" | findstr /v "No packages" > outdated_cleaned.txt
-@REM for /f "tokens=1 delims= " %%i in (outdated_cleaned.txt) do echo - %%i
-@REM echo ------------------------------------------------------------
-@REM echo NOTE: The listed applications will be force-closed for updates.
-@REM echo You have 5 seconds to pause this process if needed.
-@REM timeout /t 5 >nul
-@REM echo.
-
-@REM :: Perform updates with force-close enabled
-@REM for /f "tokens=1 delims= " %%i in (outdated_cleaned.txt) do (
-@REM     echo Force updating %%i...
-@REM     winget upgrade --id %%i --silent --force
-@REM )
-@REM :: Clean up temporary files
-@REM del "%outdated_programs%" outdated_cleaned.txt
-@REM echo ============================================
-@REM echo winget updates completed!
-@REM echo ============================================
-echo.
-
-:: Completion message
-echo ============================================================
-echo All updates are complete!
-echo ============================================================
-pause
-exit /b
+endlocal
