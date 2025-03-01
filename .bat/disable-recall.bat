@@ -1,3 +1,40 @@
+:: ================================================================================================
+:: Description:
+:: Recall Feature Management Tool
+::
+:: This batch script provides an interactive menu to manage the Windows Recall feature.
+:: It allows users to check the status, enable, or disable the feature using `Dism`.
+::
+:: Key Features:
+:: - Ensures administrative privileges before execution.
+:: - Provides an easy-to-use menu for Recall feature management.
+:: - Uses `Dism` to get, enable, or disable the Recall feature.
+:: - Prompts for a restart after enabling or disabling the feature.
+::
+:: Usage:
+:: - Run the script as an administrator.
+:: - Select an option from the menu:
+::   [1] Get Recall Feature Status → Displays whether Recall is enabled.
+::   [2] Disable Recall Feature    → Disables the Recall feature.
+::   [3] Enable Recall Feature     → Enables the Recall feature.
+::   [4] Exit                      → Closes the script.
+::
+:: Dependencies:
+:: - Windows with `Dism` (Deployment Image Servicing and Management) available.
+::
+:: Output:
+:: - Console output showing Recall feature status and any changes made.
+::
+:: Error Handling:
+:: - If the script is not run as an administrator, it will exit with a message.
+:: - If `Dism` commands fail, Windows will display relevant error messages.
+::
+:: Notes:
+:: - Restart is required after enabling or disabling Recall.
+:: - The user is prompted to set a custom restart delay after changes.
+:: ================================================================================================
+
+
 @echo off
 title Recall Feature Management Tool
 
@@ -83,3 +120,24 @@ echo Restarting in %minutes% minutes. Save your work!
 echo ============================================================
 pause
 goto menu
+
+@REM :: minified form below
+@REM @echo off
+@REM openfiles >nul 2>&1 || (echo Run as Administrator. & pause & exit /b)
+
+@REM :menu
+@REM cls
+@REM echo 1. Get Status  2. Disable  3. Enable  4. Exit
+@REM set /p "c=Choice: "
+@REM if "%c%"=="1" (Dism /Online /Get-Features | findstr /i "Recall" & pause & goto menu)
+@REM if "%c%"=="2" (Dism /Online /Disable-Feature /FeatureName:Recall /NoRestart & echo Disabled. & goto restart)
+@REM if "%c%"=="3" (Dism /Online /Enable-Feature /FeatureName:Recall /NoRestart & echo Enabled. & goto restart)
+@REM if "%c%"=="4" exit /b
+@REM goto menu
+
+@REM :restart
+@REM set /p "m=Restart in minutes (1-60): "
+@REM echo %m% | findstr /r "^[1-9][0-9]*$" >nul || (echo Invalid input. & pause & goto restart)
+@REM shutdown /r /t %m%0
+@REM echo Restarting in %m% min. Save work!
+@REM pause
