@@ -1,22 +1,16 @@
 matches:
 
-  # - trigger: ";windows"
-  #   replace: "C:\\WINDOWS"
-
   - trigger: ";sys32"
-    replace: "C:\\WINDOWS\\system32"
+    replace: "%SYSTEMROOT%\\System32"
 
-  - trigger: ";pgfs"
-    replace: "%ProgramFiles%"
+  - trigger: ";pgf"
+    replace: "%PROGRAMFILES%"
 
-  - trigger: ";pgfs86"
-    replace: "%ProgramFiles(x86)%"
+  - trigger: ";32pgf"
+    replace: "%PROGRAMFILES(x86)%"
 
   - trigger: ";pgd"
-    replace: "%ProgramData%"
-
-  # - trigger: ";users"
-  #   replace: "C:\\Users"
+    replace: "%PROGRAMDATA%"
 
   - trigger: ";desktop"
     replace: "%USERPROFILE%\\Desktop"
@@ -46,4 +40,5 @@ matches:
   #   replace: "%TEMP%"
 
   - trigger: ";espanso"
-    replace: 'C:\Users\mahat\AppData\Roaming\espanso\match'
+    replace: "%APPDATA%\\espanso\\match"
+
