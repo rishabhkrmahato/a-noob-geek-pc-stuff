@@ -5,3 +5,6 @@ matches:
 
   - trigger: ";jfin"
     replace: "http://localhost:8096"
+
+  - trigger: ";listfile"
+    replace: "dir /s /b > output.txt"
