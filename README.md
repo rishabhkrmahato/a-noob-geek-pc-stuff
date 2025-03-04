@@ -63,15 +63,15 @@ irm https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/
 ## Repository Structure 📁🔧📂
 
 - **Batch Scripts ([.bat/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/.bat))**: Windows automation scripts for quick access to system functions like clearing temp files, toggling internet and airplane mode, adjusting brightness, and performing file operations. Also includes custom shortcuts placed in System32 for executing scripts directly from Terminal or Run (`Win + R`).
-&nbsp;
-- **Bash Scripts ([bash/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/bash))**: Scripts for Linux and Termux to automate package management, download YouTube videos using yt-dlp, modify files, and perform common system tasks with minimal user input.  
-&nbsp;
-- **PowerShell Scripts ([ps/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/ps))**: Windows automation and system management scripts for listing installed programs, modifying registry settings, handling files, and executing useful system tweaks with minimal manual work.  
-&nbsp;
-- **Python Scripts ([py/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/py))**: Utility programs for various tasks such as renaming and organizing files, generating secure passwords, processing text data, and automating repetitive actions using Python.  
-&nbsp;
-- **C Programs ([c/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/c))**: Hello World! :) 
-&nbsp;
+
+- **Bash Scripts ([bash/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/bash))**: Scripts for Linux and Termux to automate package management, download YouTube videos using yt-dlp, modify files, and perform common system tasks with minimal user input.
+  
+- **PowerShell Scripts ([ps/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/ps))**: Windows automation and system management scripts for listing installed programs, modifying registry settings, handling files, and executing useful system tweaks with minimal manual work.
+  
+- **Python Scripts ([py/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/py))**: Utility programs for various tasks such as renaming and organizing files, generating secure passwords, processing text data, and automating repetitive actions using Python.
+  
+- **C Programs ([c/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/c))**: Hello World! :)
+ 
 - **Miscellaneous ([misc/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/misc))**: Contains configuration files, registry tweaks, and additional tools for system customization. Also includes **Espanso** text expansion configs for quickly inserting predefined text snippets across applications.  
 
 ***
