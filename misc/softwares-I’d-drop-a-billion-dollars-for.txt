@@ -15,3 +15,5 @@
 	ESPANSO (awesome!)
 
 	KDE Connect 💘
+
+	RESCUEZILLA (clonezilla GUI) [https://github.com/rescuezilla/rescuezilla]
