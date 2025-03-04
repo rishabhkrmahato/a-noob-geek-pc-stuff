@@ -2,6 +2,6 @@ matches:
   - trigger: ";inr"
     replace: "₹"
 
-  - triggers: ["rupee", "rupees", "inr"]
+  - triggers: ["rupee", "rupees", "inr", "rs"]
     replace: "₹"
     word: true
