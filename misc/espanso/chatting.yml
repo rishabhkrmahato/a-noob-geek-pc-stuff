@@ -263,3 +263,7 @@ matches:
   - trigger: "whats"
     replace: "what's"
     word: true
+
+  - trigger: "ans" 
+    replace: "answer"
+    word: true
