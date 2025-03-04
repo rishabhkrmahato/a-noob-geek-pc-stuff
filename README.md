@@ -8,7 +8,7 @@ Built for convenience, each tool focuses on making small improvements to the sys
 
 ---
 
-## Star Product ⭐🔥
+## Star Product 🔥⭐🔥
 
 ### [BEST-YOUTUBE-DOWNLOADER.py](py/BEST-YOUTUBE-DOWNLOADER.py)
 
@@ -21,7 +21,7 @@ A Python script that automates the downloading of YouTube videos and playlists u
 
 <!-- To get started, follow these simple steps: -->
 
-To get started with my tools, you have two easy options:
+To get started with my tools, you have few easy options:
 
 #### **--Option 1: Quick One-Liner ! RECOMMENDED !**
 You can instantly run my tools without downloading the repository by using the following PowerShell command:
@@ -33,7 +33,6 @@ _Terminal(admin) > powershell > run-this command_
 ```powershell
 irm https://bit.ly/rkm-tools-raw | iex
 ```
-
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7fc176c3-4870-4ebe-842e-21b0e7cbcb22) -->
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7dc98ed5-edd2-48fd-b994-6079d6d1e8c0) -->
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/317af3b0-4348-4c24-b0a9-1e5785a9d02c) -->
@@ -57,37 +56,31 @@ irm https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/
 3. **Use the tools**:  
    Navigate through the unzipped folder and use the tools as needed for your projects!
 
+#### **-- Option 3: Check out the [realeases-page](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/releases)**
+
+---
+
+## Repository Structure 📁🔧📂
+
+- **Batch Scripts ([.bat/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/.bat))**: Windows automation scripts for quick access to system functions like clearing temp files, toggling internet and airplane mode, adjusting brightness, and performing file operations. Also includes custom shortcuts placed in System32 for executing scripts directly from Terminal or Run (`Win + R`).
+&nbsp;
+- **Bash Scripts ([bash/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/bash))**: Scripts for Linux and Termux to automate package management, download YouTube videos using yt-dlp, modify files, and perform common system tasks with minimal user input.  
+&nbsp;
+- **PowerShell Scripts ([ps/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/ps))**: Windows automation and system management scripts for listing installed programs, modifying registry settings, handling files, and executing useful system tweaks with minimal manual work.  
+&nbsp;
+- **Python Scripts ([py/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/py))**: Utility programs for various tasks such as renaming and organizing files, generating secure passwords, processing text data, and automating repetitive actions using Python.  
+&nbsp;
+- **C Programs ([c/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/c))**: Hello World! :) 
+&nbsp;
+- **Miscellaneous ([misc/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/misc))**: Contains configuration files, registry tweaks, and additional tools for system customization. Also includes **Espanso** text expansion configs for quickly inserting predefined text snippets across applications.  
+
 ***
 
 __EXPLORE !__ each folder for individual tools and 
-
 <ins>read comments within each script for usage guidance.</ins>
 
 ***
 
-## Repository Structure 📁🔧📂
-
-- **Batch Scripts ([.bat/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/.bat)
-)**: 
-
-Automate repetitive actions like clearing temp files, toggling network settings, and brightness adjustments.
-- **Bash Scripts ([bash/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/bash))**:
-
-Useful scripts for linux eg. downloading content on Android using Termux(yt-dlp).
-- **PowerShell Scripts ([ps/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/ps))**:
-
-Scripts for Windows management, like listing all installed programs.
-- **Python Scripts ([py/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/py))**:
-
-Small programs for tasks like file manipulation, password generation, and file splitting/joining.
-- **C Programs ([c/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/c))**:
-
-Hello World! :)
-- **Miscellaneous ([misc/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/misc))**:
-
-Config files, registry tweaks, and additional tools for Windows management.
-
----
 
 ## Contributing & License 🤝📝⚖️
 
