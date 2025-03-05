@@ -2,276 +2,340 @@ matches:
 
   - trigger: "u"
     replace: "you"
+    propagate_case: true
     word: true
 
   - trigger: "r"
     replace: "are"
+    propagate_case: true
     word: true
 
   - trigger: "i"
     replace: "I"
+    propagate_case: true
     word: true
 
   - trigger: "ok"
     replace: "okay"
+    propagate_case: true
     word: true
 
   - trigger: "imp"
     replace: "important"
+    propagate_case: true
     word: true
 
   - trigger: "ur"
     replace: "your"
-    word: true
-
-  - trigger: "dont"
-    replace: "don't"
+    propagate_case: true
     word: true
 
   - trigger: "pls"
     replace: "please"
+    propagate_case: true
     word: true
 
   - trigger: "thx"
     replace: "thanks"
+    propagate_case: true
     word: true
 
   - trigger: "ty"
     replace: "thank you"
+    propagate_case: true
     word: true
 
   - trigger: "np"
     replace: "no problem"
+    propagate_case: true
     word: true
 
   - trigger: "u2"
     replace: "you too"
+    propagate_case: true
     word: true
 
   - trigger: "brb"
     replace: "be right back"
+    propagate_case: true
     word: true
 
   - trigger: "ttyl"
     replace: "talk to you later"
+    propagate_case: true
     word: true
 
   - trigger: "idk"
     replace: "I don't know"
+    propagate_case: true
     word: true
 
   - trigger: "imo"
     replace: "in my opinion"
+    propagate_case: true
     word: true
 
   - trigger: "btw"
     replace: "by the way"
+    propagate_case: true
     word: true
 
   - trigger: "tbh"
     replace: "to be honest"
+    propagate_case: true
     word: true
 
   - trigger: "afaik"
     replace: "as far as I know"
+    propagate_case: true
     word: true
 
   - trigger: "irl"
     replace: "in real life"
+    propagate_case: true
     word: true
 
   - trigger: "fyi"
     replace: "for your information"
+    propagate_case: true
     word: true
 
   - trigger: "asap"
     replace: "as soon as possible"
+    propagate_case: true
     word: true
 
   - trigger: "bbl"
     replace: "be back later"
+    propagate_case: true
     word: true
 
   - trigger: "lmk"
     replace: "let me know"
+    propagate_case: true
     word: true
 
   - trigger: "ikr"
     replace: "I know right"
+    propagate_case: true
     word: true
 
   - trigger: "hbu"
     replace: "how about you"
+    propagate_case: true
     word: true
 
   - trigger: "wbu"
     replace: "what about you?"
+    propagate_case: true
     word: true
 
   - trigger: "omg"
     replace: "oh my god"
+    propagate_case: true
     word: true
 
   - trigger: "oml"
     replace: "oh my lord"
+    propagate_case: true
     word: true
 
   - trigger: "omw"
     replace: "on my way"
+    propagate_case: true
     word: true
 
   - trigger: "gg"
     replace: "good game"
+    propagate_case: true
     word: true
 
   - trigger: "GG"
     replace: "GOOD GAME"
+    propagate_case: true
     word: true
 
   - trigger: "glhf"
     replace: "good luck, have fun"
+    propagate_case: true
     word: true
 
   - trigger: "hf"
     replace: "have fun"
+    propagate_case: true
     word: true
 
   - trigger: "gl"
     replace: "good luck"
+    propagate_case: true
     word: true
 
   - trigger: "wyd"
     replace: "what are you doing?"
+    propagate_case: true
     word: true
 
   - trigger: "wdym"
     replace: "what do you mean?"
+    propagate_case: true
     word: true
 
   - trigger: "nvm"
     replace: "never mind"
+    propagate_case: true
     word: true
 
   - trigger: "ggwp"
     replace: "good game, well played"
+    propagate_case: true
     word: true
 
   - trigger: "wp"
     replace: "well played"
+    propagate_case: true
     word: true
 
   - trigger: "yolo"
     replace: "you only live once"
+    propagate_case: true
     word: true
 
   - trigger: "rofl"
     replace: "rolling on the floor laughing"
+    propagate_case: true
     word: true
 
   - trigger: "lmao"
     replace: "laughing my 4ss off"
+    propagate_case: true
     word: true
 
   - trigger: "lol"
     replace: "laugh out loud"
+    propagate_case: true
     word: true
 
   - trigger: "xoxo"
     replace: "hugs and kisses"
+    propagate_case: true
     word: true
 
   - trigger: "bff"
     replace: "best friends forever"
+    propagate_case: true
     word: true
 
   - trigger: "wtf"
     replace: "what the fcuk"
+    propagate_case: true
     word: true
 
   - trigger: "stfu"
     replace: "shut the fcuk up"
+    propagate_case: true
     word: true
 
   - trigger: "tldr"
     replace: "too long, didn't read"
+    propagate_case: true
     word: true
 
   - trigger: "jk"
     replace: "just kidding"
+    propagate_case: true
     word: true
 
   - trigger: "dm"
     replace: "direct message"
+    propagate_case: true
     word: true
 
   - trigger: "afk"
     replace: "away from keyboard"
+    propagate_case: true
     word: true
 
   - trigger: "bday"
     replace: "birthday"
+    propagate_case: true
     word: true
 
   - trigger: "hbd"
     replace: "Happy Birthday!"
+    propagate_case: true
     word: true
 
   - trigger: "ily"
     replace: "I love you"
+    propagate_case: true
     word: true
 
   - trigger: "msg"
     replace: "message"
+    propagate_case: true
     word: true
 
   - trigger: "cya"
     replace: "see you"
+    propagate_case: true
     word: true
 
   - trigger: "ez"
     replace: "easy"
+    propagate_case: true
     word: true
 
   - trigger: "ezpz"
     replace: "easy peasy lemon squeezy"
+    propagate_case: true
     word: true
 
   - trigger: "idc"
     replace: "I don’t care"
+    propagate_case: true
     word: true
 
   - trigger: "rip"
     replace: "rest in peace"
+    propagate_case: true
     word: true
 
   - trigger: "nt"
     replace: "nice try"
+    propagate_case: true
     word: true
 
   - trigger: "sry"
     replace: "sorry"
+    propagate_case: true
     word: true
 
   - trigger: "ow2"
     replace: "overwatch-2"
+    propagate_case: true
     word: true
 
   - trigger: "cs2"
     replace: "counter-strike-2"
+    propagate_case: true
     word: true
 
   - triggers: ["gr8", "grt"]
     replace: "great"
+    propagate_case: true
     word: true
 
   - triggers: ["gtg", "g2g"]
     replace: "got to go"
-    word: true
-
-  - trigger: "whats"
-    replace: "what's"
+    propagate_case: true
     word: true
 
   - trigger: "ans" 
     replace: "answer"
+    propagate_case: true
+    word: true
+
+  - trigger: "urself" 
+    replace: "yourself"
+    propagate_case: true
     word: true
