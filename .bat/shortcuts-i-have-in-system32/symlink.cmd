@@ -1,31 +1,47 @@
-:: make sure to call in ADMIN terminal when required.
+:: Make sure to call in ADMIN terminal when required.
 
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
-:: Ask user for the source file path
-set /p source="Enter source file path: "
-set "source=%source:"=%"  &:: Remove surrounding quotes if present
+:: Prompt user for the source path(s)
+set /p sources="Enter source file or folder path(s): "
 
-:: Check if the file exists
-if not exist "%source%" (
-    echo File does not exist!
-    pause
-    exit /b
+:: Process each source input
+for %%A in (%sources%) do (
+    set "source=%%~A"
+    set "source=!source:"=!"  &:: Remove surrounding quotes if present
+
+    :: Validate existence
+    if not exist "!source!" (
+        echo ERROR: "!source!" does not exist. Please check the path and try again.
+        echo Make sure to enter correct paths, check for spaces, and use quotes if necessary.
+        echo Example: "C:\path with spaces\file.txt" or multiple files: "file1.txt" "file2.txt"
+        pause
+        exit /b
+    )
+
+    :: Get filename or folder name
+    for %%F in ("!source!") do set "name=%%~nxF"
+
+    :: Get current directory (where script is executed)
+    set "targetDir=%CD%"
+
+    :: Determine if it's a file or a directory
+    if exist "!source!\*" (
+        :: It's a directory
+        mklink /D "!targetDir!\!name!" "!source!" >nul 2>&1
+        set "type=Directory"
+    ) else (
+        :: It's a file
+        mklink "!targetDir!\!name!" "!source!" >nul 2>&1
+        set "type=File"
+    )
+
+    :: Notify user
+    if !errorlevel! == 0 (
+        echo Symlink created successfully for !type!: "!name!"
+    ) else (
+        echo Failed to create symlink for !type! "!name!". Ensure you have administrative privileges.
+    )
 )
-
-:: Get the current directory (where script was executed)
-set "targetDir=%CD%"
-
-:: Extract filename from the source path
-for %%F in ("%source%") do set "filename=%%~nxF"
-
-:: Create the symlink in the current directory
-mklink "%targetDir%\%filename%" "%source%" >nul 2>&1
-
-:: Notify user
-if %errorlevel%==0 (
-    echo Symlink created successfully: "%filename%"
-) else (
-    echo Failed to create symlink! Ensure you have administrative privileges.
-)
+@REM pause
