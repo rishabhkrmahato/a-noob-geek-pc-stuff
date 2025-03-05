@@ -1,43 +1,47 @@
 # ================================================================================================
-# 
 # Description:
+# System Event Counter (Shutdown/Sleep/BSOD...)
 # 
-# System Event Counter and Report Generator
-# 
-# This PowerShell script analyzes the Windows System Event Log to count 
-# and detail specific system events such as sleep, wake, shutdown, 
-# fast shutdown, restart, and BSOD (Blue Screen of Death). The results 
-# are summarized in the terminal and saved as a detailed report in a text file.
+# This script retrieves system event logs for shutdown, sleep, wake, restart,
+# and blue screen (BSOD) events. It generates a summary and saves detailed 
+# event logs to a text file.
 #
 # Key Features:
-# - Requires administrative privileges to access system logs.
-# - Retrieves and counts specific event types using Event IDs:
-#   - Sleep: Event ID 42
-#   - Wake: Event ID 1
-#   - Shutdown: Event ID 1074
-#   - Fast Shutdown: Event ID 109
-#   - Restart: Event ID 1074
-#   - BSOD: Event ID 1001
-# - Generates a detailed report with timestamps, IDs, and messages.
-# - Provides a summary of event counts in the terminal.
+# - Requires administrative privileges to access system event logs.
+# - Checks for PowerShell version 5.1+ before running.
+# - Retrieves specific event logs (Shutdown, Sleep, Wake, Restart, BSOD).
+# - Displays a summary in the terminal with aligned formatting.
+# - Saves a detailed event report to a file.
+#
+# Hard-Coded Details:
+# - `OutputFile = "$env:SystemDrive\shut-sleep-wake-restart-bsod-counter.txt"`
+# - Retrieves logs from the Windows 'System' event log.
+#
+# Steps to Update Hard-Coded Details:
+# 1. Modify `$OutputFile` to change the report storage location.
+# 2. Adjust `$EventIDs` if additional system events need to be tracked.
 #
 # Usage:
-# - Run this script as an administrator.
-# - The detailed report will be saved to `%SystemDrive%\shut-sleep-wake-restart-bsod-counter.txt`.
+# - Run the script as an administrator.
+# - The event summary is displayed in the terminal.
+# - A detailed event log is saved to a text file.
 #
 # Dependencies:
-# - Requires PowerShell 5.1 or later.
-# - Administrative privileges to access system logs.
+# - Windows Event Viewer (`Get-WinEvent` is used to fetch logs).
 #
 # Output:
-# - Terminal: Displays a summary of the event counts.
-# - File: Saves a detailed report of the events in a text file.
+# - Summary of event counts displayed in the terminal.
+# - Detailed event log stored in `shut-sleep-wake-restart-bsod-counter.txt`.
 #
 # Error Handling:
-# - Exits with a message if the script is not run with administrative privileges.
+# - Displays an error if the script is not run with administrative privileges.
+# - Handles cases where logs may be cleared or inaccessible.
+#
+# Notes:
+# - If event logs are cleared, the script may show zero counts.
 # ================================================================================================
 
-# Ensure the script runs with administrative privileges
+
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Host "This script requires administrative privileges." -ForegroundColor Red
     Write-Host "Right-click the script and select 'Run as administrator' to proceed." -ForegroundColor Yellow
