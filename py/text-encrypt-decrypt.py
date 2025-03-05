@@ -120,13 +120,17 @@ def get_input(title, prompt):
 def generate_key():
     if not os.path.exists(KEY_FILE):
         key = Fernet.generate_key()
+        key_path = os.path.abspath(KEY_FILE)
         with open(KEY_FILE, "wb") as key_file:
             key_file.write(key)
         print()
         print(f"[INFO] Key file '{KEY_FILE}' created. Keep it safe!")
+        print(f"[INFO] Key file location: {key_path}")
     else:
+        key_path = os.path.abspath(KEY_FILE)
         print()
         print(f"[INFO] Key file '{KEY_FILE}' already exists.")
+        print(f"[INFO] Key file location: {key_path}")
 
 # Load Key
 def load_key():
