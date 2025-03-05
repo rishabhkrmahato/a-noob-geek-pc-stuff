@@ -1,0 +1,44 @@
+:root {
+    --bg-color: white;
+    --text-color: black;
+    --link-color: #0366d6;
+    --nav-bg-color: #f6f8fa;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode a {
+    color: #6bbaff;
+}
+
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #fff;
+    color: black;
+    padding: 10px 15px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background 0.4s ease, color 0.4s ease, transform 0.2s ease;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background: black;
+    color: white;
+    transform: rotate(180deg);
+}

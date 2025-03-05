@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title | default: site.github.repository_name }}</title>
+    
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    
+    <!-- Cayman theme CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/cayman.css' | relative_url }}">
+
+</head>
+<body>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    <main class="container">
+        {{ content }}
+    </main>
+
+    <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
+
+</body>
+</html>

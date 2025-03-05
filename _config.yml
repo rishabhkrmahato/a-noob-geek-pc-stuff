@@ -1,6 +1,4 @@
-# Jekyll Themes for GitHub Pages
-
-theme: jekyll-theme-cayman
+# other Jekyll Themes for GitHub Pages
 # theme: jekyll-theme-minimal
 # theme: jekyll-theme-architect
 # theme: jekyll-theme-hacker
@@ -11,3 +9,8 @@ theme: jekyll-theme-cayman
 # theme: jekyll-theme-slate
 # theme: jekyll-theme-tactile
 # theme: jekyll-theme-time-machine
+
+theme: jekyll-theme-cayman
+include:
+  - _layouts
+  - assets
