@@ -36,7 +36,9 @@ irm https://bit.ly/rkm-tools-raw | iex
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7fc176c3-4870-4ebe-842e-21b0e7cbcb22) -->
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7dc98ed5-edd2-48fd-b994-6079d6d1e8c0) -->
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/317af3b0-4348-4c24-b0a9-1e5785a9d02c) -->
-![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/1938cb59-eabf-463e-b1ef-bec90c553a13)
+<!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/1938cb59-eabf-463e-b1ef-bec90c553a13) -->
+![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/143392bf-127d-4f20-a8d9-85d450ab79aa)
+
 
 
 Alternatively, use the full URL:
@@ -56,7 +58,7 @@ irm https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/
 3. **Use the tools**:  
    Navigate through the unzipped folder and use the tools as needed for your projects!
 
-#### **-- Option 3: Check out the [realeases-page](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/releases)**
+#### **-- Option 3: Check out the [releases-page](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/releases)**
 
 ---
 
