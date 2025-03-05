@@ -17,3 +17,7 @@
 	KDE Connect 💘
 
 	RESCUEZILLA (clonezilla GUI) [https://github.com/rescuezilla/rescuezilla]
+
+	http-server [https://github.com/http-party/http-server]
+
+	
