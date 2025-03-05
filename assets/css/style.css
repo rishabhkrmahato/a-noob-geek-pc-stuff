@@ -1,40 +1,43 @@
 :root {
-    --bg-color: white;
-    --text-color: black;
-    --link-color: #0366d6;
-    --nav-bg-color: #f6f8fa;
+    --bg-color-light: white;
+    --text-color-light: black;
+    --bg-color-dark: #1e1e1e;
+    --text-color-dark: #e0e0e0;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body.dark-mode {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
 }
 
 body.dark-mode a {
     color: #6bbaff;
 }
 
+/* Keep Cayman Theme's Fonts */
+body, h1, h2, h3, p {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Dark Mode Toggle Button */
 .dark-mode-toggle {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    background: #fff;
-    color: black;
+    background: #0366d6; /* Match Cayman's blue */
+    color: white;
     padding: 10px 15px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
     font-size: 20px;
-    transition: background 0.4s ease, color 0.4s ease, transform 0.2s ease;
+    transition: background 0.4s ease, transform 0.2s ease;
 }
 
 body.dark-mode .dark-mode-toggle {

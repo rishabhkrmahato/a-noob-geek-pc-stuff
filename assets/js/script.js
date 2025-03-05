@@ -1,23 +1,24 @@
 function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
 
-    // Get button
     let button = document.querySelector(".dark-mode-toggle");
 
-    // Check current mode & set correct icon
     if (document.body.classList.contains("dark-mode")) {
-        button.innerHTML = "🌙"; // Show Moon in Dark Mode
+        button.innerHTML = "🌙";
         localStorage.setItem("darkMode", "enabled");
     } else {
-        button.innerHTML = "☀️"; // Show Sun in Light Mode
+        button.innerHTML = "☀️";
         localStorage.setItem("darkMode", "disabled");
     }
 }
 
-// Apply mode on page load (Default = Dark Mode)
-if (localStorage.getItem("darkMode") !== "disabled") {
-    document.body.classList.add("dark-mode");
-    document.querySelector(".dark-mode-toggle").innerHTML = "🌙"; // Moon for Dark Mode
-} else {
-    document.querySelector(".dark-mode-toggle").innerHTML = "☀️"; // Sun for Light Mode
-}
+// Apply mode on page load (Default = Light Mode)
+document.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode");
+    }
+    let button = document.querySelector(".dark-mode-toggle");
+    if (button) {
+        button.innerHTML = document.body.classList.contains("dark-mode") ? "🌙" : "☀️";
+    }
+});
