@@ -544,8 +544,9 @@ do {
             Write-Host "[10] BEST-YOUTUBE-DOWNLOADER.py"
             Write-Host "[11] bookmarks.html-to-text-csv.py"
             Write-Host "[12] ytmusic-multi-search.py"
+            Write-Host "[13] text-encrypt-decrypt.py"
             Write-Host ""
-            Write-Host "[13] split-join-files program"
+            Write-Host "[14] split-join-files program"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -699,6 +700,18 @@ do {
                     }
                 }
                 "13"
+                {
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/py/text-encrypt-decrypt.py"
+                    $scriptPath = "$directoryPath\text-encrypt-decrypt.py"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        python $scriptPath
+                        # Start-Process python -ArgumentList $scriptPath
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "14"
                 {
                     Clear-Host
                     Write-Host ""
