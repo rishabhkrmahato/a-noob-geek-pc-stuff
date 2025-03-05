@@ -1,0 +1,242 @@
+matches:
+
+  - trigger: "teh"
+    replace: "the"
+    propagate_case: true
+    word: true
+
+  - trigger: "adn"
+    replace: "and"
+    propagate_case: true
+    word: true
+
+  - trigger: "thier"
+    replace: "their"
+    propagate_case: true
+    word: true
+
+  - trigger: "recieve"
+    replace: "receive"
+    propagate_case: true
+    word: true
+
+  - trigger: "adress"
+    replace: "address"
+    propagate_case: true
+    word: true
+
+  - trigger: "seperate"
+    replace: "separate"
+    propagate_case: true
+    word: true
+
+  - trigger: "wich"
+    replace: "which"
+    propagate_case: true
+    word: true
+
+  - trigger: "definately"
+    replace: "definitely"
+    propagate_case: true
+    word: true
+
+  - trigger: "occured"
+    replace: "occurred"
+    propagate_case: true
+    word: true
+
+  - trigger: "untill"
+    replace: "until"
+    propagate_case: true
+    word: true
+
+
+  - trigger: "beleive"
+    replace: "believe"
+    propagate_case: true
+    word: true
+
+  - trigger: "wierd"
+    replace: "weird"
+    propagate_case: true
+    word: true
+
+  - trigger: "enviroment"
+    replace: "environment"
+    propagate_case: true
+    word: true
+
+  - trigger: "experiance"
+    replace: "experience"
+    propagate_case: true
+    word: true
+
+  - trigger: "arguement"
+    replace: "argument"
+    propagate_case: true
+    word: true
+
+  - trigger: "concious"
+    replace: "conscious"
+    propagate_case: true
+    word: true
+
+  - trigger: "truely"
+    replace: "truly"
+    propagate_case: true
+    word: true
+
+  - trigger: "embarass"
+    replace: "embarrass"
+    propagate_case: true
+    word: true
+
+  - trigger: "comming"
+    replace: "coming"
+    propagate_case: true
+    word: true
+
+  - trigger: "neccessary"
+    replace: "necessary"
+    propagate_case: true
+    word: true
+
+  - trigger: "ocassion"
+    replace: "occasion"
+    propagate_case: true
+    word: true
+
+  - trigger: "recomend"
+    replace: "recommend"
+    propagate_case: true
+    word: true
+
+  - trigger: "tomatos"
+    replace: "tomatoes"
+    propagate_case: true
+    word: true
+
+  - trigger: "succesful"
+    replace: "successful"
+    propagate_case: true
+    word: true
+
+  - trigger: "possesion"
+    replace: "possession"
+    propagate_case: true
+    word: true
+
+  - trigger: "goverment"
+    replace: "government"
+    propagate_case: true
+    word: true
+
+  - trigger: "gratefull"
+    replace: "grateful"
+    propagate_case: true
+    word: true
+
+  - trigger: "publically"
+    replace: "publicly"
+    propagate_case: true
+    word: true
+
+  - trigger: "privledge"
+    replace: "privilege"
+    propagate_case: true
+    word: true
+
+  - trigger: "maintainance"
+    replace: "maintenance"
+    propagate_case: true
+    word: true
+
+  - trigger: "concieve"
+    replace: "conceive"
+    propagate_case: true
+    word: true
+
+  - trigger: "equiptment"
+    replace: "equipment"
+    propagate_case: true
+    word: true
+
+  - trigger: "suprise"
+    replace: "surprise"
+    propagate_case: true
+    word: true
+
+  - trigger: "tommorow"
+    replace: "tomorrow"
+    propagate_case: true
+    word: true
+
+  - trigger: "truely"
+    replace: "truly"
+    propagate_case: true
+    word: true
+
+  - trigger: "happend"
+    replace: "happened"
+    propagate_case: true
+    word: true
+
+  - trigger: "dependant"
+    replace: "dependent"
+    propagate_case: true
+    word: true
+
+  - trigger: "threshhold"
+    replace: "threshold"
+    propagate_case: true
+    word: true
+
+  - trigger: "defendent"
+    replace: "defendant"
+    propagate_case: true
+    word: true
+
+  - trigger: "perseverence"
+    replace: "perseverance"
+    propagate_case: true
+    word: true
+
+  - trigger: "personell"
+    replace: "personnel"
+    propagate_case: true
+    word: true
+
+  - trigger: "liason"
+    replace: "liaison"
+    propagate_case: true
+    word: true
+
+  - trigger: "calender"
+    replace: "calendar"
+    propagate_case: true
+    word: true
+
+  - trigger: "refered"
+    replace: "referred"
+    propagate_case: true
+    word: true
+
+  - trigger: "occurence"
+    replace: "occurrence"
+    propagate_case: true
+    word: true
+
+  - trigger: "arguement"
+    replace: "argument"
+    propagate_case: true
+    word: true
+
+  - trigger: "volounteer"
+    replace: "volunteer"
+    propagate_case: true
+    word: true
+
+  - trigger: "independance"
+    replace: "independence"
+    propagate_case: true
+    word: true
