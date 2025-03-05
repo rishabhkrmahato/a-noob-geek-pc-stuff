@@ -1,0 +1,44 @@
+matches:
+  - trigger: ";;b"
+    replace: "**bold**"
+    word: true
+
+  - trigger: ";;i"
+    replace: "_italic_"
+    word: true
+
+  - trigger: ";;c"
+    replace: "`inline code`"
+    word: true
+
+  - trigger: ";;cb"
+    replace: "```\ncode block\n```"
+    word: true
+
+  - trigger: ";;l"
+    replace: "[Link](https://example.com)"
+    word: true
+
+  - trigger: ";;ul"
+    replace: "- Item 1\n- Item 2\n- Item 3"
+    word: true
+
+  - trigger: ";;ol"
+    replace: "1. First\n2. Second\n3. Third"
+    word: true
+
+  - trigger: ";;comment"
+    replace: "<!-- This is a comment -->"
+    word: true
+
+  - trigger: ";;mlcomment"
+    replace: "<!--\nThis is a multi-line comment\n--> "
+    word: true
+
+  - trigger: ";;bcomment"
+    replace: "> [!NOTE] This is a visible Markdown comment"
+    word: true
+
+  - trigger: ";;todo"
+    replace: "- [ ] Task 1\n- [ ] Task 2\n- [ ] Task 3\n"
+    word: true
