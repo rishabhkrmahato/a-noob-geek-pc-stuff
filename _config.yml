@@ -1,2 +1,4 @@
-theme: jekyll-theme-minimal-mistakes
+remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: "dark"
+plugins:
+  - jekyll-remote-theme
