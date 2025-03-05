@@ -24,6 +24,10 @@ matches:
     replace: "your"
     word: true
 
+  - trigger: "dont"
+    replace: "don't"
+    word: true
+
   - trigger: "pls"
     replace: "please"
     word: true
