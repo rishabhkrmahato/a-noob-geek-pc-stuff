@@ -1,2 +1,16 @@
-# remote_theme: just-the-docs/just-the-docs
-remote_theme: cotes2020/jekyll-theme-chirpy
+#  these are the only direct themes github pages can build without any _layouts/_assets/etc. stuff in your repo...
+
+# theme: jekyll-theme-minimal
+# theme: jekyll-theme-architect
+# theme: jekyll-theme-hacker
+# theme: jekyll-theme-leap-day
+# theme: jekyll-theme-merlot
+# theme: jekyll-theme-midnight
+# theme: jekyll-theme-modernist
+# theme: jekyll-theme-slate
+# theme: jekyll-theme-tactile
+# theme: jekyll-theme-time-machine
+
+# tried much with other remote themes, they are just themes, they will need you to have your website html, css, js and other backend files in your repo!
+
+theme: jekyll-theme-midnight
