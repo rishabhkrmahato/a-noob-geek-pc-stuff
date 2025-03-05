@@ -16,6 +16,10 @@ matches:
     replace: "okay"
     word: true
 
+  - trigger: "imp"
+    replace: "important"
+    word: true
+
   - trigger: "ur"
     replace: "your"
     word: true
