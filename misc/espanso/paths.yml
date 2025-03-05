@@ -42,3 +42,5 @@ matches:
   - trigger: ";espanso"
     replace: "%APPDATA%\\espanso\\match"
 
+  - trigger: ";pyenv"
+    replace: "%USERPROFILE%\\.pyenv\\pyenv-win\\versions"
