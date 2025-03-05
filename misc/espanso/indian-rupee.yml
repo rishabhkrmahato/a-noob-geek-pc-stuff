@@ -4,4 +4,5 @@ matches:
 
   - triggers: ["rupee", "rupees", "inr", "rs"]
     replace: "₹"
+    propagate_case: true
     word: true
