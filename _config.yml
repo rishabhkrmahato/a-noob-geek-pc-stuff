@@ -10,7 +10,8 @@
 # theme: jekyll-theme-slate
 # theme: jekyll-theme-tactile
 # theme: jekyll-theme-time-machine
+# theme: jekyll-theme-cayman
 
 # tried much with other remote themes, they are just themes, they will need you to have your website html, css, js and other backend files in your repo!
 
-theme: jekyll-theme-midnight
+theme: jekyll-theme-cayman
