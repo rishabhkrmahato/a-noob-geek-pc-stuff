@@ -1,4 +1,2 @@
-remote_theme: "mmistakes/so-simple-theme"
-skin: dark
-
-include: ["README.md"] 
+theme: jekyll-theme-minimal-mistakes
+minimal_mistakes_skin: "dark"
