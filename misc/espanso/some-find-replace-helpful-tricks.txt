@@ -1,0 +1,6 @@
+
+replace: "(.*)"
+⬇️
+replace: "$1"
+    propagate_case: true
+
