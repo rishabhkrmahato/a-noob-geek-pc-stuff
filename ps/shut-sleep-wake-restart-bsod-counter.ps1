@@ -41,7 +41,6 @@
 if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Host "This script requires administrative privileges." -ForegroundColor Red
     Write-Host "Right-click the script and select 'Run as administrator' to proceed." -ForegroundColor Yellow
-    Write-Host ""
     exit
 }
 
@@ -52,81 +51,72 @@ if ($PSVersionTable.PSVersion.Major -lt 5) {
 }
 
 # Define File Path for Output
-$SystemDrive = [System.Environment]::GetEnvironmentVariable("SystemDrive")
-$OutputFile = [IO.Path]::Combine("$SystemDrive\", "shut-sleep-wake-restart-bsod-counter.txt")
+$OutputFile = "$env:SystemDrive\shut-sleep-wake-restart-bsod-counter.txt"
 
 # Define Event IDs for Specific Events
 $EventIDs = @{
     "Sleep" = 42
     "Wake" = 1
     "Shutdown" = 1074
-    "FastShutdown" = 109
+    "Fast Shutdown" = 109
     "Restart" = 1074
     "BSOD" = 1001
 }
 
-# Function to Retrieve Events
+# Function to Retrieve Events with Error Handling
 function Get-SystemEvents {
-    param (
-        [int[]]$EventID
-    )
-    Get-WinEvent -FilterHashtable @{
-        LogName = 'System'
-        ID = $EventID
+    param ([int[]]$EventID)
+    try {
+        $events = Get-WinEvent -FilterHashtable @{ LogName = 'System'; ID = $EventID } -ErrorAction SilentlyContinue
+        return $events
+    } catch {
+        return @()  # Return empty array on failure
     }
 }
 
 # Retrieve Events
-$SleepEvents = Get-SystemEvents -EventID $EventIDs["Sleep"]
-$WakeEvents = Get-SystemEvents -EventID $EventIDs["Wake"]
-$ShutdownEvents = Get-SystemEvents -EventID $EventIDs["Shutdown"]
-$FastShutdownEvents = Get-SystemEvents -EventID $EventIDs["FastShutdown"]
-$RestartEvents = Get-SystemEvents -EventID $EventIDs["Restart"]
-$BSODEvents = Get-SystemEvents -EventID $EventIDs["BSOD"]
+$EventData = @{}
+foreach ($key in $EventIDs.Keys) {
+    $EventData[$key] = Get-SystemEvents -EventID $EventIDs[$key]
+}
 
 # Count Events
-$EventCounts = @{
-    "Sleep" = $SleepEvents.Count
-    "Wake" = $WakeEvents.Count
-    "Shutdown" = $ShutdownEvents.Count
-    "Fast Shutdown" = $FastShutdownEvents.Count
-    "Restart" = $RestartEvents.Count
-    "BSOD" = $BSODEvents.Count
+$EventCounts = @{}
+foreach ($key in $EventData.Keys) {
+    $EventCounts[$key] = $EventData[$key].Count
 }
 
 # Write Detailed Results to File with Error Handling
 try {
-    "========= Detailed System Events Report =========" | Out-File -FilePath $OutputFile
-    "Generated on: $(Get-Date)" | Out-File -FilePath $OutputFile -Append
-    "-------------------------------------------------" | Out-File -FilePath $OutputFile -Append
+    @"
+========= Detailed System Events Report =========
+Generated on: $(Get-Date)
+-------------------------------------------------
+"@ | Out-File -FilePath $OutputFile
 
     function Write-EventDetailsToFile {
-        param (
-            [string]$Title,
-            [array]$Events
-        )
-        $TitleLine = "========== $Title =========="
-        $TitleLine | Out-File -FilePath $OutputFile -Append
+        param ([string]$Title, [array]$Events)
+        "`n========== $Title ==========" | Out-File -FilePath $OutputFile -Append
         if ($Events.Count -eq 0) {
-            "No $Title events found." | Out-File -FilePath $OutputFile -Append
+            "No $Title events found. (Logs may have been cleared)" | Out-File -FilePath $OutputFile -Append
         } else {
             foreach ($Event in $Events) {
-                "Time: $($Event.TimeCreated)" | Out-File -FilePath $OutputFile -Append
-                "ID: $($Event.ID)" | Out-File -FilePath $OutputFile -Append
-                "Message: $($Event.Message)" | Out-File -FilePath $OutputFile -Append
-                "------------------------------------" | Out-File -FilePath $OutputFile -Append
+                @"
+Time: $($Event.TimeCreated)
+ID: $($Event.ID)
+Message: $($Event.Message)
+------------------------------------
+"@ | Out-File -FilePath $OutputFile -Append
             }
         }
     }
 
-    Write-EventDetailsToFile -Title "Sleep Events" -Events $SleepEvents
-    Write-EventDetailsToFile -Title "Wake Events" -Events $WakeEvents
-    Write-EventDetailsToFile -Title "Shutdown Events" -Events $ShutdownEvents
-    Write-EventDetailsToFile -Title "Fast Shutdown Events" -Events $FastShutdownEvents
-    Write-EventDetailsToFile -Title "Restart Events" -Events $RestartEvents
-    Write-EventDetailsToFile -Title "BSOD Events" -Events $BSODEvents
+    # Write all event categories
+    foreach ($key in $EventData.Keys) {
+        Write-EventDetailsToFile -Title $key -Events $EventData[$key]
+    }
 
-    "-------------------------------------------------" | Out-File -FilePath $OutputFile -Append
+    "`n-------------------------------------------------" | Out-File -FilePath $OutputFile -Append
     "End of Report" | Out-File -FilePath $OutputFile -Append
 
 } catch {
@@ -134,15 +124,6 @@ try {
     Write-Host "Error: $_" -ForegroundColor Red
     exit
 }
-
-# # Display Summary in Terminal with no alignments (results not looking good)
-# Write-Host "=============================================" -ForegroundColor Cyan
-# Write-Host "Summary of Events:" -ForegroundColor Cyan
-# Write-Host ""
-# foreach ($Key in $EventCounts.Keys) {
-#     Write-Host "$Key --- $($EventCounts[$Key])" -ForegroundColor Green
-# }
-# Write-Host "=============================================" -ForegroundColor Cyan
 
 # Define the Desired Order for Output
 $DesiredOrder = @("Sleep", "Wake", "Shutdown", "Restart", "Fast Shutdown", "BSOD")
@@ -160,7 +141,9 @@ $maxKeyLength = $maxKeyLength.Maximum
 foreach ($Key in $DesiredOrder) {
     if ($EventCounts.ContainsKey($Key)) {
         $paddedKey = $Key.PadRight($maxKeyLength)  # Pad event names to align
-        Write-Host "$paddedKey --- $($EventCounts[$Key])" -ForegroundColor Green
+        $eventCount = $EventCounts[$Key]
+        $message = if ($eventCount -eq 0) { "No events found.(Logs may have been cleared)" } else { "$eventCount" }
+        Write-Host "$paddedKey --- $message" -ForegroundColor Green
     }
 }
 Write-Host "=============================================" -ForegroundColor Cyan
