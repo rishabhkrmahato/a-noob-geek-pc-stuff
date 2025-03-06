@@ -7,4 +7,4 @@ matches:
     replace: "http://localhost:8096"
 
   - trigger: ";listfile"
-    replace: "dir /s /b > output.txt"
+    replace: "dir /s /b > filelist-.txt"
