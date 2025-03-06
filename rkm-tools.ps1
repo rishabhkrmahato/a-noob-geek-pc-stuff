@@ -103,7 +103,7 @@ do {
             Write-Host "[10] open-chatgpt-replace-copilot_key.bat"
             Write-Host "[11] create-file.bat"
             Write-Host "[12] disable-recall.bat"
-            Write-Host "[13] "
+            Write-Host "[13] ! RESTART-TO-BIOS !"
             Write-Host "[14] git-commit-all-changes.bat"
             Write-Host "[15] list-all-files-full-paths.bat"
             Write-Host "[16] clear-bin-and-temp.bat"
@@ -222,7 +222,9 @@ do {
                     $scriptPath = "$directoryPath\create-file.bat"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
+                        Write-Host ""
                         & $scriptPath
+                        # Start-Process -FilePath "cmd.exe" -ArgumentList "/k `"$scriptPath`"" -WindowStyle Normal
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -240,7 +242,15 @@ do {
                 }
                 "13"
                 {
-                    Write-Host "Under Construction ..."
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/bootbios.cmd"
+                    $scriptPath = "$directoryPath\bootbios.cmd"
+                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
+                    if (Test-Path $scriptPath) {
+                        Write-Host ""
+                        Start-Process -FilePath "cmd.exe" -ArgumentList "/k `"$scriptPath`"" -WindowStyle Normal
+                    } else {
+                        Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
                 }
                 "14"
                 {
@@ -575,7 +585,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -598,7 +607,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -610,7 +618,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -622,7 +629,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -634,7 +640,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -646,7 +651,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -658,7 +662,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -670,7 +673,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -682,7 +684,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -694,7 +695,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
@@ -706,7 +706,6 @@ do {
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
                         python $scriptPath
-                        # Start-Process python -ArgumentList $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
                     }
