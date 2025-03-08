@@ -339,3 +339,8 @@ matches:
     replace: "yourself"
     propagate_case: true
     word: true
+
+  - trigger: "FOSS" 
+    replace: "Free and Open Source Software"
+    # propagate_case: true
+    word: true
