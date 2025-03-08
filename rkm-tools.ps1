@@ -103,7 +103,7 @@ do {
             Write-Host "[10] open-chatgpt-replace-copilot_key.bat"
             Write-Host "[11] create-file.bat"
             Write-Host "[12] disable-recall.bat"
-            Write-Host "[13] ! RESTART-TO-BIOS !"
+            Write-Host "[13] !-RESTART-TO-BIOS-!"
             Write-Host "[14] git-commit-all-changes.bat"
             Write-Host "[15] list-all-files-full-paths.bat"
             Write-Host "[16] clear-bin-and-temp.bat"
@@ -111,6 +111,8 @@ do {
             Write-Host "[18] take-backup-compress-copy.bat"
             Write-Host "[19] 1click-reg-backup.bat"
             Write-Host "[20] hide-files-in-plain-sight.bat"
+            Write-Host ""
+            Write-Host "[21] install-my-terminal-shortcuts"
             Write-Host ""
             Write-Host "[0] Back to Main Menu" -ForegroundColor Blue
             Write-Host ""
@@ -242,7 +244,7 @@ do {
                 }
                 "13"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/bootbios.cmd"
+                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/shortcuts-i-have-in-system32/bootbios.cmd"
                     $scriptPath = "$directoryPath\bootbios.cmd"
                     Invoke-WebRequest -Uri $url -OutFile $scriptPath
                     if (Test-Path $scriptPath) {
@@ -327,6 +329,46 @@ do {
                         & $scriptPath
                     } else {
                         Write-Host "Failed to download the script." -ForegroundColor Red
+                    }
+                }
+                "21" 
+                {
+                    Clear-Host
+                    Write-Host "`nSetting up terminal shortcuts..." -ForegroundColor Cyan
+                    # System drive & paths
+                    $systemDrive = $env:SystemDrive
+                    $targetPath = "$systemDrive\rkm-shortcuts"
+                    $zipPath = "$env:TEMP\rkm-repo.zip"
+                    $extractPath = "$env:TEMP\rkm-repo"
+                    try {
+                        # Download & Extract GitHub Repo
+                        Invoke-WebRequest -Uri "https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip" -OutFile $zipPath
+                        Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+                        # Remove old folder if exists, then create fresh one
+                        if (Test-Path $targetPath) { 
+                            Remove-Item -Path $targetPath -Recurse -Force -ErrorAction Stop 
+                        }
+                        New-Item -Path $targetPath -ItemType Directory | Out-Null
+                        # Move all files from repo folder
+                        Move-Item -Path "$extractPath\a-noob-geek-pc-stuff-main\.bat\shortcuts-i-have-in-system32\*" -Destination $targetPath -Force
+                        # Add to PATH if not already there
+                        $currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
+                        if ($currentPath -notlike "*$targetPath*") {
+                            [System.Environment]::SetEnvironmentVariable("Path", "$currentPath;$targetPath", [System.EnvironmentVariableTarget]::Machine)
+                        }
+                        # Cleanup
+                        Remove-Item -Path $zipPath, $extractPath -Recurse -Force -ErrorAction SilentlyContinue
+                        Write-Host "`nTerminal shortcuts setup complete." -ForegroundColor Green
+                        Write-Host "`nShortcut directory added to PATH: $targetPath`nYou can view and modify its contents as needed." -ForegroundColor Green
+                    } catch {
+                        Clear-Host
+                        Write-Host "`n! ERROR: Unable to complete setup." -ForegroundColor Red
+                        if ($_.Exception.Message -match "being used by another process") {
+                            Write-Host "It looks like some files in '$targetPath' are in use." -ForegroundColor Yellow
+                            Write-Host "Please close any programs using this folder and run this again." -ForegroundColor Yellow
+                        } else {
+                            Write-Host "An unexpected error occurred. Check for open programs or permission issues, then run this again." -ForegroundColor Yellow
+                        }
                     }
                 }
                 "0"
