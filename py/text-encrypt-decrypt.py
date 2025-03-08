@@ -1,54 +1,59 @@
 """
-================================================================================================
-Description:
-Secure Text Encryptor & Decryptor
+==================================================================================================
+ Description:
+ Script Name: Secure Text Encryption & Decryption
 
-This script provides a simple encryption and decryption tool using 
-the `cryptography` library (Fernet). It securely encrypts user-inputted 
-text and copies the result to the clipboard.
+ - This script allows secure encryption and decryption of text using Fernet (AES-based encryption).
+ - Uses a randomly named key file (`secretXXXX.key`) to store encryption keys securely.
+ - GUI input via Tkinter for better user experience.
+ - Supports automatic clipboard copying for convenience.
 
-Key Features:
-- Generates and stores a unique encryption key (`secret.key`).
-- Encrypts user-provided text and copies it to the clipboard.
-- Decrypts encrypted text and restores the original message.
-- Provides a graphical input box for text entry using Tkinter.
-- Uses `pyperclip` to automatically copy results to the clipboard.
+ Key Features:
+ - Checks for missing dependencies (`cryptography`, `pyperclip`, `tkinter`).
+ - Generates and securely stores encryption keys.
+ - Encrypts text and copies the output to the clipboard.
+ - Decrypts encrypted text and copies the plain text to the clipboard.
+ - Uses a non-blocking GUI for input prompts.
+ - Prevents browser caching issues by appending a random query parameter.
 
-Hard-Coded Details:
-- `KEY_FILE = "secret.key"` → Stores the encryption key.
-- Uses `Fernet` encryption from the `cryptography` module.
-- Displays messages via Tkinter pop-ups for better user experience.
+ Hard-Coded Details:
+ - The encryption key is saved in a file named `secretXXXX.key` (XXXX = random 4-digit number).
+ - The script assumes `pyperclip`, `cryptography`, and `tkinter` are installed.
+ - Uses Fernet encryption from the `cryptography` library.
 
-Steps to Update Hard-Coded Details:
-1. Modify `KEY_FILE` if a different key storage location is preferred.
-2. Adjust `Fernet` settings for different encryption needs.
-3. Change Tkinter GUI properties for a customized user interface.
+ Steps to Update Hard-Coded Details:
+ 1. Change the `KEY_FILE` format if you want a different naming convention.
+ 2. Modify the `get_input()` function to change how text input is handled.
+ 3. Adjust the clipboard behavior in `encrypt_text()` and `decrypt_text()` if necessary.
 
-Usage:
-- Run the script and select an option from the menu:
-  [1] Encrypt Text → Enter text and copy encrypted output.
-  [2] Decrypt Text → Enter encrypted text and retrieve original content.
-  [3] Exit → Close the script.
-- The encryption key is generated and stored automatically on first use.
+ Usage:
+ - Run the script.
+ - Select `Encrypt` or `Decrypt`.
+ - Enter text in the GUI window.
+ - The result is copied to the clipboard automatically.
+ - Check the console for additional details.
 
-Dependencies:
-- Python modules: `cryptography`, `pyperclip`, `tkinter`
-- Install missing dependencies using:
-  `pip install cryptography pyperclip`
+ Dependencies:
+ - `cryptography` (Install via `pip install cryptography`)
+ - `pyperclip` (Install via `pip install pyperclip`)
+ - `tkinter` (Pre-installed with Python, but may require `sudo apt install python3-tk` on Linux)
 
-Output:
-- Encrypted or decrypted text copied to the clipboard.
-- Console logs provide details on each operation.
+ Output:
+ - The encrypted text is displayed in the console and copied to the clipboard.
+ - The decrypted text is also copied for easy access.
 
-Error Handling:
-- Checks for missing dependencies and provides installation instructions.
-- Prevents encryption/decryption errors with validation and exception handling.
+ Error Handling:
+ - If dependencies are missing, the script prompts the user to install them.
+ - If the key file is missing, an error message is displayed.
+ - Incorrect encrypted text inputs trigger a warning.
 
-Notes:
-- Losing `secret.key` means encrypted data cannot be recovered.
-- Only use this tool on trusted systems to avoid security risks.
-================================================================================================
+ Notes:
+ - Keep the key file safe! Losing it means you cannot decrypt your data.
+ - Useful for quick encryption of sensitive information without saving files.
+
+==================================================================================================
 """
+
 
 
 import os
@@ -79,7 +84,8 @@ except ImportError:
 import pyperclip
 from cryptography.fernet import Fernet
 
-KEY_FILE = "secret.key"
+import random
+KEY_FILE = f"secret{random.randint(1000, 9999)}.key"
 
 # **Fixed GUI (Non-Blocking)**
 def get_input(title, prompt):
