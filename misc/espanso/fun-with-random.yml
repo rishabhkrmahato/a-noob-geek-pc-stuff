@@ -1,0 +1,26 @@
+matches:
+  - trigger: ";dice"
+    replace: "{{roll}}"
+    vars:
+      - name: roll
+        type: random
+        params:
+          choices: ["1", "2", "3", "4", "5", "6"]
+  - trigger: ";card"
+    replace: "{{rank}} of {{suit}}"
+    vars:
+      - name: rank
+        type: random
+        params:
+          choices: ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+      - name: suit
+        type: random
+        params:
+          choices: ["Hearts", "Diamonds", "Clubs", "Spades"]
+  - trigger: ";money"
+    replace: "{{amount}}"
+    vars:
+      - name: amount
+        type: random
+        params:
+          choices: ["₹1", "₹2", "₹5", "₹10", "₹20", "₹5", "₹10", "₹20", "₹50", "₹100", "₹200", "₹500"]
