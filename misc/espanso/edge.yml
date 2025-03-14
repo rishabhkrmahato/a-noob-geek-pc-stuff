@@ -1,0 +1,6 @@
+filter_class: ^msedge$
+backend: clipboard
+
+# Reminder: Edge's "Enhanced Security Mode" blocks Espanso. Disable it if expansions stop working.
+# I got Espanso working perfectly by setting it up to run as admin via Task Scheduler and disabling its startup entry in Task Manager. This ensures it works without issues.
+# more here: https://github.com/espanso/espanso/issues/2254
