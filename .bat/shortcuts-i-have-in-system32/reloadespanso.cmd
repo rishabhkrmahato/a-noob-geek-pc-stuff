@@ -1,0 +1,1 @@
+C:/Users/rishabhkrm/Documents/GitHub/a-noob-geek-pc-stuff/misc/espanso/reloadespanso.cmd
