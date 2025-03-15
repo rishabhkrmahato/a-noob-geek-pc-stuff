@@ -94,8 +94,8 @@ do {
             Write-Host "[1] network-refresh.bat"
             Write-Host "[2] toggle-ethernet-admin.bat"
             Write-Host "[3] nircmd-set-brightness.bat"
-            Write-Host "[4] end-task-edge.bat"
-            Write-Host "[5] convert-mkv-to-mp4.bat"
+            Write-Host "[4] "
+            Write-Host "[5] "
             Write-Host "[6] list-imp-files.bat"
             Write-Host "[7] 1click-nircmd-set-brightness.bat"
             Write-Host "[8] "
@@ -157,25 +157,11 @@ do {
                 }
                 "4"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/end-task-edge.bat"
-                    $scriptPath = "$directoryPath\end-task-edge.bat"
-                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
-                    if (Test-Path $scriptPath) {
-                        & $scriptPath
-                    } else {
-                        Write-Host "Failed to download the script." -ForegroundColor Red
-                    } 
+                    Write-Host "Under Construction."
                 }
                 "5"
                 {
-                    $url = "https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/.bat/convert-mkv-to-mp4.bat"
-                    $scriptPath = "$directoryPath\convert-mkv-to-mp4.bat"
-                    Invoke-WebRequest -Uri $url -OutFile $scriptPath
-                    if (Test-Path $scriptPath) {
-                        & $scriptPath
-                    } else {
-                        Write-Host "Failed to download the script." -ForegroundColor Red
-                    }
+                    Write-Host "Under Construction."
                 }
                 "6"
                 {
