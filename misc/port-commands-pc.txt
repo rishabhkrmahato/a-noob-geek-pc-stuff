@@ -1,0 +1,42 @@
+👉 Check all ports used by SSH
+
+Get-NetTCPConnection | Where-Object { (Get-Process -Id $_.OwningProcess).ProcessName -match "ssh" } | Format-Table LocalPort, State, OwningProcess -AutoSize
+
+
+👉 Check all ports used by Jellyfin
+
+Get-NetTCPConnection | Where-Object { (Get-Process -Id $_.OwningProcess).ProcessName -match "jellyfin" } | Format-Table LocalPort, State, OwningProcess -AutoSize
+
+
+👉 Check all ports used by qBittorrent
+(can be multiple it's needed for torrenting, check web-ui port in settings to confiyour your web-ui port)
+
+Get-NetTCPConnection | Where-Object { (Get-Process -Id $_.OwningProcess).ProcessName -match "qbittorrent" } | Format-Table LocalPort, State, OwningProcess -AutoSize
+
+
+
+👉👉 everything in one go:
+
+1. get ports and pid
+
+Get-NetTCPConnection | Select-Object LocalPort, State, OwningProcess | Sort-Object LocalPort | Format-Table -AutoSize
+
+2. get app-name
+
+Get-Process -Id <PID>
+
+
+👉👉👉 super-everything (not good looking copy it and use "find" in any text editor):
+
+Get-NetTCPConnection | ForEach-Object { $_.LocalPort, (Get-Process -Id $_.OwningProcess).ProcessName } | Format-Table -AutoSize
+
+
+👌 EDIT yoyour ssh-defaur(22) port, eg. to 56789
+
+edit (use vscode) -- C:\ProgramData\ssh\sshd_config
+change line -- #Port 22 to Port 56789
+allow in firewall (use powershell) --  New-NetFirewallRule -Name "SSH56789" -DisplayName "OpenSSH Port 56789" -Protocol TCP -LocalPort 56789 -Action Allow
+restart service (if not in use) or restart pc -- Restart-Service sshd
+check new port -- netstat -an | findstr 56789
+test the port ! enjoy !
+
