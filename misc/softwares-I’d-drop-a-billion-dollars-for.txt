@@ -3,8 +3,9 @@
 	JELLYFIN
 
 	torbox.app (BEST SEEDBOX)
+	debrid-link.com (300₹-15 days wow, even free tier is really helpful) [THE BEST]
 
-	PAIRDROP (SNAPDROP)
+	PAIRDROP - yes (SNAPDROP - xx)
 
 	UNIGETUI (https://github.com/marticliment/UniGetUI)
 
@@ -19,5 +20,7 @@
 	RESCUEZILLA (clonezilla GUI) [https://github.com/rescuezilla/rescuezilla]
 
 	http-server [https://github.com/http-party/http-server]
+
+	TAILSCALE - real good stuff.
 
 	
