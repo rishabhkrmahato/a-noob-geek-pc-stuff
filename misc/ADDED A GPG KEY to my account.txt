@@ -1,1 +1,9 @@
 now every commit will be signed and verified !.
+
+deleted the old gpg key from my github account (I did not back up the key, got lost during clean install on win11pro)
+
+using new gpg key:-
+sonu-lenovo-pro
+Email address:  mahato.rishabhkr60@gmail.com 
+Key ID: 59641****E2C**D1
+Subkeys: 1347******296D5D
