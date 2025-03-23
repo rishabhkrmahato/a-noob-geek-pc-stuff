@@ -1,0 +1,45 @@
+Set Windows Console Host as Default and Configure CMD Appearance
+
+Step 1: Set Default Terminal Application
+1. Open Windows Terminal.
+2. Set the default terminal application to Windows Console Host.
+   (Windows Terminal lacks an option to disable text wrapping, which can be frustrating to work with.)
+
+Step 2: Open CMD
+1. Search for cmd and open it.
+2. Right-click the title bar → Click "Defaults"
+
+Step 3: Configure CMD Settings
+
+- Options Tab:
+  - Leave everything as is.
+
+- Font Tab:
+  - Font size: 22
+  - Font: Cascadia Code
+
+- Layout Tab:
+  - Uncheck "Wrap text output on resize"
+  - Set Screen Buffer Size: 200 x 9001 (Width × Height)
+  - Set Window Size: 120 × 30 (Width × Height)
+  - Check "Let system position window"
+
+- Colors Tab:
+  - Screen Text: (255, 255, 255) [White]
+  - Screen Background: (0, 0, 0) [Black]
+  - Popup Text: (0, 0, 255) [Blue]
+  - Popup Background: (250, 250, 50) [Yellowish]
+  - Opacity: 98%
+    - (Opacity adjustment has multiple steps per value, meaning 99% has three sub-levels of opacity control, and other values may also behave similarly.)
+
+- Terminal Tab:
+  - Ensure Windows Console Host is set as the default terminal application.
+  - Enable "Cursor color" and set it to (0, 255, 0) [Green].
+
+Step 4: Apply & Exit
+Click OK and close the window.
+
+Effect of These Changes:
+- These settings apply universally across Windows for all console pop-ups, whether from a script or manually opened, admin or non-admin.
+- If you notice variations in a specific console window, adjust the settings via "Right-click title bar → Properties" for that instance.
+- Applies to CMD, PowerShell, PowerShell Core, WSL (Ubuntu, etc.) in both admin and non-admin sessions.
