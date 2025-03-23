@@ -145,13 +145,8 @@ matches:
     propagate_case: true
     word: true
 
-  - trigger: "gg"
+  - triggers: ["gg", "GG"]
     replace: "good game"
-    propagate_case: true
-    word: true
-
-  - trigger: "GG"
-    replace: "GOOD GAME"
     propagate_case: true
     word: true
 
