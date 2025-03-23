@@ -82,7 +82,7 @@ matches:
 
   - trigger: "id"
     replace: "I'd"
-    propagate_case: true
+    # propagate_case: true
     word: true
 
   - trigger: "ill"
