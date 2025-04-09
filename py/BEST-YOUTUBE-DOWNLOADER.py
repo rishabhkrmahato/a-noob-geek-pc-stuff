@@ -1,78 +1,75 @@
+# -*- coding: utf-8 -*-
 """
-==============================================================================================
-Description:
+==============================================================================
+ Universal YouTube Downloader (Video & Playlist)
+==============================================================================
+ Description:
+   Downloads YouTube videos or entire playlists using yt-dlp.
+   It focuses on selecting the best quality video and audio streams based
+   on bitrate (TBR), ensuring audio streams are not Dynamic Range Compressed (DRC).
+   Designed to be cross-platform (Windows, macOS, Linux, Termux).
 
-YouTube Video & Playlist Downloader
+ Key Features:
+   - Validates YouTube video/playlist links.
+   - Guides the user to install/update dependencies if missing (Python modules, yt-dlp).
+   - Fetches video information using yt-dlp's JSON output for robustness.
+   - Selects highest TBR video-only and highest TBR non-DRC audio-only formats.
+   - Downloads and merges the selected formats for each video.
+   - Handles playlists: processes each video individually, skipping failures.
+   - Saves files to the script's current directory.
+   - Color-coded terminal output for clarity.
 
-This Python script automates downloading YouTube videos and playlists 
-using `yt-dlp`. It validates links, fetches available formats, selects 
-the best video and audio formats, and downloads the content. If `yt-dlp` 
-is outdated or missing, it installs or updates it via Chocolatey.
+ Usage:
+   1. Ensure Python 3.x is installed.
+   2. Run the script: python your_script_name.py
+   3. Follow on-screen prompts to install 'requests' and 'packaging' if needed.
+   4. Ensure 'yt-dlp' is installed and accessible in your system's PATH.
+      (The script will guide you if it's missing or potentially outdated).
+   5. Enter a YouTube video or playlist link when prompted.
 
-Key Features:
-- Validates YouTube links (video or playlist).
-- Checks if `yt-dlp` is installed and up-to-date.
-- Extracts all videos from a playlist if the user chooses to download it.
-- Fetches available video and audio formats.
-- Automatically selects the best format based on quality.
-- Downloads and merges the selected video and audio.
-- Provides detailed logs and color-coded output.
+ Dependencies (Manual Setup Required - Script will guide you):
+   - Python 3.x
+   - yt-dlp: The core download tool. (https://github.com/yt-dlp/yt-dlp)
+   - requests: For checking yt-dlp version online. (`pip install requests`)
+   - packaging: For comparing versions. (`pip install packaging`)
 
-Usage:
-1. Run the script in a Python environment.
-2. Enter a YouTube video or playlist link when prompted.
-3. If a playlist is detected, the user is asked whether to download the entire playlist.
-4. The script downloads the selected content.
-
-Hard-Coded Details:
-- Uses `yt-dlp` for YouTube downloads.
-- Installs or updates `yt-dlp` using Chocolatey if missing.
-- Uses `yt-dlp` to extract playlist URLs.
-
-Steps to Update Hard-Coded Details:
-1. Update the `yt-dlp` installation method if using a different package manager.
-2. Modify `TAB_DELAY` if a different delay is needed between downloading multiple files.
-3. Adjust `CHROME_PATH` in case of a non-standard Chrome installation.
-
-Dependencies:
-- Python 3.x
-- `yt-dlp` (installed automatically if missing)
-- `requests` (for checking the latest `yt-dlp` version)
-- `packaging` (for version comparison)
-- `Chocolatey` (for managing `yt-dlp` installation)
-
-Output:
-- Downloads YouTube videos or playlists in the best available format.
-- Saves downloaded files to the current working directory.
-
-Error Handling:
-- Displays error messages for invalid YouTube URLs.
-- Handles errors if `yt-dlp` is missing or outdated.
-- Skips failed downloads and continues with remaining videos.
-
-Notes:
-- Ensure an active internet connection for fetching dependencies and downloading videos.
-- The script supports UTF-8 encoding for compatibility with non-English characters.
-
-==============================================================================================
+ Notes:
+   - Requires an active internet connection.
+   - Does NOT automatically install or update dependencies. Follow the
+     on-screen instructions if prompted.
+   - Format selection prioritizes highest Total Bit Rate (TBR) for video
+     and non-DRC audio, which usually correlates with quality.
+==============================================================================
 """
-
-
 
 import os
 import sys
 import subprocess
 import re
-import glob
-import requests
-from shutil import which
-from packaging import version
+import json
+import shutil  # Used instead of 'which' for Python 3.3+
 
-# import os
-# os.system('chcp 65001 >nul')  # Set encoding to UTF-8 for the session
-# sys.stdout.reconfigure(encoding='utf-8')  # Ensure Python stdout is UTF-8
+# --- Configuration ---
+# Current Date (example, could be used for logging if needed)
+# CURRENT_DATE_STR = datetime.datetime.now().strftime("%Y-%m-%d")
 
-# Colors for terminal output
+# --- Dependency Checks ---
+try:
+    import requests
+except ImportError:
+    print("\nError: 'requests' module not found.")
+    print("Please install it by running: pip install requests")
+    sys.exit(1)
+
+try:
+    from packaging import version
+except ImportError:
+    print("\nError: 'packaging' module not found.")
+    print("Please install it by running: pip install packaging")
+    sys.exit(1)
+
+
+# --- Colors for terminal output ---
 class Colors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -82,375 +79,374 @@ class Colors:
     FAIL = '\033[91m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 def print_color(message, color):
+    """Prints a message in a specified color."""
     print(f"{color}{message}{Colors.ENDC}")
 
-# def check_yt_dlp():
-#     """
-#     Checks if yt-dlp is installed, up-to-date, and in PATH. Installs or updates if necessary.
-#     """
-#     print_color("\nChecking yt-dlp installation...", Colors.HEADER)
-#     yt_dlp_installed = which("yt-dlp")
-#     if yt_dlp_installed is None:
-#         print_color("yt-dlp not found. Installing...", Colors.WARNING)
-#         subprocess.run(["pip", "install", "yt-dlp"], check=True)
-#     else:
-#         print_color("yt-dlp is installed. Verifying version...", Colors.OKBLUE)
-#         current_version = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True).stdout.strip()
-#         latest_version = requests.get("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest").json()["tag_name"]
-#         if version.parse(current_version) < version.parse(latest_version):
-#             print_color(f"Updating yt-dlp to the latest version {latest_version}...", Colors.WARNING)
-#             subprocess.run(["pip", "install", "--upgrade", "yt-dlp"], check=True)
-#         else:
-#             print_color("yt-dlp is up-to-date!", Colors.OKGREEN)
+# --- Custom Exception ---
+class FormatSelectionError(Exception):
+    """Custom exception for errors during format selection."""
+    pass
 
-def check_yt_dlp():
-    """
-    Checks if yt-dlp is installed and up-to-date.
-    If outdated, it opens a new elevated Python script to update yt-dlp using Chocolatey.
-    """
-    print_color("\nChecking yt-dlp installation...", Colors.HEADER)
+# --- Core Functions ---
 
-    # Check if yt-dlp is installed
-    yt_dlp_installed = which("yt-dlp")
-    if yt_dlp_installed is None:
-        print_color("yt-dlp not found. Installing via Chocolatey in elevated mode...", Colors.WARNING)
-        open_elevated_updater()
-        return
+def check_prerequisites():
+    """Checks for yt-dlp installation and version."""
+    print_color("\nChecking prerequisites...", Colors.HEADER)
 
-    # Check the current version of yt-dlp
-    print_color("yt-dlp is installed. Verifying version...", Colors.OKBLUE)
-    current_version = subprocess.run(["yt-dlp", "--version"], capture_output=True, text=True).stdout.strip()
-    latest_version = requests.get("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest").json()["tag_name"]
-
-    if version.parse(current_version) < version.parse(latest_version):
-        print_color(f"Updating yt-dlp to the latest version {latest_version} via Chocolatey...", Colors.WARNING)
-        open_elevated_updater()
+    # 1. Check for yt-dlp command
+    yt_dlp_path = shutil.which("yt-dlp")
+    if yt_dlp_path is None:
+        print_color("Error: 'yt-dlp' command not found in your system's PATH.", Colors.FAIL)
+        print("Please install yt-dlp.")
+        print("  - Using pip (recommended): pip install --upgrade yt-dlp")
+        print("  - Or download from GitHub: https://github.com/yt-dlp/yt-dlp#installation")
+        sys.exit(1)
     else:
-        print_color("yt-dlp is up-to-date!", Colors.OKGREEN)
+        print_color(f"yt-dlp found at: {yt_dlp_path}", Colors.OKGREEN)
 
-def open_elevated_updater():
-    """
-    Opens a new elevated Python script to update yt-dlp using Chocolatey.
-    Waits for the elevated process to finish before continuing.
-    Deletes the temporary script after execution.
-    """
-    print_color("Opening elevated Python script to update yt-dlp...", Colors.HEADER)
-    
-    # Path to the new Python script
-    updater_script = "update_yt_dlp.py"
-
-    # Write the updater script
-    with open(updater_script, "w", encoding="utf-8") as f:
-        f.write(
-            '''import os
-import time
-import subprocess
-
-def print_message(message):
-    print(f"\\033[92m{message}\\033[0m")
-
-def print_warning(message):
-    print(f"\\033[93m{message}\\033[0m")
-
-def install_choco():
-    """
-    Checks if Chocolatey is installed. If not, installs it.
-    """
+    # 2. Check yt-dlp version (optional but recommended)
     try:
-        # Check if Chocolatey is available via `choco -v`
-        subprocess.run(["choco", "-v"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-        print_message("Chocolatey is already installed.")
-    except subprocess.CalledProcessError:
-        # If `choco` command fails, check the file path
-        if not os.path.exists(r"C:\\ProgramData\\chocolatey\\bin\\choco.exe"):
-            print_message("Chocolatey not found. Installing...")
-            subprocess.run([
-                "powershell",
-                "-NoProfile",
-                "-ExecutionPolicy", "Bypass",
-                "-Command",
-                "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; "
-                "iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
-            ], check=True)
-        else:
-            print_warning("WARNING: Chocolatey was found at the expected path, but the 'choco' command is not functional.")
-            print_warning("You may need to add Chocolatey to your PATH environment variable or fix the installation.")
+        result = subprocess.run(['yt-dlp', '--version'], capture_output=True, text=True, check=True, encoding='utf-8')
+        current_ver_str = result.stdout.strip()
+        print_color(f"Installed yt-dlp version: {current_ver_str}", Colors.OKBLUE)
 
-def update_yt_dlp():
-    print_message("Updating yt-dlp via Chocolatey...")
-    subprocess.run(["choco", "upgrade", "yt-dlp", "-y"], check=True)
+        # Compare with latest version from GitHub API
+        try:
+            response = requests.get("https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest", timeout=5)
+            response.raise_for_status() # Raise an exception for bad status codes
+            latest_ver_str = response.json()["tag_name"]
 
-if __name__ == "__main__":
-    try:
-        install_choco()
-        update_yt_dlp()
-        print_message("Update completed. Waiting for 5 seconds before closing...")
-        time.sleep(5)
+            if version.parse(current_ver_str) < version.parse(latest_ver_str):
+                print_color(f"Warning: Your yt-dlp version ({current_ver_str}) is outdated. Latest is {latest_ver_str}.", Colors.WARNING)
+                print("It's recommended to update for the latest features and fixes:")
+                print("  - Using pip: pip install --upgrade yt-dlp")
+                print("  - Or download the newest version from GitHub.")
+            else:
+                print_color("yt-dlp is up-to-date!", Colors.OKGREEN)
+
+        except requests.exceptions.RequestException as e:
+            print_color(f"Warning: Could not check for latest yt-dlp version. {e}", Colors.WARNING)
+        except Exception as e:
+             print_color(f"Warning: Error processing latest yt-dlp version info. {e}", Colors.WARNING)
+
     except subprocess.CalledProcessError as e:
-        print(f"\\033[91mError: {e}\\033[0m")
-        time.sleep(5)
-
-    # Delete the script after execution
-    script_path = os.path.abspath(__file__)
-    print_message(f"Deleting script: {script_path}")
-    os.remove(script_path)
-    '''
-        )
-
-    # Open the new script in an elevated terminal and wait for it to complete
-    subprocess.run([
-        "powershell",
-        "-NoProfile",
-        "-Command",
-        f"Start-Process python -ArgumentList '{updater_script}' -Verb RunAs -Wait"
-    ], check=True)
-
-    print_color("Elevated updater script executed. Continuing main script...", Colors.OKGREEN)
-
-def fetch_formats(link):
-    """
-    Uses yt-dlp to fetch available video and audio formats.
-    """
-    print_color("\nFetching formats using yt-dlp...", Colors.HEADER)
-    try:
-        result = subprocess.run(["yt-dlp", "-F", link], capture_output=True, text=True, check=True).stdout
-        print_color("\nFetched Format Details:\n", Colors.OKCYAN)
-        print(result)
-        return result
-    except subprocess.CalledProcessError:
-        print_color("Failed to fetch formats. Ensure the link is correct.", Colors.FAIL)
+        print_color(f"Error: Failed to get yt-dlp version. Command failed: {e}", Colors.FAIL)
+        print("Ensure yt-dlp is installed correctly and working.")
         sys.exit(1)
+    except FileNotFoundError:
+         print_color("Error: 'yt-dlp' command not found even after shutil.which check. Ensure PATH is correct.", Colors.FAIL)
+         sys.exit(1)
 
-def select_formats(format_details):
-    """
-    Parses format details and selects the best video and audio formats based on criteria.
-    """
-    print_color("\nSelecting the best formats...", Colors.HEADER)
-    video_id, audio_id = None, None
-    highest_video_tbr, highest_audio_tbr = 0, 0
-
-    for line in format_details.splitlines():
-        if "video only" in line:
-            try:
-                tbr_match = re.search(r"\b(\d+)k\b", line)
-                tbr = int(tbr_match.group(1)) if tbr_match else 0
-                if tbr > highest_video_tbr:
-                    highest_video_tbr = tbr
-                    video_id = re.search(r"^\d+", line).group(0)
-            except AttributeError:
-                continue
-
-        if "audio only" in line:
-            try:
-                tbr_match = re.search(r"\b(\d+)k\b", line)
-                tbr = int(tbr_match.group(1)) if tbr_match else 0
-                if "drc" not in line.lower() and tbr > highest_audio_tbr:
-                    highest_audio_tbr = tbr
-                    audio_id = re.search(r"^\d+", line).group(0)
-            except AttributeError:
-                continue
-
-    if not video_id:
-        print_color("No suitable video format found. Please check the video link.", Colors.FAIL)
-    if not audio_id:
-        print_color("No suitable audio format found. Please check the video link.", Colors.FAIL)
-
-    if video_id and audio_id:
-        print_color(f"Selected Video ID: {video_id}, Audio ID: {audio_id}", Colors.OKGREEN)
-        return video_id, audio_id
-    else:
-        sys.exit(1)
-
-def download_video(link, video_id, audio_id):
-    """
-    Downloads the selected video and audio streams using yt-dlp.
-    """
-    print_color("\nStarting download...", Colors.HEADER)
-    output_template = os.path.join(os.getcwd(), "%(title)s.%(ext)s")
-    command = f'yt-dlp -f "{video_id}+{audio_id}" -o "{output_template}" "{link}"'
-    # command = f'yt-dlp -f "{video_id}+{audio_id}" -o "{output_template}" {link}' 
+def fetch_video_info(link):
+    """Fetches video metadata using yt-dlp --dump-json."""
+    print_color("Fetching video info using yt-dlp...", Colors.OKBLUE)
+    command = ['yt-dlp', '--dump-json', link]
     try:
-        subprocess.run(command, shell=True, check=True)
-        print("================================================================================================")
-        print()
+        result = subprocess.run(command, capture_output=True, text=True, check=True, encoding='utf-8', errors='ignore')
+        return json.loads(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print_color(f"Error fetching video info for {link}.", Colors.FAIL)
+        print(f"yt-dlp command failed:\n{e.stderr}")
+        return None # Signal failure
+    except json.JSONDecodeError as e:
+        print_color(f"Error decoding yt-dlp JSON output for {link}: {e}", Colors.FAIL)
+        return None # Signal failure
+    except Exception as e:
+        print_color(f"An unexpected error occurred during fetch_video_info for {link}: {e}", Colors.FAIL)
+        return None
 
-        # UNCOMMENT THESE LINES BELOW TO ONLY SHOW THE DIRECTORY NAME
-        # output_directory = os.getcwd()  # Get the current working directory
-        # print_color(f"Download completed! Files are saved in the directory: {output_directory}", Colors.OKGREEN)
+def select_formats(video_info):
+    """Parses JSON data and selects the best video and audio formats based on TBR."""
+    print_color("Selecting best video/audio formats...", Colors.OKBLUE)
+    if not video_info or 'formats' not in video_info:
+        raise FormatSelectionError("No format information available in video data.")
 
-        downloaded_files = glob.glob(os.path.join(os.getcwd(), "*.*"))
-        if downloaded_files:
-            latest_file = max(downloaded_files, key=os.path.getctime)  # Gets the latest file by creation time
-            print_color(f"Download completed! File saved to: {latest_file}", Colors.OKGREEN)
+    formats = video_info['formats']
+    best_video_id = None
+    best_audio_id = None
+    max_video_tbr = -1  # Use -1 to handle formats with tbr=0
+    max_audio_tbr = -1
+
+    for fmt in formats:
+        # Ensure 'tbr', 'vcodec', 'acodec' exist, provide defaults if not
+        tbr = fmt.get('tbr')  # Total bitrate (might be None)
+        vcodec = fmt.get('vcodec', 'none')
+        acodec = fmt.get('acodec', 'none')
+        format_note = fmt.get('format_note', '').lower()
+        format_str = fmt.get('format', '').lower() # Fallback check in format string
+
+        # Convert tbr to float, treat None as -1 for comparison
+        current_tbr = -1
+        if tbr is not None:
+            try:
+                current_tbr = float(tbr)
+            except (ValueError, TypeError):
+                current_tbr = -1 # Ignore if tbr is not a valid number
+
+        # Select Video-only format
+        if vcodec != 'none' and acodec == 'none':
+            if current_tbr > max_video_tbr:
+                max_video_tbr = current_tbr
+                best_video_id = fmt.get('format_id')
+
+        # Select Audio-only format (non-DRC)
+        elif acodec != 'none' and vcodec == 'none':
+            # Check for DRC in format_note or format string
+            is_drc = 'drc' in format_note or 'drc' in format_str
+            if not is_drc and current_tbr > max_audio_tbr:
+                max_audio_tbr = current_tbr
+                best_audio_id = fmt.get('format_id')
+
+    if not best_video_id:
+        raise FormatSelectionError("Could not find a suitable video-only format.")
+    if not best_audio_id:
+        raise FormatSelectionError("Could not find a suitable non-DRC audio-only format.")
+
+    print_color(f"Selected Video ID: {best_video_id} (TBR: {max_video_tbr:.2f}k)" if max_video_tbr != -1 else f"Selected Video ID: {best_video_id}", Colors.OKGREEN)
+    print_color(f"Selected Audio ID: {best_audio_id} (TBR: {max_audio_tbr:.2f}k)" if max_audio_tbr != -1 else f"Selected Audio ID: {best_audio_id}", Colors.OKGREEN)
+    return best_video_id, best_audio_id
+
+def download_video(link, video_id, audio_id, output_dir):
+    """Downloads and merges the selected video and audio streams."""
+    print_color(f"Starting download for {link}...", Colors.HEADER)
+    # Use video ID in template for potential uniqueness if titles clash
+    output_template = os.path.join(output_dir, '%(title)s [%(id)s].%(ext)s')
+    format_string = f"{video_id}+{audio_id}"
+    command = ['yt-dlp', '-f', format_string, '-o', output_template, link]
+
+    try:
+        # Run without check=True to analyze output even on failure (stderr often has info)
+        result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', errors='ignore')
+
+        output_log = result.stdout + "\n" + result.stderr # Combine stdout and stderr for parsing
+
+        # Check return code *after* running
+        if result.returncode != 0:
+            # Raise error to be caught by the main loop's handler
+            raise subprocess.CalledProcessError(result.returncode, command, output=result.stdout, stderr=result.stderr)
+
+        # --- Try to find the final filename from yt-dlp's output ---
+        final_filename = None
+        # Regex for '[Merger] Merging formats into "..."' or '[download] Destination: ...'
+        # It captures the filename inside the quotes or after "Destination: "
+        # Handles filenames with spaces correctly if quoted.
+        merge_match = re.search(r"\[Merger\] Merging formats into \"(.+)\"", output_log)
+        dest_match = re.search(r"\[download\] Destination: (.+)", output_log)
+        # Regex for cases where yt-dlp just downloads (e.g., mp4 already exists)
+        downloaded_match = re.search(r"\[download\] (.+) has already been downloaded", output_log)
+        ffmpeg_match = re.search(r"\[FixupM3u8\] Fixing MPEG-TS in \"(.+)\"", output_log) # M3U8 Fixup
+        ffmpeg_generic_match = re.search(r"\[Fixup\w+\] Fixing.* in \"(.+)\"", output_log) # More generic fixup
+
+        if merge_match:
+            final_filename = merge_match.group(1)
+        elif dest_match:
+             # Need to check if it was later merged - Merger message is more reliable for final name
+            temp_filename = dest_match.group(1)
+            # Check if a *later* merge message exists for *this specific base name*
+            # This is tricky, rely on merge_match if possible. Assume dest_match is final if no merge_match.
+            final_filename = temp_filename
+            # Refine check: see if output indicates merging happened AFTER this destination message
+            dest_pos = output_log.find(f"[download] Destination: {temp_filename}")
+            merge_later = "[Merger] Merging formats into" in output_log[dest_pos:] if dest_pos != -1 else False
+            if merge_later:
+                 final_filename = None # Wait for merge message parsing
+            else:
+                 final_filename = temp_filename
+        elif downloaded_match:
+             final_filename = downloaded_match.group(1)
+        elif ffmpeg_match:
+             final_filename = ffmpeg_match.group(1)
+        elif ffmpeg_generic_match:
+             final_filename = ffmpeg_generic_match.group(1)
+
+        if final_filename:
+            # Ensure the path is absolute if it's not already
+            if not os.path.isabs(final_filename):
+                 final_filename = os.path.join(output_dir, os.path.basename(final_filename)) # Use basename just in case
+            print_color(f"Download successful! File saved to:", Colors.OKGREEN)
+            print(f"{final_filename}")
+
         else:
-            print_color("Download completed, but the output file could not be located.", Colors.WARNING)
+            print_color("Download likely completed, but couldn't parse exact filename from output.", Colors.OKGREEN)
+            print(f"Check your output directory for a file matching the pattern: {output_template}")
+            # Fallback: list recent files? Maybe too complex/unreliable. Stick to pattern.
 
-        print()
-    except subprocess.CalledProcessError:
-        print_color("Download failed. Please check the link and try again.", Colors.FAIL)
-        sys.exit(1)
-
-# def is_valid_youtube_link(link):
-#     """
-#     Validates a YouTube video link and ensures it's not a playlist.
-#     """
-#     print_color("\nValidating YouTube link...", Colors.HEADER)
-#     if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/)|youtu\.be/)", link):
-#     # if not re.match(r"^https?://(www\.)?(youtube\.com/watch\?v=|youtu\.be/)", link):
-#         print_color("Invalid YouTube URL. Please enter a valid video link.", Colors.FAIL)
-#         sys.exit(1)
-#     if "list=" in link:
-#         print_color("The link is for a playlist. Please provide a single video link.", Colors.FAIL)
-#         sys.exit(1)
-#     response = requests.get(link)
-#     if response.status_code != 200:
-#         print_color("The video link is not accessible. Please check the URL.", Colors.FAIL)
-#         sys.exit(1)
-#     print_color("YouTube link is valid!", Colors.OKGREEN)
-
-# if __name__ == "__main__":
-#     print()
-#     print_color("YouTube Video Downloader Script", Colors.BOLD)
-
-#     # Step 1: Get YouTube video link from the user
-#     print()
-#     youtube_link = input(f"{Colors.OKCYAN}Enter a YouTube video link: {Colors.ENDC}").strip()
-
-#     # Step 2: Validate YouTube link
-#     print()
-#     is_valid_youtube_link(youtube_link)
-
-#     # Step 3: Check and setup yt-dlp
-#     print()
-#     check_yt_dlp()
-
-#     # Step 4: Fetch available formats
-#     print()
-#     formats = fetch_formats(youtube_link)
-
-#     # Step 5: Select best video and audio formats
-#     print()
-#     video_format_id, audio_format_id = select_formats(formats)
-
-#     # Step 6: Download video
-#     print()
-#     download_video(youtube_link, video_format_id, audio_format_id)
-
-# def is_valid_youtube_link(link):
-#     """
-#     Validates a YouTube link and checks if it is a video or a playlist.
-#     """
-#     print_color("\nValidating YouTube link...", Colors.HEADER)
-    
-#     if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/|playlist\?list=)|youtu\.be/)", link):
-#         print_color("Invalid YouTube URL. Please enter a valid video or playlist link.", Colors.FAIL)
-#         sys.exit(1)
-    
-#     response = requests.get(link)
-#     if response.status_code != 200:
-#         print_color("The video/playlist link is not accessible. Please check the URL.", Colors.FAIL)
-#         sys.exit(1)
-
-#     if "list=" in link:
-#         print_color("Playlist detected! Extracting video links...", Colors.OKBLUE)
-#         return "playlist"
-#     else:
-#         print_color("YouTube video link is valid!", Colors.OKGREEN)
-#         return "video"
+    except subprocess.CalledProcessError as e:
+        # This error will be caught and handled in the main loop
+        # Re-raise it to propagate the failure information
+        raise e
+    except Exception as e:
+         # Catch other potential errors during download/parsing
+         print_color(f"An unexpected error occurred during download for {link}: {e}", Colors.FAIL)
+         # Re-raise to be handled by the main loop
+         raise e
 
 def is_valid_youtube_link(link):
-    """
-    Validates a YouTube link and checks if it is a video or a playlist.
-    If a playlist link is detected, the user is asked if they want to download the full playlist.
-    If they choose 'No', the URL is cleaned to remove the playlist part.
-    """
-    print_color("\nValidating YouTube link...", Colors.HEADER)
+    """Validates YouTube link format and checks if it's a playlist."""
+    print_color("\nValidating YouTube link...", Colors.OKBLUE)
+    # Regex for various YouTube video, shorts, and playlist URL formats
+    youtube_regex = re.compile(
+        r'^(https?://)?(www\.)?(youtube\.com|youtu\.be)/'
+        r'(watch\?v=|playlist\?list=|embed/|shorts/|live/)?'
+        r'([a-zA-Z0-9_-]{11})?' # Optional Video ID
+        r'([\?&]list=([a-zA-Z0-9_-]+))?' # Optional Playlist ID
+        r'.*$', re.IGNORECASE)
 
-    if not re.match(r"^https?://(www\.)?(youtube\.com/(watch\?v=|shorts/|playlist\?list=)|youtu\.be/)", link):
-        print_color("Invalid YouTube URL. Please enter a valid video or playlist link.", Colors.FAIL)
-        sys.exit(1)
+    match = youtube_regex.match(link)
 
-    response = requests.get(link)
-    if response.status_code != 200:
-        print_color("The video/playlist link is not accessible. Please check the URL.", Colors.FAIL)
-        sys.exit(1)
+    if not match:
+        print_color("Invalid YouTube URL format.", Colors.FAIL)
+        return None, None # Indicate failure
 
-    if "list=" in link:
-        print_color("\nThis link belongs to a playlist.", Colors.WARNING)
-        user_choice = input(f"{Colors.BOLD}Do you want to download the entire playlist? (y/n): {Colors.ENDC}").strip().lower()
+    # Check if 'list=' parameter is present indicating a playlist
+    is_playlist = 'list=' in link
 
-        if user_choice == "y":
-            print_color("Downloading the entire playlist...", Colors.OKGREEN)
-            return "playlist", link  # Return the original playlist URL
-
-        elif user_choice == "n":
-            # Clean URL to remove playlist ID but keep the video ID
-            cleaned_url = re.sub(r"[&?]list=[^&]+", "", link)
-            print_color(f"\nProceeding with the single video: {cleaned_url}", Colors.OKGREEN)
-            return "video", cleaned_url  # Return the cleaned URL for a single video
-
-        else:
-            print_color("Invalid choice. Please enter 'y' or 'n'.", Colors.FAIL)
-            sys.exit(1)
-
-    print_color("YouTube video link is valid!", Colors.OKGREEN)
-    return "video", link  # Return original link if it's not a playlist
+    if is_playlist:
+        print_color("Playlist link detected.", Colors.WARNING)
+        while True:
+            try:
+                user_choice = input(f"{Colors.BOLD}Download the entire playlist? (y/n): {Colors.ENDC}").strip().lower()
+                if user_choice == 'y':
+                    print_color("Preparing to download the entire playlist...", Colors.OKGREEN)
+                    # Extract the playlist URL part (ensure only list= parameter is primary)
+                    playlist_match = re.search(r"(list=([a-zA-Z0-9_-]+))", link)
+                    if playlist_match:
+                         playlist_url = f"https://www.youtube.com/playlist?{playlist_match.group(1)}"
+                         return "playlist", playlist_url
+                    else:
+                         print_color("Could not cleanly extract playlist ID. Using original link.", Colors.WARNING)
+                         return "playlist", link # Fallback to original link
+                elif user_choice == 'n':
+                     # Try to extract just the video part if present
+                    video_id_match = re.search(r"v=([a-zA-Z0-9_-]{11})", link)
+                    if video_id_match:
+                        cleaned_url = f"https://www.youtube.com/watch?v={video_id_match.group(1)}"
+                        print_color(f"Proceeding with single video: {cleaned_url}", Colors.OKGREEN)
+                        return "video", cleaned_url
+                    else:
+                        print_color("Could not find a video ID in the playlist link to download individually.", Colors.FAIL)
+                        print_color("Please provide a direct video link if you don't want the playlist.", Colors.WARNING)
+                        return None, None # Indicate failure to proceed
+                else:
+                     print_color("Invalid choice. Please enter 'y' or 'n'.", Colors.FAIL)
+            except EOFError: # Handle Ctrl+D or similar unexpected EOF
+                 print_color("\nOperation cancelled by user.", Colors.FAIL)
+                 return None, None
+    else:
+        # Validate it's likely a video/short/live link
+        if not match.group(5) and '/live/' not in link: # Check if video ID group exists or it's a /live/ link
+             print_color("Link does not appear to be a valid video, short, or live stream link.", Colors.FAIL)
+             return None, None
+        print_color("YouTube video link is valid!", Colors.OKGREEN)
+        return "video", link
 
 def get_playlist_videos(playlist_url):
-    """
-    Extracts all video links from a playlist using yt-dlp.
-    """
+    """Extracts all video URLs from a playlist using yt-dlp."""
     print_color("\nExtracting video links from the playlist...", Colors.HEADER)
-    
+    command = ['yt-dlp', '--flat-playlist', '--print', '%(webpage_url)s', playlist_url]
     try:
-        result = subprocess.run(
-            ["yt-dlp", "--flat-playlist", "--print", "%(webpage_url)s", playlist_url],
-            capture_output=True,
-            text=True,
-            check=True
-        ).stdout.splitlines()
-        
-        if not result:
-            print_color("Failed to extract video links. Check the playlist URL.", Colors.FAIL)
-            sys.exit(1)
-        
-        print_color(f"Found {len(result)} videos in the playlist!", Colors.OKGREEN)
-        return result
-    
-    except subprocess.CalledProcessError:
-        print_color("Error extracting videos from playlist. Ensure yt-dlp is working.", Colors.FAIL)
-        sys.exit(1)
+        result = subprocess.run(command, capture_output=True, text=True, check=True, encoding='utf-8', errors='ignore')
+        video_links = result.stdout.strip().splitlines()
 
+        if not video_links:
+            print_color("No video links found in the playlist or failed to extract.", Colors.WARNING)
+            return [] # Return empty list, don't exit
+
+        print_color(f"Found {len(video_links)} videos in the playlist.", Colors.OKGREEN)
+        return video_links
+
+    except subprocess.CalledProcessError as e:
+        print_color("Error extracting videos from playlist.", Colors.FAIL)
+        print(f"yt-dlp command failed:\n{e.stderr}")
+        return [] # Return empty list on error
+    except Exception as e:
+        print_color(f"An unexpected error occurred during get_playlist_videos: {e}", Colors.FAIL)
+        return []
+
+# --- Main Execution ---
 if __name__ == "__main__":
-    print()
-    print_color("YouTube Video Downloader Script", Colors.BOLD)
+    print_color("\n--- Universal YouTube Downloader ---", Colors.BOLD + Colors.HEADER)
 
-    print()
-    youtube_link = input(f"{Colors.OKCYAN}Enter a YouTube video or playlist link: {Colors.ENDC}").strip()
+    check_prerequisites() # Check dependencies first
 
-    print()
-    link_type, youtube_link = is_valid_youtube_link(youtube_link)  # Get link type and URL
+    try:
+         youtube_link_input = input(f"\n{Colors.OKCYAN}Enter a YouTube video or playlist link: {Colors.ENDC}").strip()
+         if not youtube_link_input:
+              print_color("No link entered. Exiting.", Colors.FAIL)
+              sys.exit(1)
+    except EOFError:
+         print_color("\nOperation cancelled by user.", Colors.FAIL)
+         sys.exit(1)
 
-    print()
-    check_yt_dlp()
+    link_type, url_to_process = is_valid_youtube_link(youtube_link_input)
 
-    print()
-    video_links = [youtube_link]  # Default list (single video)
+    if link_type is None:
+        sys.exit(1) # Exit if validation failed
 
-    if link_type == "playlist":  # If it's a playlist, extract all video links
-        video_links = get_playlist_videos(youtube_link)
+    video_links_to_download = []
+    if link_type == "video":
+        video_links_to_download.append(url_to_process)
+    elif link_type == "playlist":
+        video_links_to_download = get_playlist_videos(url_to_process)
+        if not video_links_to_download:
+            print_color("No videos found in the playlist or failed to retrieve them. Exiting.", Colors.FAIL)
+            sys.exit(1)
 
-    for index, video_url in enumerate(video_links, start=1):
-        print()
-        print_color(f"Processing Video {index}/{len(video_links)}: {video_url}", Colors.BOLD)
+    print(f"\n{Colors.HEADER}--- Starting Download Process ---{Colors.ENDC}")
+    total_videos = len(video_links_to_download)
+    success_count = 0
+    fail_count = 0
+    current_dir = os.getcwd()
 
-        print()
-        formats = fetch_formats(video_url)
+    for index, video_url in enumerate(video_links_to_download, start=1):
+        print("\n" + "="*70)
+        print_color(f"Processing Video {index}/{total_videos}: {video_url}", Colors.BOLD + Colors.OKCYAN)
+        print("="*70)
 
-        print()
-        video_format_id, audio_format_id = select_formats(formats)
+        try:
+            # 1. Fetch video info
+            video_info = fetch_video_info(video_url)
+            if video_info is None:
+                raise Exception("Failed to fetch video information.") # Generic error to be caught below
 
-        print()
-        download_video(video_url, video_format_id, audio_format_id)
+            # 2. Select formats
+            video_format_id, audio_format_id = select_formats(video_info)
+            # select_formats raises FormatSelectionError on failure
+
+            # 3. Download video
+            download_video(video_url, video_format_id, audio_format_id, current_dir)
+            # download_video raises CalledProcessError on failure
+
+            success_count += 1
+
+        # --- Granular Error Handling per Video ---
+        except FormatSelectionError as e:
+            print_color(f"Skipping video {index}: Could not select formats. Reason: {e}", Colors.FAIL)
+            fail_count += 1
+            continue # Move to the next video
+        except subprocess.CalledProcessError as e:
+            print_color(f"Skipping video {index}: Download command failed (Exit code: {e.returncode}).", Colors.FAIL)
+            # Print stderr from yt-dlp for more details
+            if e.stderr:
+                print(f"{Colors.FAIL}yt-dlp Error Output:{Colors.ENDC}\n{e.stderr.strip()}")
+            fail_count += 1
+            continue # Move to the next video
+        except Exception as e: # Catch any other unexpected errors for this video
+            print_color(f"Skipping video {index}: An unexpected error occurred: {e}", Colors.FAIL)
+            # Consider logging traceback here if needed for debugging
+            # import traceback
+            # traceback.print_exc()
+            fail_count += 1
+            continue # Move to the next video
+
+    # --- Final Summary ---
+    print("\n" + "="*70)
+    print_color("--- Download Process Finished ---", Colors.BOLD + Colors.HEADER)
+    print_color(f"Successfully downloaded: {success_count}/{total_videos}", Colors.OKGREEN)
+    if fail_count > 0:
+        print_color(f"Failed/Skipped videos:  {fail_count}/{total_videos}", Colors.FAIL)
+    print(f"Files saved in directory: {current_dir}")
+    print("="*70 + "\n")
