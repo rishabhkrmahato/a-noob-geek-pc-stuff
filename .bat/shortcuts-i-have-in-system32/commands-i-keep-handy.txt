@@ -1,40 +1,53 @@
+:: ---------------------------------------------------------------------------------------------------
+:: 7-Zip: Create a .tar archive and split into 2GB parts
 "C:\Program Files\7-Zip\7z.exe" a -ttar -v2000m "%USERPROFILE%\Desktop\ARCHIVE_NAME.tar" "PATH_TO_FILE_OR_FOLDER"
+:: (Adjust path to 7z.exe if different.)
 
-
+:: ---------------------------------------------------------------------------------------------------
+:: FFmpeg: Mux (merge) video + audio into a single file without re-encoding
 ffmpeg -i video.<video_ext> -i audio.<audio_ext> -c:v copy -c:a copy output.<output_ext>
 
-
+:: ---------------------------------------------------------------------------------------------------
+:: PowerShell: Add a folder permanently to the system PATH variable
 [System.Environment]::SetEnvironmentVariable("Path", $([System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";<ADD_YOUR_DIRECTORY_HERE>"), "Machine")
+:: (Run inside PowerShell terminal, not CMD. Needs admin rights.)
 
----(powershell command above; always use ps commands after entering powershell only; many syntaxing issues occur if u call ps in cmd)---
+:: ---------------------------------------------------------------------------------------------------
+:: Windows: Create an empty file of a specific size (in bytes)
+fsutil file createnew <filename> <size_in_bytes>
+:: Example: fsutil file createnew dummy.txt 1048576 → creates 1MB file.
 
-
-fsutil file createnew
-
-
+:: ---------------------------------------------------------------------------------------------------
+:: Linux (Ubuntu/Debian): Update and upgrade all packages
 sudo apt update && sudo apt upgrade -y
 
+:: ---------------------------------------------------------------------------------------------------
+:: FFmpeg: Losslessly split a media file into multiple parts
+ffmpeg -i [file.ext] -c copy -map 0 -segment_time [seconds] -f segment -reset_timestamps 1 -avoid_negative_ts make_zero output-%03d.ext
+:: (Works for videos, audios, subtitles without re-encoding.)
 
+:: ---------------------------------------------------------------------------------------------------
+:: yt-dlp: Download best video and best audio, save to Videos folder
+yt-dlp -f bestvideo+bestaudio -o "%USERPROFILE%\Videos\%(title)s.%(ext)s" <video_url>
+:: (Note: This may NOT guarantee the *absolute best* quality.)
+:: For highest quality downloads, use Rishabh's custom script instead:
+:: https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/blob/main/py/BEST-YOUTUBE-DOWNLOADER.py
 
-ffmpeg -i [file.ext] -c copy -map 0 -segment_time [time-in-secs] -f segment -reset_timestamps 1 -avoid_negative_ts make_zero [output-%03d.ext]
-{
-- Universally supports videos, audio, and files with multiple streams (subtitles, metadata, etc.) in common formats like .mp4, .mkv, and .mp3.  
-- Ensures lossless quality using `-c copy`, avoiding re-encoding.  
-- Provides seamless splits with no data loss, though perfect cuts depend on original keyframes.  
-- Resolves irregular timestamps with `-avoid_negative_ts`, preventing playback issues.
-}
-
-
-
-yt-dlp -f bestvideo+bestaudio -o "C:\Users\mahat\Videos\%(title)s.%(ext)s" <video_url>
-
-
-
+:: ---------------------------------------------------------------------------------------------------
+:: IDM Reset: PowerShell command to reset Internet Download Manager (IDM)
 iex(irm is.gd/idm_reset)
 
-
+:: ---------------------------------------------------------------------------------------------------
+:: Windows Activation Scripts:
 irm https://get.activated.win | iex
+:: (Script for activating Windows.)
+
 https://massgrave.dev/genuine-installation-media
+:: (Official site for genuine Windows ISOs and activation resources.)
 
-
+:: ---------------------------------------------------------------------------------------------------
+:: Chris Titus Tech: Windows debloater and optimizer
 irm "https://christitus.com/win" | iex
+:: (Tweaks Windows, removes bloatware, optimizes performance.)
+
+:: ---------------------------------------------------------------------------------------------------
