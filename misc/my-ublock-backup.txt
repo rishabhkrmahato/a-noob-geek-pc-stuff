@@ -1,6 +1,6 @@
 {
-  "timeStamp": 1732370330210,
-  "version": "1.61.0",
+  "timeStamp": 1745744101486,
+  "version": "1.62.0",
   "userSettings": {
     "importedLists": [],
     "popupPanelSections": 15
@@ -10,14 +10,10 @@
     "ublock-filters",
     "ublock-badware",
     "ublock-privacy",
-    "ublock-quick-fixes",
     "ublock-unbreak",
+    "ublock-quick-fixes",
     "easylist",
-    "adguard-generic",
-    "adguard-mobile",
     "easyprivacy",
-    "adguard-spyware",
-    "adguard-spyware-url",
     "urlhaus-1",
     "plowe-0"
   ],
@@ -27,11 +23,12 @@
     "chatgpt.com",
     "chrome-extension-scheme",
     "moz-extension-scheme",
+    "music.apple.com",
     "omni.axisbank.co.in",
-    "youtube.com"
+    "tv.apple.com"
   ],
   "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
   "urlFilteringString": "",
-  "hostnameSwitchesString": "no-large-media: behind-the-scene false\nno-csp-reports: * true",
-  "userFilters": "! 18-Nov-2024 https://www.herzindagi.com\n||production.niti.ai/cta//loopPod?podId=4d716be2-a384-44a5-9a8c-923077204986&params={%22article_params%22:{%22language%22:%22en%22,%22category%22:%22entertainment%22,%22sub_category%22:%22tv-ott%22,%22page_type%22:%22article%22,%22author%22:%22Alice%20Mary%20Topno%20%22,%22article_id%22:%22250368%22},%22request_metadata%22:{%22title%22:%22Top%207%20Websites%20To%20Stream%20Korean%20Dramas%20With%20English%20Subtitles%20For%20Free%22,%22description%22:%22Finding%20a%20Korean%20drama%20with%20excellent%20English%20subtitles%20is%20essential%20for%20foreign%20viewers%20who%20do%20not%20speak%20Korean%20well.%20Korean%20dramas%20are%20currently%20a%20global%20phenomenon.%20If%20you%27re%20looking%20for%20websites%20where%20you%20can%20watch%20Korean%20dramas%20with%20English%20subtitles%20online,%20have%20a%20look%20at%20the%20list%20below:%22,%22keyword%22:%22websites%20to%20watch%20korean%20dramas%20free%20with%20english%20subtitles,%20where%20to%20watch%20korean%20dramas%20for%20free,%20korean%20dramas%2$subdocument"
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false",
+  "userFilters": ""
 }
