@@ -283,96 +283,167 @@ def select_formats(video_info):
     print_color(f"Selected Audio ID: {best_audio_id} (TBR: {max_audio_tbr:.2f}k)" if max_audio_tbr != -1 else f"Selected Audio ID: {best_audio_id}", Colors.OKGREEN)
     return best_video_id, best_audio_id
 
+# --- REVISED download_video function ---
 def download_video(link, video_id, audio_id, output_dir):
-    """Downloads and merges the selected video and audio streams."""
+    """Downloads and merges the selected video and audio streams, showing progress."""
     print_color(f"Starting download for {link}...", Colors.HEADER)
-    # Use video ID in template for potential uniqueness if titles clash
-    # Ensure output dir exists
     os.makedirs(output_dir, exist_ok=True)
-    # Sanitize title for filesystem compatibility (basic example)
-    # A more robust library like 'pathvalidate' could be used for complex cases
     output_template = os.path.join(output_dir, '%(title)s [%(id)s].%(ext)s')
     format_string = f"{video_id}+{audio_id}"
-    # Add --force-overwrites or --no-overwrites based on preference? Default overwrites partials.
-    # Add --merge-output-format mp4/mkv ? Default is often mkv. Explicitly set if needed.
     command = ['yt-dlp',
                '-f', format_string,
                '-o', output_template,
                '--merge-output-format', 'mp4', # Example: Force mp4 merge
+               # '--progress', # Explicitly request progress updates if needed
+               # '--newline', # Helps ensure line buffering from yt-dlp
                link]
 
+    print_color(f"Executing command: {' '.join(command)}", Colors.OKCYAN) # Show command being run
+
+    # --- Use Popen to stream output ---
+    process = None # Initialize process variable
+    stdout_lines = []
+    stderr_lines = []
+    full_output_log = ""
+
     try:
-        # Run without check=True to analyze output even on failure (stderr often has info)
-        # Force utf-8 encoding for Windows compatibility
-        result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', errors='ignore')
+        # Start the yt-dlp process
+        # bufsize=1 enables line buffering
+        # Use Popen to allow reading streams while process runs
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,            # Decode stdout/stderr as text
+            encoding='utf-8',     # Specify encoding
+            errors='ignore',      # Ignore decoding errors
+            bufsize=1             # Line-buffered output
+        )
 
-        output_log = result.stdout + "\n" + result.stderr # Combine stdout and stderr for parsing
+        # Read and print stdout line by line in real-time
+        print_color("--- yt-dlp Output Start ---", Colors.OKBLUE)
+        if process.stdout:
+            for line in iter(process.stdout.readline, ''):
+                line_stripped = line.strip()
+                print(line_stripped) # Print the progress line immediately
+                stdout_lines.append(line) # Store original line with newline
+            process.stdout.close() # Close stdout stream
 
-        # Print yt-dlp output for user feedback during download
-        print(output_log.strip()) # Print the captured output
+        # Wait for the process to finish and get the exit code
+        return_code = process.wait()
 
-        # Check return code *after* running and printing output
-        if result.returncode != 0:
-            # Raise error to be caught by the main loop's handler
-            # Include decoded output in the exception
-            raise subprocess.CalledProcessError(result.returncode, command, output=result.stdout, stderr=result.stderr)
+        # Read any remaining stderr output after the process has finished
+        stderr_output = ""
+        if process.stderr:
+            stderr_output = process.stderr.read()
+            process.stderr.close() # Close stderr stream
+            if stderr_output.strip():
+                print_color("--- yt-dlp Error Output ---", Colors.WARNING)
+                print(stderr_output.strip())
+                stderr_lines = stderr_output.splitlines(keepends=True) # Store lines
 
-        # --- Try to find the final filename from yt-dlp's output (more robustly) ---
+        print_color("--- yt-dlp Output End ---", Colors.OKBLUE)
+
+        # Combine captured output for later analysis (like filename extraction)
+        full_output_log = "".join(stdout_lines) + stderr_output
+
+        # Check return code after process finishes and all output is read
+        if return_code != 0:
+            # Raise error similar to check=True, including captured output
+            raise subprocess.CalledProcessError(
+                return_code,
+                command,
+                output="".join(stdout_lines), # Pass captured stdout
+                stderr=stderr_output          # Pass captured stderr
+            )
+
+        # --- Original filename finding logic (using combined log) ---
         final_filename = None
-        # Order matters: check merge first, then fixup, then destination/already downloaded
         patterns = [
             r"\[Merger\] Merging formats into \"(.+)\"",
-            r"\[Fixup\w+\] Fixing M(PEG|KV)TS in \"(.+)\"", # More specific fixups
-            r"\[Fixup\w+\] Fixing.* in \"(.+)\"", # Generic fixup
+            r"\[Fixup\w+\] Fixing M(?:PEG|KV)TS in \"(.+)\"", # Adjusted Fixup regex slightly
+            r"\[Fixup\w+\] Fixing.* in \"(.+)\"",
             r"\[download\] Destination: (.+)",
             r"\[download\] (.+) has already been downloaded"
         ]
 
         for pattern in patterns:
-            match = re.search(pattern, output_log)
+            match = re.search(pattern, full_output_log)
             if match:
-                # Group 1 usually contains the path in quotes/after destination
-                # Group 2 for the FixupM*TS pattern
+                # Group 1 or the last matched group usually contains the path
                 potential_path = match.group(match.lastindex or 1)
                 # Basic check if the path looks reasonable (e.g., contains the video ID from template)
-                video_id_in_path = re.search(r"\[([a-zA-Z0-9_-]{11})\]", potential_path)
-                if video_id_in_path: # or just check if os.path.exists(potential_path): # Less reliable right after process ends
+                # Use video_id passed into the function for the check
+                video_id_in_path = re.search(re.escape(f"[{video_id}]"), potential_path)
+                if video_id_in_path:
                     final_filename = potential_path
-                    break # Found a likely candidate
+                    break
 
         if final_filename:
-            # Ensure the path is absolute only if it's not already (yt-dlp usually gives abs path)
             if not os.path.isabs(final_filename):
-                final_filename = os.path.abspath(os.path.join(output_dir, os.path.basename(final_filename)))
+                 # yt-dlp might output relative path based on -o template structure
+                 # Ensure it's joined with the intended output_dir if relative
+                 potential_abs = os.path.abspath(os.path.join(output_dir, os.path.basename(final_filename)))
+                 # A simple check if the filename part matches is often enough
+                 if os.path.basename(potential_path) == os.path.basename(final_filename):
+                      final_filename = potential_abs
+                 else: # Fallback to constructing from output_dir + basename if absolute check fails
+                      final_filename = os.path.abspath(os.path.join(output_dir, os.path.basename(final_filename)))
+
 
             # Double check existence for confirmation
             if os.path.exists(final_filename):
                  print_color(f"Download and merge successful! Final file:", Colors.OKGREEN)
                  print(f"{final_filename}")
             else:
-                 print_color(f"Download process finished, but couldn't verify final file location: {final_filename}", Colors.WARNING)
-                 print(f"Check your output directory: {output_dir}")
+                 # Fallback if the parsed name doesn't exist, maybe path issue?
+                 # Look for the file based on the template pattern in the output dir
+                 expected_pattern = f"*[{video_id}].mp4" # Match based on ID and expected ext
+                 found_files = [f for f in os.listdir(output_dir) if video_id in f and f.endswith('.mp4')]
+                 if found_files:
+                     final_filename = os.path.abspath(os.path.join(output_dir, found_files[0]))
+                     print_color(f"Download successful (verified by file search)! Final file:", Colors.OKGREEN)
+                     print(f"{final_filename}")
+                 else:
+                     print_color(f"Download process finished, but couldn't verify final file location matching '{final_filename}' or pattern '*{video_id}*.mp4'", Colors.WARNING)
+                     print(f"Please check your output directory: {output_dir}")
+
 
         else:
-            # Check if *any* file matching the pattern exists as a last resort
-            potential_files = []
-            try:
-                # Extract expected ID and title elements if possible
-                # This part is complex; a simpler check is just to list the dir
-                print_color("Download process finished, but couldn't parse exact filename from output.", Colors.WARNING)
-                print(f"Please check your output directory for the downloaded file: {output_dir}")
-
-            except Exception as e:
-                print_color(f"Error during fallback file check: {e}", Colors.FAIL)
+            # Fallback check if parsing failed entirely
+            print_color("Download process finished, but couldn't parse exact filename from output.", Colors.WARNING)
+            expected_pattern = f"*[{video_id}].mp4" # Match based on ID and expected ext
+            found_files = [f for f in os.listdir(output_dir) if video_id in f and f.endswith('.mp4')]
+            if found_files:
+                 final_filename = os.path.abspath(os.path.join(output_dir, found_files[0]))
+                 print_color(f"However, found a likely file via search:", Colors.OKGREEN)
+                 print(f"{final_filename}")
+            else:
+                print_color(f"Please check your output directory for the downloaded file: {output_dir}", Colors.WARNING)
 
 
     except subprocess.CalledProcessError as e:
-        # This error will be caught and handled in the main loop
+        # This error will be caught and handled in the main loop's handler
         # Re-raise it to propagate the failure information including output
+        # The error object 'e' now correctly contains stdout/stderr captured before failure
         raise e
+    except FileNotFoundError:
+        # Handle case where yt-dlp command itself is not found (should be caught by prerequisites check, but good practice)
+        print_color(f"Error: 'yt-dlp' command not found during execution.", Colors.FAIL)
+        # Re-raise to be handled by the main loop
+        raise Exception("yt-dlp command failed (FileNotFoundError)") from FileNotFoundError
     except Exception as e:
-         # Catch other potential errors during download/parsing
+         # Catch other potential errors during download process/Popen setup
          print_color(f"An unexpected error occurred during download process for {link}: {e}", Colors.FAIL)
+         # Ensure process is terminated if it exists and an error occurred mid-stream
+         if process and process.poll() is None:
+             try:
+                 process.terminate() # Try to terminate gracefully
+                 process.wait(timeout=5) # Wait a bit
+             except: # Broad except for cleanup
+                 pass
+             if process.poll() is None: # If still running
+                 process.kill() # Force kill
          # Re-raise to be handled by the main loop
          raise e
 
