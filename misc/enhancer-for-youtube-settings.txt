@@ -100,7 +100,7 @@
     "volumemultiplier": 3,
     "volumevariation": 5,
     "whatsnew": false,
-    "wideplayer": true,
+    "wideplayer": false,
     "wideplayerviewport": false
   }
 }
