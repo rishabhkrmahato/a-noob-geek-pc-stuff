@@ -23,7 +23,8 @@ A Python script that automates the downloading of YouTube videos and playlists u
 
 To get started with my tools, you have few easy options:
 
-#### **--Option 1: Quick One-Liner ! RECOMMENDED !**
+
+#### **--Option 1: Quick One-Liner !** --- UNDER RE-CONSTRUCTION
 You can instantly run my tools without downloading the repository by using the following PowerShell command:
 
 __RUN-AS-ADMIN__ ; as some tools require admin permissions.
@@ -37,7 +38,7 @@ irm https://bit.ly/rkm-tools-raw | iex
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/7dc98ed5-edd2-48fd-b994-6079d6d1e8c0) -->
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/317af3b0-4348-4c24-b0a9-1e5785a9d02c) -->
 <!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/1938cb59-eabf-463e-b1ef-bec90c553a13) -->
-![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/143392bf-127d-4f20-a8d9-85d450ab79aa)
+<!-- ![rkm-tools-terminal-guide](https://github.com/user-attachments/assets/143392bf-127d-4f20-a8d9-85d450ab79aa) -->
 
 
 
@@ -47,7 +48,7 @@ Alternatively, use the full URL:
 irm https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/heads/main/rkm-tools.ps1 | iex
 ```
 
-#### **-- Option 2: Download the Repository**
+#### **-- Option 2: Download the Repository** --- USE THIS CURRENTLY !
 
 1. **Download my repository**:  
    [__Click here__ to download the latest version](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/archive/refs/heads/main.zip)
@@ -64,19 +65,7 @@ irm https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/refs/
 
 ## Repository Structure 📁🔧📂
 
-- **Batch Scripts ([.bat/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/.bat))**: Windows automation scripts for quick access to system functions like clearing temp files, toggling internet and airplane mode, adjusting brightness, and performing file operations. Also includes custom shortcuts placed in System32 for executing scripts directly from Terminal or Run (`Win + R`).
-
-- **Bash Scripts ([bash/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/bash))**: Scripts for Linux and Termux to automate package management, download YouTube videos using yt-dlp, modify files, and perform common system tasks with minimal user input.
-  
-- **PowerShell Scripts ([ps/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/ps))**: Windows automation and system management scripts for listing installed programs, modifying registry settings, handling files, and executing useful system tweaks with minimal manual work.
-  
-- **Python Scripts ([py/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/py))**: Utility programs for various tasks such as renaming and organizing files, generating secure passwords, processing text data, and automating repetitive actions using Python.
-  
-- **C Programs ([c/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/c))**: Hello World! :)
- 
-- **Miscellaneous ([misc/](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/tree/main/misc))**: Contains configuration files, registry tweaks, and additional tools for system customization. Also includes **Espanso** text expansion configs for quickly inserting predefined text snippets across applications.  
-
-***
+--- TO BE RE-DESIGNED !
 
 __EXPLORE !__ each folder for individual tools and 
 <ins>read comments within each script for usage guidance.</ins>
