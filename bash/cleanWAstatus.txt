@@ -1,0 +1,8 @@
+simple whatsapp status cleaner 
+one click via termux
+
+1. nano ~/.bashrc 
+2. go to eof & add line   
+alias cleanWAstatus='rm -v /storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses/*'
+3. source ~/.bashrc or Restart App
+4. done type "cleanWAstatus" to immediately clean status storage folder of whatsapp.
