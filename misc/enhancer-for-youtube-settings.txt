@@ -1,5 +1,5 @@
 {
-  "version": "3.0.6",
+  "version": "3.0.9",
   "settings": {
     "applyvideofilters": false,
     "backdropcolor": "#000000",
@@ -12,7 +12,7 @@
     "cinemamode": false,
     "cinemamodewideplayer": false,
     "controlbar": {
-      "active": true,
+      "active": false,
       "autohide": true,
       "centered": true,
       "position": "fixed"
@@ -24,7 +24,7 @@
       "speed",
       "options"
     ],
-    "controlsvisible": false,
+    "controlsvisible": true,
     "controlspeed": true,
     "controlspeedmousebutton": false,
     "controlvolume": true,
@@ -49,6 +49,30 @@
     "executescript": false,
     "expanddescription": false,
     "filter": "none",
+    "griditemsperrow": {
+      "channel": {
+        "shorts": {
+          "apply": false,
+          "count": 5
+        },
+        "videos": {
+          "apply": false,
+          "count": 4
+        }
+      },
+      "posts": {
+        "apply": false,
+        "count": 4
+      },
+      "shorts": {
+        "apply": false,
+        "count": 8
+      },
+      "videos": {
+        "apply": false,
+        "count": 4
+      }
+    },
     "hidecardsendscreens": false,
     "hidechat": false,
     "hidecomments": false,
@@ -66,12 +90,12 @@
     "pauseforegroundtab": false,
     "pausevideos": true,
     "popuplayersize": "854x480",
-    "previousversion": "3.0.5",
-    "qualityembeds": "hd1440",
+    "previousversion": "3.0.8",
+    "qualityembeds": "hd2160",
     "qualityembedsfullscreen": "hd2160",
-    "qualityplaylists": "hd1440",
+    "qualityplaylists": "highres",
     "qualityplaylistsfullscreen": "hd2160",
-    "qualityvideos": "hd1440",
+    "qualityvideos": "highres",
     "qualityvideosfullscreen": "hd2160",
     "reload": false,
     "reversemousewheeldirection": false,
@@ -84,7 +108,7 @@
     "theatermode": true,
     "theme": "enhanced-dark",
     "themevariant": "dark-red.css",
-    "update": 1740134998227,
+    "update": 1752053986464,
     "vendorthemevariant": "youtube-deep-dark.css",
     "videofilters": {
       "blur": 0,
