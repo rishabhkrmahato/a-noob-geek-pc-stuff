@@ -1,246 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU" />
-    <title>UPI Payment Redirect</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #121212;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .card {
-            background: #1e1e1e;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            text-align: center;
-            width: 90%;
-            max-width: 400px;
-            box-sizing: border-box;
-        }
-        .card h1 {
-            font-size: 1.8rem;
-            color: #ffd700;
-            margin-bottom: 15px;
-        }
-        .card p {
-            font-size: 1rem;
-            color: #b0b0b0;
-            margin: 10px 0;
-        }
-        .card .upi-highlight {
-            color: #00ff7f;
-            font-weight: bold;
-            position: relative;
-            display: inline-block;
-            overflow: hidden;
-            padding: 2px 0;
-        }
-        .card .upi-highlight::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
-            transition: all 0.5s;
-        }
-        .card .upi-highlight:hover::after {
-            left: 100%;
-        }
-        .highlighted {
-            color: #4fc3f7;
-            font-weight: bold;
-        }
-        .card a {
-            display: inline-block;
-            background: #ffd700;
-            color: #000;
-            font-weight: bold;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            margin-top: 20px;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .card a:hover {
-            background: #f7c600;
-            transform: translateY(-3px);
-        }
-        .footer {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #666;
-        }
-        @media (min-width: 768px) {
-            .card {
-                width: 400px;
-                padding: 40px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pay Dr. Rishabh Kumar Mahato</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background: #1c1c1c;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      padding: 30px 25px;
+      max-width: 400px;
+      width: 100%;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      background: #222 url('https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff/blob/main/misc/drawn-me.png?raw=true') center/cover;
+      border: 3px solid #43e97b;
+      animation: popIn 1.2s ease-out;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    h1 span.pay {
+      font-weight: 400;
+      color: #aaa;
+      font-size: 1.2rem;
+      display: block;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    h1 span.name {
+      font-weight: 700;
+      color: #43e97b;
+      font-size: 1.4rem;
+      display: block;
+      animation: slideUp 1.5s ease forwards;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    p.subtitle {
+      color: #bbb;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      animation: fadeIn 2s ease;
+    }
+
+    .upi-id {
+      font-weight: 600;
+      color: #43e97b;
+      margin: 15px 0;
+      word-wrap: break-word;
+    }
+
+    .qr {
+      margin: 20px auto;
+      width: 200px;
+      height: 200px;
+      background: #fff;
+      padding: 12px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0,0,0,0.2) inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0,0,0,0.2) inset; }
+      50% { transform: scale(1.05); box-shadow: 0 15px 35px rgba(67, 233, 123, 0.4); }
+    }
+
+    .qr img {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: linear-gradient(90deg, #43e97b, #38f9d7);
+      color: #000;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeIn 2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .copy-btn {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #ddd;
+      background: none;
+      border: 1px solid #555;
+      border-radius: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      animation: fadeIn 2.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: #333;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #888;
+      animation: fadeIn 3s ease;
+    }
+  </style>
 </head>
 <body>
-    <div class="card">
-        <h1>UPI Payment Redirect</h1>
-        <p>This link is intended to be opened on a <span class="highlighted">mobile UPI app</span>.</p>
-        <p>If you are seeing this message, you may be using a <span class="highlighted">desktop or unsupported environment</span>.</p>
-        <p>Destination UPI ID:</p>
-        <p class="upi-highlight">dr.rishabhkrm@axisbank</p>
-        <a href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU">Proceed to UPI App</a>
-        <div class="footer">&copy; 2025 RISHABH KR. MAHATO. All Rights Reserved.</div>
+  <div class="card">
+    <div class="avatar"></div>
+    <h1>
+      <span class="pay">Pay</span>
+      <span class="name">Dr. Rishabh Kumar Mahato</span>
+    </h1>
+    <p class="subtitle">Support via UPI</p>
+
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=dr.rishabhkrm@axisbank&pn=Dr.%20Rishabh%20Kumar%20Mahato&cu=INR&tn=THANK%20YOU" alt="UPI QR Code">
     </div>
+
+    <p class="upi-id">dr.rishabhkrm@axisbank</p>
+
+    <a class="btn" href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=Dr.%20Rishabh%20Kumar%20Mahato&cu=INR&tn=THANK%20YOU">Pay with UPI</a>
+
+    <button class="copy-btn" onclick="copyUPI()">Copy UPI ID</button>
+
+    <div class="footer">&copy; 2025 Dr. Rishabh Kumar Mahato</div>
+  </div>
+
+  <script>
+    function copyUPI() {
+      navigator.clipboard.writeText('dr.rishabhkrm@axisbank');
+      alert('UPI ID copied to clipboard!');
+    }
+  </script>
 </body>
 </html>
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU" />
-    <title>Redirecting to UPI Payment...</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #000000, #4b0082, #ff69b4, #ffffff);
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-        }
-        .container {
-            max-width: 500px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.8);
-        }
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-        .highlight {
-            color: #007BFF;
-            font-weight: bold;
-        }
-        a {
-            display: inline-block;
-            padding: 10px 15px;
-            margin-top: 10px;
-            text-decoration: none;
-            background: #007BFF;
-            color: #fff;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-        a:hover {
-            background: #0056b3;
-        }
-        footer {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Redirecting to UPI Payment</h1>
-        <p>
-            This link is meant to be opened in a <span class="highlight">mobile phone UPI app</span>.
-            If you're seeing this message, you are probably on a <span class="highlight">non-mobile environment</span>.
-        </p>
-        <p>To UPI ID: <span class="highlight">dr.rishabhkrm@axisbank</span></p>
-        <p>
-            To proceed manually, click the link below:
-            <br>
-            <a href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU">Open in UPI App</a>
-        </p>
-    </div>
-    <footer>
-        &copy; 2025 RISHABH KR. MAHATO. All Rights Reserved.
-    </footer>
-</body>
-</html> -->
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU" />
-    <title>UPI Payment</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom right, #4e54c8, #8f94fb);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        p {
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-        a {
-            color: #ffd700;
-            text-decoration: none;
-            font-weight: bold;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            transition: background 0.3s ease;
-        }
-        a:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-        .upi-link {
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            word-wrap: break-word;
-            color: #ffffff;
-            opacity: 0.8;
-        }
-    </style>
-</head>
-<body>
-    <h1>UPI Payment</h1>
-    <p>This link is meant to open in a mobile UPI-compatible app.</p>
-    <p>If you are not redirected automatically, <a href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU">click here</a>.</p>
-    <div class="upi-link">
-        <strong>UPI Link:</strong> <br>
-        <code>upi://pay?pa=dr.rishabhkrm@axisbank&pn=RISHABH%20KR.%20MAHATO&cu=INR&tn=THANK%20YOU</code>
-    </div>
-</body>
-</html> -->
