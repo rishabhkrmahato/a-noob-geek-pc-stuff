@@ -1,1 +1,0 @@
-C:/Users/rishabhkrm/Documents/GitHub/a-noob-geek-pc-stuff/misc/espanso/install-espanso-admin-task.ps1
