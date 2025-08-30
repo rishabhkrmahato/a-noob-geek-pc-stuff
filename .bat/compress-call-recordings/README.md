@@ -1,63 +1,63 @@
-# 📞 Compress Call Recordings
+# 🎵 Audio Compressor
 
-A simple Windows batch script to **compress call recordings** (or any audio files) into the modern **Opus format** with very small size while keeping speech clear and usable.
-
----
+A simple Windows batch script to compress audio files using OPUS codec for optimal speech compression.
 
 ## ✨ Features
-- Converts all supported audio files in the current folder:
-  - `.wav`, `.m4a`, `.mp3`, `.aac`, `.amr`, `.ogg`, `.flac`
 
-- Uses **Opus codec at 12 kbps mono** (optimized for voice).
+- **Batch Processing** - Converts all audio files in the current directory
+- **High Compression** - Uses OPUS codec at 16kbps for speech-optimized compression
+- **Multiple Formats** - Supports MP3, WAV, M4A, AAC, FLAC, OGG
+- **Clean Output** - Organized compressed files in dedicated folder
+- **Error Handling** - Clear success/failure indicators
 
-- Creates a `compressed/` folder → originals stay untouched.
+## 📋 Requirements
 
-- Clean console output with success/error reporting.
-
-- Lightweight, dependency-free (only requires `ffmpeg`).
-
----
-
-## 📦 Requirements
-- [ffmpeg](https://ffmpeg.org/) must be installed and in PATH.  
-
-  If you use [Scoop](https://scoop.sh/):
-  ```powershell
-  scoop install ffmpeg
-
----
+- Windows OS
+- [FFmpeg](https://ffmpeg.org/download.html) installed and added to PATH
 
 ## 🚀 Usage
 
-- Place compress-call-recordings.bat inside your recordings folder.
+1. Place the script in the folder containing your audio files
+2. Double-click `compress_audio.bat` or run from command prompt
+3. Compressed files will be saved in the `compressed` folder
 
-- Double-click the script.
+```batch
+# Example folder structure after running:
+📁 your-audio-folder/
+├── 📄 compress_audio.bat
+├── 🎵 recording1.mp3
+├── 🎵 recording2.wav
+└── 📁 compressed/
+    ├── 🎵 recording1.opus
+    └── 🎵 recording2.opus
+```
 
-- Compressed .opus files will be saved inside a new compressed/ folder.
+## ⚙️ Technical Details
+
+- **Codec**: libopus
+- **Bitrate**: 16kbps (optimized for speech)
+- **Output Format**: .opus
+- **Compression Ratio**: ~90% size reduction typical
+
+## 🛠️ Customization
+
+To modify compression settings, edit the ffmpeg parameters in the script:
+
+```batch
+# Current setting (speech-optimized)
+ffmpeg -i "input.mp3" -c:a libopus -b:a 16k "output.opus"
+
+# Higher quality (32kbps)
+ffmpeg -i "input.mp3" -c:a libopus -b:a 32k "output.opus"
+```
+
+## 📝 Notes
+
+- Original files are preserved (not deleted)
+- OPUS format provides excellent compression for speech recordings
+- Ideal for call recordings, voice notes, and podcasts
+- May not be suitable for high-fidelity music
 
 ---
 
-## 📉 Compression Ratio
-
-- Original: 1.7 GB of recordings
-
-- Compressed: ~160 MB (90%+ smaller)
-
-- Quality: Clear enough for future use (speech-only optimization).
-
----
-
-## ⚠️ Notes
-
-- This script is optimized for speech recordings (calls, lectures, notes).
-
-- Not recommended for music → quality will drop significantly.
-
-- If you want slightly better clarity, adjust the bitrate in the script:
-  b:a 16k
-
----
-
-📜 License
-
-- This script is released under the MIT License – free to use, modify, and share.
+*Part of [a-noob-geek-pc-stuff](https://github.com/rishabhkrmahato/a-noob-geek-pc-stuff) collection*
