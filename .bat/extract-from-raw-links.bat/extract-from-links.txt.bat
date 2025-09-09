@@ -1,40 +1,37 @@
-:: ==============================================================================
-:: Batch Downloader & Merger
-::
-:: - Downloads files from URLs in 'links.txt' using curl
-:: - Saves them in the 'extracted' folder
-:: - Merges all .txt files into 'combined.txt'
-::
-:: Requirements: curl (preinstalled in Windows 10+)
-:: ==============================================================================
-
 @echo off
 setlocal enabledelayedexpansion
-set "output_folder=extracted"
 
-:: Check if links.txt exists
-if not exist "links.txt" (
-    echo ERROR: 'links.txt' not found.
-    pause
-    exit /b
+rem ================================
+rem  Extract & Merge Links Downloader
+rem ================================
+
+set "output=extracted"
+set "links=links.txt"
+set "merged=combined.txt"
+
+rem Check if links.txt exists
+if not exist "%links%" (
+    echo [ERROR] "%links%" not found.
+    exit /b 1
 )
 
-:: Create output folder if missing
-if not exist "%output_folder%" mkdir "%output_folder%"
+rem Create output folder
+if not exist "%output%" mkdir "%output%"
 
-:: Download each URL
-for /f "usebackq tokens=* delims=" %%L in ("links.txt") do (
+rem Download files
+for /f "usebackq tokens=* delims=" %%L in ("%links%") do (
     if not "%%L"=="" (
-        echo Downloading: %%L
-        curl -s "%%L" -o "%output_folder%\%%~nL.txt"
+        echo [*] Downloading: %%L
+        curl -s "%%L" -o "%output%\%%~nL.txt"
     )
 )
 
-echo.
-echo Downloads completed. Files saved in: "%output_folder%"
-echo Merging all .txt files into 'combined.txt'...
+rem Merge text files
+> "%merged%" (
+    for %%F in ("%output%\*.txt") do type "%%F"
+)
 
-copy /b "%output_folder%\*.txt" "combined.txt" >nul
+echo [DONE] Merged into "%merged%"
 
-echo Merge complete: combined.txt
-pause
+rem Open merged file if it exists
+if exist "%merged%" start "" "%merged%"
