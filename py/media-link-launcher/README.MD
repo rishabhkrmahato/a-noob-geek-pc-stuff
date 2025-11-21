@@ -17,7 +17,7 @@ A modern GUI application for launching multiple media links in your preferred vi
 
 ## Screenshots
 
-![Media Launcher Interface](screenshot.png)
+![Media Launcher Interface](https://github.com/user-attachments/assets/0fdc8633-4628-4919-9787-5c9538aafe25)
 
 ## Requirements
 
