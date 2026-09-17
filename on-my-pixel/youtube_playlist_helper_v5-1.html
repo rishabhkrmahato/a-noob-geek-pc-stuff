@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0c10">
+<meta name="description" content="A mobile-first YouTube Playlist Helper.">
+<title>YouTube Playlist Helper</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#090a0e;--card:#12141a;--card2:#181b23;
+  --line:rgba(255,255,255,.085);--text:#f5f6fa;--muted:#969baa;
+  --purple:#9a8cff;--mint:#63e8ca;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;background:
+  radial-gradient(650px 300px at 50% -90px,rgba(154,140,255,.18),transparent 70%),
+  var(--bg);color:var(--text);
+  font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+button,a{font:inherit}
+button{cursor:pointer}
+button:active,.item:active{transform:scale(.98)}
+.app{width:min(100%,760px);margin:auto;padding:0 14px 38px}
+.top{
+  position:sticky;top:0;z-index:20;
+  padding:calc(10px + env(safe-area-inset-top)) 0 12px;
+  background:linear-gradient(to bottom,rgba(9,10,14,.98) 78%,rgba(9,10,14,.88));
+  backdrop-filter:blur(18px);
+}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.brand{font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#bbb4ff}
+.progressText{
+  appearance:none;-webkit-appearance:none;
+  border:1px solid rgba(154,140,255,.16);
+  background:rgba(154,140,255,.065);
+  color:var(--muted);
+  font-size:12px;font-weight:650;line-height:1;
+  cursor:pointer;
+  padding:7px 10px;
+  margin:-3px 0;
+  border-radius:10px;
+  transition:background .15s,color .15s,border-color .15s,transform .12s;
+}
+.progressText:active{
+  background:rgba(154,140,255,.16);
+  color:var(--text);
+  border-color:rgba(154,140,255,.3);
+  transform:scale(.97);
+}
+.progress{height:4px;border-radius:99px;background:#20232b;overflow:hidden;margin-bottom:13px}
+.progress i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--purple),var(--mint));transition:width .28s ease}
+.current{
+  padding:14px 15px;border:1px solid rgba(154,140,255,.25);border-radius:16px;
+  background:linear-gradient(135deg,rgba(154,140,255,.11),rgba(99,232,202,.045));
+  margin-bottom:10px;
+}
+.eyebrow{font-size:11px;color:var(--mint);font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.currentTitle{margin:0;font-size:16px;line-height:1.35;font-weight:750}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.btn{min-height:50px;border:0;border-radius:14px;font-weight:800;font-size:15px;transition:transform .12s ease,opacity .12s ease}
+.open{color:#0b0c10;background:linear-gradient(135deg,#f1eeff,#bcb3ff)}
+.next{color:#f3f4f7;background:#1a1d24;border:1px solid var(--line)}
+.back{width:100%;min-height:38px;margin-top:6px;color:var(--muted);background:transparent;font-size:13px;font-weight:650}
+.hint{text-align:center;color:var(--muted);font-size:11px;line-height:1.35;margin:2px 2px 0}
+.list{padding-top:6px}
+.item{
+  position:relative;display:flex;align-items:center;gap:11px;width:100%;min-height:58px;
+  margin:0 0 8px;padding:11px 12px;border:1px solid var(--line);border-radius:15px;
+  background:rgba(18,20,26,.82);color:var(--text);text-decoration:none;
+  transition:opacity .2s,border-color .2s,background .2s,transform .12s;
+}
+.item.currentItem{border-color:rgba(154,140,255,.58);background:linear-gradient(135deg,rgba(154,140,255,.13),rgba(18,20,26,.96))}
+.item.done{opacity:.37}
+.item.done .title{text-decoration:line-through;text-decoration-thickness:1.5px}
+.num{flex:0 0 34px;height:34px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.055);color:var(--muted);font-size:12px;font-weight:750}
+.currentItem .num{color:#0b0c10;background:linear-gradient(135deg,#c9c1ff,#74e9d0)}
+.title{font-size:14px;line-height:1.3;font-weight:550}
+.status{margin-left:auto;flex:0 0 auto;font-size:10px;color:var(--muted);font-weight:750;letter-spacing:.05em}
+.done .status{color:var(--mint)}
+.footer{text-align:center;color:#606571;font-size:11px;padding:18px 0 0}
+
+/* Return placard */
+#returnOverlay{
+  position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  padding:18px;opacity:0;visibility:hidden;pointer-events:none;
+  background:rgba(4,5,8,.52);backdrop-filter:blur(10px);
+  transition:opacity .22s ease,visibility .22s ease;
+}
+#returnOverlay.show{opacity:1;visibility:visible;pointer-events:auto}
+.placard{
+  position:relative;width:min(100%,440px);overflow:hidden;border:1px solid rgba(154,140,255,.3);
+  border-radius:24px;background:
+    radial-gradient(420px 180px at 20% 0,rgba(154,140,255,.17),transparent 70%),
+    linear-gradient(160deg,#171922,#0f1117);
+  box-shadow:0 24px 70px rgba(0,0,0,.55);
+  transform:translateY(18px) scale(.97);transition:transform .25s cubic-bezier(.2,.8,.2,1);
+}
+#returnOverlay.show .placard{transform:translateY(0) scale(1)}
+.placardInner{padding:17px}
+.placardLabel{display:flex;align-items:center;gap:7px;color:var(--mint);font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 14px var(--mint);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+.thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:15px;background:#20232b;display:block;margin-bottom:13px}
+.nextMeta{display:flex;align-items:center;gap:8px;margin:0 0 7px}
+.placardCount{
+  font-size:11px;font-weight:750;color:#bcb6ff;padding:5px 8px;border-radius:8px;
+  background:rgba(154,140,255,.1);border:1px solid rgba(154,140,255,.16);
+}
+.nextTitle{font-size:19px;line-height:1.28;font-weight:800;margin:0 0 15px}
+.continue{
+  width:100%;min-height:54px;border:0;border-radius:15px;color:#0b0c10;font-weight:850;font-size:16px;
+  background:linear-gradient(100deg,#eeeaff,#a99cff,#7eead2,#eeeaff);
+  background-size:240% 100%;animation:shimmer 2.6s ease-in-out infinite;
+  box-shadow:0 10px 28px rgba(154,140,255,.2);
+}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.dismiss{width:100%;margin-top:7px;min-height:38px;border:0;background:transparent;color:#9297a5;font-size:13px;font-weight:650}
+.last{
+  position:absolute;top:13px;right:13px;max-width:48%;display:flex;align-items:center;gap:7px;
+  padding:6px 8px 6px 6px;border:1px solid rgba(255,255,255,.12);border-radius:12px;
+  background:rgba(7,8,11,.78);backdrop-filter:blur(10px);
+}
+.last img{width:34px;height:20px;object-fit:cover;border-radius:5px;background:#242832}
+.lastText{min-width:0;font-size:9px;color:#d8dae0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lastLabel{display:block;color:#8f95a2;font-size:8px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:1px}
+
+/* Jump dialog */
+.jumpBox{display:none;position:fixed;inset:0;z-index:120;background:rgba(4,5,8,.6);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:18px}
+.jumpBox.show{display:flex}
+.jumpCard{width:min(100%,340px);padding:20px;border-radius:20px;background:#171922;border:1px solid var(--line);box-shadow:0 25px 70px #000}
+.jumpCard h3{margin:0 0 6px;font-size:17px}.jumpCard p{margin:0 0 14px;color:var(--muted);font-size:12px}
+.jumpInput{width:100%;height:48px;border-radius:12px;border:1px solid #343844;background:#0f1117;color:var(--text);padding:0 13px;font-size:16px;outline:none}
+.jumpActions{display:flex;gap:8px;margin-top:10px}.jumpActions button{flex:1;height:45px;border:0;border-radius:12px;font-weight:750}
+.go{background:#eeeaff;color:#111}.cancel{background:#242731;color:#ddd}
+@media(max-width:420px){.nextTitle{font-size:18px}}
+@media(prefers-color-scheme:light){
+:root{color-scheme:light;--bg:#f5f6fa;--text:#171820;--muted:#737887;--line:rgba(20,22,30,.09)}
+body{background:radial-gradient(650px 300px at 50% -90px,rgba(139,124,255,.15),transparent 70%),var(--bg)}
+.top{background:linear-gradient(to bottom,rgba(245,246,250,.98) 78%,rgba(245,246,250,.88))}
+.next{color:var(--text);background:#fff}.item{background:rgba(255,255,255,.9)}
+.progressText{background:rgba(139,124,255,.075);border-color:rgba(139,124,255,.16)}
+.current{background:linear-gradient(135deg,rgba(139,124,255,.10),rgba(94,231,197,.07))}
+.placard{background:linear-gradient(160deg,#fff,#f4f3fa)}
+#returnOverlay{background:rgba(245,246,250,.55)}
+.last{background:rgba(255,255,255,.82)}
+.jumpCard{background:#fff}.jumpInput{background:#f5f6fa;color:#171820}
+.cancel{background:#eceef3;color:#333}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<section class="top" id="top">
+  <div class="topbar">
+    <div class="brand">Playlist helper</div>
+    <button class="progressText" id="progressText" aria-label="Jump to video"></button>
+  </div>
+  <div class="progress"><i id="progressBar"></i></div>
+  <div class="current">
+    <div class="eyebrow">Now ready</div>
+    <p class="currentTitle" id="currentTitle"></p>
+  </div>
+  <div class="controls">
+    <button class="btn open" id="open">▶ Open</button>
+    <button class="btn next" id="next">Next →</button>
+  </div>
+  <button class="btn back" id="back">↶ Undo last advance</button>
+  <div class="hint">Open marks it done and prepares the next one.</div>
+</section>
+<main class="list" id="list"></main>
+<div class="footer">Progress is saved on this device.</div>
+</div>
+
+<div id="returnOverlay" aria-hidden="true">
+  <div class="placard" id="placard">
+    <div class="last" id="lastBox" hidden>
+      <img id="lastThumb" alt="">
+      <div class="lastText"><span class="lastLabel">Last opened</span><span id="lastTitle"></span></div>
+    </div>
+    <div class="placardInner">
+      <div class="placardLabel"><span class="dot"></span> Ready for the next one</div>
+      <img class="thumb" id="nextThumb" alt="Next video thumbnail" loading="lazy">
+      <div class="nextMeta"><span class="placardCount" id="placardCount"></span></div>
+      <p class="nextTitle" id="placardTitle"></p>
+      <button class="continue" id="continue">▶ Continue to this video</button>
+      <button class="dismiss" id="dismiss">Minimize placard</button>
+    </div>
+  </div>
+</div>
+
+<div class="jumpBox" id="jumpBox">
+  <div class="jumpCard">
+    <h3>Jump to a video</h3>
+    <p>Enter a number from 1 to <span id="jumpMax"></span>.</p>
+    <input class="jumpInput" id="jumpInput" inputmode="numeric" type="number" min="1">
+    <div class="jumpActions">
+      <button class="cancel" id="cancelJump">Cancel</button>
+      <button class="go" id="goJump">Go →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const videos = [{"n": 1, "title": "Super Treble Test", "url": "https://www.youtube.com/watch?v=bixOW8naQ78"}, {"n": 2, "title": "My Life In IIT delhi", "url": "https://www.youtube.com/watch?v=KjHzRbH7UUQ"}, {"n": 3, "title": "iit madras ..life...", "url": "https://www.youtube.com/watch?v=KtdYA9enBjg"}, {"n": 4, "title": "Move Your Body Full Song | Johnny Gaddaar | Hard Kaur | Shankar Ehsaan Loy", "url": "https://www.youtube.com/watch?v=8iQU0ubwVdY"}, {"n": 5, "title": "Genda Phool - Delhi 6 | A.R. Rahman | Little Women Choreography", "url": "https://www.youtube.com/watch?v=Ezb7_tNgRFE"}, {"n": 6, "title": "Girl Born With Beating Heart Outside of Her Chest Turns 14", "url": "https://www.youtube.com/watch?v=DlqBUFJJzKY"}, {"n": 7, "title": "Horse kicks tree, farts on dogs then runs away.", "url": "https://www.youtube.com/watch?v=KCzwyFHSMdY"}, {"n": 8, "title": "Listening radio with grass", "url": "https://www.youtube.com/watch?v=b9UO9tn4MpI"}, {"n": 9, "title": "Doge Store Clerk (Shiba)--Shiba Inu In Tokyo", "url": "https://www.youtube.com/watch?v=E6CcUj2mDbI"}, {"n": 10, "title": "Mahabharat | Full Animated Film- Hindi | Exclusive | HD 1080p | With English Subtitles", "url": "https://www.youtube.com/watch?v=rOP3nvxj14A"}, {"n": 11, "title": "Koi Aap Jaisa", "url": "https://www.youtube.com/watch?v=ZnpsSJ2Tg5Q"}, {"n": 12, "title": "The Angriest Scammer Reduced To A Sobbing Mess After Having Her Information Revealed", "url": "https://www.youtube.com/watch?v=8r_7bx_wrw8"}, {"n": 13, "title": "this keyboard should not sound this good", "url": "https://www.youtube.com/watch?v=sVInBOLSqoM"}, {"n": 14, "title": "Washing Powder Nirma – Historic ad – Edit 1", "url": "https://www.youtube.com/watch?v=wpj2qkaE7YQ"}, {"n": 15, "title": "Dad surprises kids.", "url": "https://www.youtube.com/watch?v=704KaG7KWe8"}, {"n": 16, "title": "Mere Dholna / Bhool Bhulaiyaa / HAVAS GURUHI - Kakhramon & Dostonbek / Uzbekistan 21.12.2022", "url": "https://www.youtube.com/watch?v=8WM7rVGwtiM"}, {"n": 17, "title": "Dad pranks daughter", "url": "https://www.youtube.com/watch?v=SPiABxqjM3M"}, {"n": 18, "title": "Rob Spence: The balloon", "url": "https://www.youtube.com/watch?v=nZXaZzYvtSg"}, {"n": 19, "title": "Dharmesh Sir's First Audition For Dance India Dance (2009)", "url": "https://www.youtube.com/watch?v=s6lszE2f4d8"}, {"n": 20, "title": "What is GitHub?", "url": "https://www.youtube.com/watch?v=pBy1zgt0XPc"}, {"n": 21, "title": "Madonna | Like A Prayer, 1989", "url": "https://www.youtube.com/watch?v=xFos2Xi5QoM"}, {"n": 22, "title": "Toyota knew how it's done", "url": "https://www.youtube.com/watch?v=_kXiD2AtH2g"}, {"n": 23, "title": "Krish movie heart touching  soundtrack!!!!!!", "url": "https://www.youtube.com/watch?v=Gpgd7u1lpkw"}, {"n": 24, "title": "Black Myth Wukong Characters in Journey to west Tv series", "url": "https://www.youtube.com/watch?v=sV4sV6KpgB4"}, {"n": 25, "title": "Bobby Vinton - Mr  Lonely", "url": "https://www.youtube.com/watch?v=_zSecRAFM14"}, {"n": 26, "title": "The Verkkars - EZ4ENCE (kannatusvideo)", "url": "https://www.youtube.com/watch?v=kPkT0jMjEu8"}, {"n": 27, "title": "One-Minute Time Machine - Original 2013 Director’s Cut", "url": "https://www.youtube.com/watch?v=CXhnPLMIET0"}, {"n": 28, "title": "My First video!!!!:)", "url": "https://www.youtube.com/watch?v=ZU6igLYRf50"}, {"n": 29, "title": "Is Google always listening: Live Test", "url": "https://www.youtube.com/watch?v=zBnDWSvaQ1I"}, {"n": 30, "title": "The Manslater: (Woman Language Translator)", "url": "https://www.youtube.com/watch?v=ezVib_giTFo"}, {"n": 31, "title": "Never Gonna Give You Up but enable captions", "url": "https://www.youtube.com/watch?v=W8DlMJgYuxs"}, {"n": 32, "title": "Divorce Speedrun World Record", "url": "https://www.youtube.com/watch?v=3CErbU9DThs"}, {"n": 33, "title": "AIB : Every Bollywood Party Song feat. Irrfan", "url": "https://www.youtube.com/watch?v=r3nhttUMhrI"}, {"n": 34, "title": "Shaan and Mika fight", "url": "https://www.youtube.com/watch?v=I6uohWOHL7o"}, {"n": 35, "title": "12 yr Shreya Ghoshal 1996 winner | Sonu Nigam | Tumse milkar na jane, Wo chup rahe to mere dil", "url": "https://www.youtube.com/watch?v=_cnS6XUMtoI"}, {"n": 36, "title": "NASA Scientists Plan To Approach Girl By 2018", "url": "https://www.youtube.com/watch?v=ya_D9IwB3-s"}, {"n": 37, "title": "Best Ways To Learn Linux", "url": "https://www.youtube.com/watch?v=x-3TBVtM0-Y"}, {"n": 38, "title": "Rickroll'd", "url": "https://www.youtube.com/watch?v=7_pRiUfp938"}, {"n": 39, "title": "Elden Ring | Full Game - 100% Walkthrough - No Commentary Longplay", "url": "https://www.youtube.com/watch?v=HJ6EIysyst8"}, {"n": 40, "title": "Plays God of War Once", "url": "https://www.youtube.com/watch?v=hHWRikDNkh4"}, {"n": 41, "title": "Best Black Myth: Wukong Montage !?", "url": "https://www.youtube.com/watch?v=YwO3rRQ97YI"}, {"n": 42, "title": "Happy Deagle Ace", "url": "https://www.youtube.com/watch?v=dg6TQy6pGfs"}, {"n": 43, "title": "CADIAN INSANE 1v4 CLUTCH + TEAM REACTION", "url": "https://www.youtube.com/watch?v=FFESGKu-b7w"}, {"n": 44, "title": "GOD device 1v4 deagle clutch  against Vitality @overpass | BLAST Premier Global Final", "url": "https://www.youtube.com/watch?v=OgvoTH401rg"}, {"n": 45, "title": "Curve the Bullet", "url": "https://www.youtube.com/watch?v=3eamRl5KTdQ"}, {"n": 46, "title": "E3 2016: God of War Reveal Live Reaction (Front Row) From Sony Press Conference", "url": "https://www.youtube.com/watch?v=wW8hQRTAik4"}, {"n": 47, "title": "Black Myth: Wukong - \"No More Holding Back\" | Erlang the Sacred Divinity | No Damage NG++++", "url": "https://www.youtube.com/watch?v=LRkf0R6VDRA"}, {"n": 48, "title": "Microsoft Windows 8 Commercial \"You And Me Together\" Long Version", "url": "https://www.youtube.com/watch?v=UZF9cZJUl7k"}, {"n": 49, "title": "Training an unbeatable AI in Trackmania", "url": "https://www.youtube.com/watch?v=Dw3BZ6O_8LY"}, {"n": 50, "title": "Bhuvan Bam.3gp", "url": "https://www.youtube.com/watch?v=ZIl8mDHAhx8"}, {"n": 51, "title": "Smack that- ORIGINAL! (Little brother video bombs sister)", "url": "https://www.youtube.com/watch?v=hYuHKw5EI78"}, {"n": 52, "title": "It’s Prom", "url": "https://www.youtube.com/watch?v=_x14hNEf_tI"}, {"n": 53, "title": "Dumbledore asked calmly", "url": "https://www.youtube.com/watch?v=IdoD2147Fik"}, {"n": 54, "title": "One day, a computer will fit on a desk (1974) | RetroFocus", "url": "https://www.youtube.com/watch?v=sTdWQAKzESA"}, {"n": 55, "title": "Bongo Cat - See You Again - Original", "url": "https://www.youtube.com/watch?v=GAUfhZE02Ns"}, {"n": 56, "title": "Windows 8 Commercial Indonesia : Lenka - Everything at Once [Full Version]", "url": "https://www.youtube.com/watch?v=YlX7vdYgF04"}, {"n": 57, "title": "Chand Nawab KARACHIIIIIIIIIIIIIIIIIIIII", "url": "https://www.youtube.com/watch?v=YHPhR89-x3g"}, {"n": 58, "title": "Makkhi (Eaga) Full Hindi Dubbed Movie | Nani, Samantha Akkineni, Sudeep, S. S. Rajamouli", "url": "https://www.youtube.com/watch?v=OMlG0mX3wZ8"}, {"n": 59, "title": "Bad History - PUTIN (My Heart Is Cold)", "url": "https://www.youtube.com/watch?v=OvkOOxklAKE"}, {"n": 60, "title": "Kaise Bani Kaise Bani - The Chatni Song | Dabangg 2 | Salman Khan", "url": "https://www.youtube.com/watch?v=iTPVQtNT10w"}, {"n": 61, "title": "BEN 10- Official theme | Sunidhi Chauhan #sunidhilive", "url": "https://www.youtube.com/watch?v=iESy3uj4sjE"}, {"n": 62, "title": "\"Why this Kolaveri Di?\" goes Dutch", "url": "https://www.youtube.com/watch?v=Cd77LenKLHg"}, {"n": 63, "title": "Sare Jahan Se Achha | Sare Jahan Se Achha Hindustan Hamara | Lata Mangeshkar Sare Jahan Se Achha", "url": "https://www.youtube.com/watch?v=5ahXODbIPxc"}, {"n": 64, "title": "Sare Jahan Se Acha Full Song - Piano - Instrumental", "url": "https://www.youtube.com/watch?v=Z94Y5XRcv40"}, {"n": 65, "title": "Sare Jahan Se Acha Full Song - Piano - Instrumental", "url": "https://www.youtube.com/watch?v=Z94Y5XRcv40"}, {"n": 66, "title": "cadbury shots man me laddoo phoota 2", "url": "https://www.youtube.com/watch?v=jSWdCXJKUMA"}, {"n": 67, "title": "Relaxing Car Drive", "url": "https://www.youtube.com/watch?v=GMgsFZ4rkEI"}, {"n": 68, "title": "Why Our Counting System is Biased", "url": "https://www.youtube.com/watch?v=tqO94YKFRpk"}, {"n": 69, "title": "Best Proposal Ever!", "url": "https://www.youtube.com/watch?v=C_avf-v45W4"}, {"n": 70, "title": "Rabbit learns he is adopted", "url": "https://www.youtube.com/watch?v=sxGKgndSfCE"}, {"n": 71, "title": "Hearing My Husband Say I Love You for the First Time", "url": "https://www.youtube.com/watch?v=BD0aZ9ksgAI"}, {"n": 72, "title": "Silk Now Bubbled Up For Joy", "url": "https://www.youtube.com/watch?v=J9po8piihCc"}, {"n": 73, "title": "Rare Artistry Enrich Your Soul with the Relaxing Craft of Venetian Glass Art Design Sylcom Light", "url": "https://www.youtube.com/watch?v=RTjnGRjvC0M"}, {"n": 74, "title": "It Took Me 1.5 Years to Make This Attack on Titan short film", "url": "https://www.youtube.com/watch?v=NjahiPD445k"}, {"n": 75, "title": "WILDSTONE EDGE- WE ARE JUST FRIENDS", "url": "https://www.youtube.com/watch?v=qc48_hBGdy8"}, {"n": 76, "title": "EXCLUSIVE: Namit Malhotra on RAMAYANA, Christopher Nolan and Winning 8 Oscars | #PGX113", "url": "https://www.youtube.com/watch?v=khlji6Y29_A"}, {"n": 77, "title": "introducing copyparty, the FOSS file server", "url": "https://www.youtube.com/watch?v=15_-hgsX2V0"}, {"n": 78, "title": "A ride to remember.", "url": "https://www.youtube.com/watch?v=UwXVwdtAV-c"}, {"n": 79, "title": "Why do YouTube views freeze at 301?", "url": "https://www.youtube.com/watch?v=oIkhgagvrjI"}, {"n": 80, "title": "Manforce | Choti Gudiya | #ProtectChildhood", "url": "https://www.youtube.com/watch?v=LyqXjGdWmtM"}, {"n": 81, "title": "Universe Size Comparison | Cosmic Eye (Original HD)", "url": "https://www.youtube.com/watch?v=8Are9dDbW24"}, {"n": 82, "title": "Marvel Studios' Avengers - Official Trailer", "url": "https://www.youtube.com/watch?v=hA6hldpSTF8"}, {"n": 83, "title": "Hrithik Roshan - Reliance ad", "url": "https://www.youtube.com/watch?v=zWE815GxWWc"}, {"n": 84, "title": "Khoya Khoya Chand Contest Winners - Exclusive video preview from the album 'The Bartender'", "url": "https://www.youtube.com/watch?v=CPy7MfZA8Pc"}, {"n": 85, "title": "send this to your crush without context", "url": "https://www.youtube.com/watch?v=bzLaL0SVwwI"}, {"n": 86, "title": "iPhone 6 Plus Bend Test", "url": "https://www.youtube.com/watch?v=znK652H6yQM"}, {"n": 87, "title": "Hrithik Roshan - Doob Jaa - Come Fall In Love With JUST DANCE", "url": "https://www.youtube.com/watch?v=A6UijYmmDyE"}, {"n": 88, "title": "stop watching this", "url": "https://www.youtube.com/watch?v=K0oxXlMjTVo"}, {"n": 89, "title": "Harry Potter - The Ultimate Indian Theme", "url": "https://www.youtube.com/watch?v=pIrOAyXIjak"}, {"n": 90, "title": "01 Kaanta Laga Haye Laga   Samadhi   DJ Doll   Kaanta Laga Remix", "url": "https://www.youtube.com/watch?v=dDztcwCDqUg"}, {"n": 91, "title": "संपूर्ण गीता | Bhagawad Geeta- All Chapters With Narration| Shailendra Bhartti | Sanatan Dharma", "url": "https://www.youtube.com/watch?v=28sptQICKCk"}, {"n": 92, "title": "Simply Explaining Complex Everyday Things", "url": "https://www.youtube.com/watch?v=Lmz_jFsKdpE"}, {"n": 93, "title": "Ennio Morricone - The Ecstasy of Gold - Theremin & Voice", "url": "https://www.youtube.com/watch?v=ajM4vYCZMZk"}, {"n": 94, "title": "Thanks, Smokey!", "url": "https://www.youtube.com/watch?v=P9_mH82hBdc"}, {"n": 95, "title": "India's Most FAMOUS P😈RNSTAR | Dostcast w/ @NiksIndian", "url": "https://www.youtube.com/watch?v=Ht-So1wfPrs"}, {"n": 96, "title": "KHILADI 786 MASHUP", "url": "https://www.youtube.com/watch?v=-I3G_Ba0eH4"}, {"n": 97, "title": "MASHUQ HAQUE - AIRTEL PHONK | A. R. RAHMAN (PHONK)", "url": "https://www.youtube.com/watch?v=DjNq6N026bQ"}, {"n": 98, "title": "Mentos Evolution", "url": "https://www.youtube.com/watch?v=1TrHjwCWHN0"}, {"n": 99, "title": "Punjabi MC  Jogi", "url": "https://www.youtube.com/watch?v=tZo9qe4DoIc"}, {"n": 100, "title": "Na To Karvan Ki Talash Hai - Manna Dey, Asha Bhosle - BARSAAT KI RAAT - Madhubala, Bharat", "url": "https://www.youtube.com/watch?v=BQRHuMBtOYY"}, {"n": 101, "title": "Meryl Davis & Charlie White honor Bollywood music and dance! | Music Monday", "url": "https://www.youtube.com/watch?v=kdhGTv5DOdM"}, {"n": 102, "title": "\"City light\", de McCann Mumbai (India) para HappyDent, 2007", "url": "https://www.youtube.com/watch?v=GWvxt1IL9Wg"}, {"n": 103, "title": "Sholay Spoof - Orbit Chewing Gum Ad", "url": "https://www.youtube.com/watch?v=mQcf3dwCrBg"}, {"n": 104, "title": "Fear Files Theme Song", "url": "https://www.youtube.com/watch?v=-ldS2caI16I"}, {"n": 105, "title": "The Aahat Theme | Trap Remix | Horror Music | Dj Dalal London | Bollywood Halloween Music | Darr", "url": "https://www.youtube.com/watch?v=qx82qdauVys"}, {"n": 106, "title": "Cute Lamb Needs Attention", "url": "https://www.youtube.com/watch?v=s50vvwTystA"}, {"n": 107, "title": "marmot can be cleaned with a paint roller.", "url": "https://www.youtube.com/watch?v=-VSi_VAK8Ek"}, {"n": 108, "title": "Dog makes baby laugh", "url": "https://www.youtube.com/watch?v=h6DoAo2FdR8"}, {"n": 109, "title": "'He's Cranky': Rescued Bat Enjoys Banana", "url": "https://www.youtube.com/watch?v=S8zhnXZdTFM"}, {"n": 110, "title": "Halonix", "url": "https://www.youtube.com/watch?v=GevQhcyIi8s"}, {"n": 111, "title": "HUL Start a little good – Water", "url": "https://www.youtube.com/watch?v=OSb5afmesJQ"}, {"n": 112, "title": "Turning the streets into a Bollywood movie", "url": "https://www.youtube.com/watch?v=I6a__-_F6wM"}, {"n": 113, "title": "Aur aur aur mathira meme template", "url": "https://www.youtube.com/watch?v=Bnxo_48PfZc"}, {"n": 114, "title": "AGE 12 TO MARRIED – I Took A Photo Every Day", "url": "https://www.youtube.com/watch?v=65nfbW-27ps"}, {"n": 115, "title": "Chittiyan kalaaiyaan.medi version!", "url": "https://www.youtube.com/watch?v=JGh09JHkD34"}, {"n": 116, "title": "Surprise! Virat Kohli Old Indian TV ads with Genelia Deshmukh!", "url": "https://www.youtube.com/watch?v=8pcBQPyvQq0"}, {"n": 117, "title": "Fevicol ad", "url": "https://www.youtube.com/watch?v=Q-wQpWwQnAg"}, {"n": 118, "title": "Violence continues to shake Pakistan's Lyari town", "url": "https://www.youtube.com/watch?v=7M9DXvVHVnQ"}, {"n": 119, "title": "The biggest drawing ever", "url": "https://www.youtube.com/watch?v=GeEISHh37lY"}, {"n": 120, "title": "Wildlife Windows 7 Sample Video", "url": "https://www.youtube.com/watch?v=a3ICNMQW7Ok"}, {"n": 121, "title": "CHALISA", "url": "https://www.youtube.com/watch?v=byas2EoAOYY"}, {"n": 122, "title": "Ari Ari Rock", "url": "https://www.youtube.com/watch?v=x_eHEn9qr4U"}, {"n": 123, "title": "Pearly Shell-Tiny Bubbles Remix", "url": "https://www.youtube.com/watch?v=vNahueIhcYI"}, {"n": 124, "title": "Fastrack Reflex Activity Tracker - Gear Up For Some Action", "url": "https://www.youtube.com/watch?v=6gMIdvFprF0"}, {"n": 125, "title": "Tere Naal Nachna (Cover Version)", "url": "https://www.youtube.com/watch?v=XxPqjj3T3RA"}, {"n": 126, "title": "Laga Laga Re (Full Song) | Maine Pyaar Kyun Kiya | Salmaan Khan, Sushmita Sen", "url": "https://www.youtube.com/watch?v=R1Z4PXNxUhk"}, {"n": 127, "title": "Mentos Cola Theatre ad", "url": "https://www.youtube.com/watch?v=mhaULIoWKtA"}, {"n": 128, "title": "Hrithik Roshan - Sony Ericsson - The Thump", "url": "https://www.youtube.com/watch?v=fEp4RnV4TK0"}, {"n": 129, "title": "Hide N Seek Ad - Hrithik Roshan", "url": "https://www.youtube.com/watch?v=mjnSuhXhh5w"}, {"n": 130, "title": "A color of his own", "url": "https://www.youtube.com/watch?v=COItegfG-n0"}, {"n": 131, "title": "Daddy Yankee - Gasolina (Video Oficial)", "url": "https://www.youtube.com/watch?v=CCF1_jI8Prk"}, {"n": 132, "title": "Beauty Is Nothing Without Brains", "url": "https://www.youtube.com/watch?v=AX5NO5BKH4s"}, {"n": 133, "title": "Baby Crying with auto tune", "url": "https://www.youtube.com/watch?v=EkNynn4yTh0"}, {"n": 134, "title": "Shreya Ghoshal’s FULL Performance at IPL Opening Ceremony | Live Magic! 🎤🔥", "url": "https://www.youtube.com/watch?v=PuozpNLfz7I"}, {"n": 135, "title": "Dua Lipa - Live From Mexico", "url": "https://www.youtube.com/watch?v=vZYVkitGXBU"}, {"n": 136, "title": "Ristedaar BC : Mai Bhi Changa Mera Pio Bhi Changa | Viral Song | terabhaipaul (Original Song) 2024", "url": "https://www.youtube.com/watch?v=7yKtHz7ORLo"}, {"n": 137, "title": "Bing Bing Boo | Full Audio | Yashraj Mukhate | Rashmeet Kaur | Kisna | Sasta Trance", "url": "https://www.youtube.com/watch?v=h-ile9tMNM0"}, {"n": 138, "title": "Experts Weigh In On Harambe's Last Moments", "url": "https://www.youtube.com/watch?v=23um2h4YUwU"}, {"n": 139, "title": "Universal Intro caught on camera", "url": "https://www.youtube.com/watch?v=N3i8hpu5kek"}, {"n": 140, "title": "Rendering at 5am", "url": "https://www.youtube.com/watch?v=asjQNZn7vng"}, {"n": 141, "title": "Bird Photobombs Meteorologist", "url": "https://www.youtube.com/watch?v=a4Y9bfQO8uE"}, {"n": 142, "title": "Just so you know!!! :)", "url": "https://www.youtube.com/watch?v=YV9I89ndkKY"}, {"n": 143, "title": "Waka Waka Biggest flashmob in the Netherlands", "url": "https://www.youtube.com/watch?v=FFtzqqgE3kA"}, {"n": 144, "title": "OMNIA Nightclub Las Vegas - Chandelier Drop - March 28, 2025 (Martin Garrix night) - 4K/60fps", "url": "https://www.youtube.com/watch?v=coRoVaCR2mY"}, {"n": 145, "title": "Pranking my angry dad gone wrong", "url": "https://www.youtube.com/watch?v=MYCHpnMgTEM"}, {"n": 146, "title": "Gypsy kid dancing at club can't be bothered. 1997.", "url": "https://www.youtube.com/watch?v=3eRBFkxgG7g"}, {"n": 147, "title": "Two AI agents on a phone call realize they’re both AI and switch to a superior audio signal ggwave", "url": "https://www.youtube.com/watch?v=EtNagNezo8w"}, {"n": 148, "title": "The Greatest Shot In Television", "url": "https://www.youtube.com/watch?v=2WoDQBhJCVQ"}, {"n": 149, "title": "Try To Keep A Straight Face 🤣", "url": "https://www.youtube.com/watch?v=saHe83veuZA"}, {"n": 150, "title": "Ram Ko Dekh Kar Shri Janak Nandini - Full Bhajan By Sadho Band", "url": "https://www.youtube.com/watch?v=quiFb_yHQKI"}, {"n": 151, "title": "Me at the zoo", "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw"}, {"n": 152, "title": "technology is gay", "url": "https://www.youtube.com/watch?v=ohfVOpBbXs0"}, {"n": 153, "title": "How to set up the Apple Polishing Cloth (2nd Generation)", "url": "https://www.youtube.com/watch?v=TBNOqS0DPEc"}, {"n": 154, "title": "Andrew Garfield saves MJ audience reaction (epic)🔥🔥", "url": "https://www.youtube.com/watch?v=hRQkX48pavY"}, {"n": 155, "title": "Avengers ASSEMBLE FINALE endgame theatre reaction South India Chennai", "url": "https://www.youtube.com/watch?v=AZPVQSKj0js"}, {"n": 156, "title": "I'm Coming For You, Brother (Full Episode) | 9/11: One Day in America | National Geographic", "url": "https://www.youtube.com/watch?v=bseXTZ9ZwHY"}, {"n": 157, "title": "How To Delete Your Entire YouTube Music Library with YTMusic Deleter", "url": "https://www.youtube.com/watch?v=oV-yLi1AW1c"}];
+let current=Number(localStorage.getItem("ytHelperIndex")||0);
+if(!Number.isInteger(current)||current<0||current>videos.length)current=0;
+
+const $=id=>document.getElementById(id);
+const topEl=$("top"),list=$("list"),progressText=$("progressText"),progressBar=$("progressBar");
+const currentTitle=$("currentTitle"),openBtn=$("open"),nextBtn=$("next"),backBtn=$("back");
+const overlay=$("returnOverlay"),placardTitle=$("placardTitle"),placardCount=$("placardCount");
+const nextThumb=$("nextThumb"),continueBtn=$("continue"),dismissBtn=$("dismiss");
+const lastBox=$("lastBox"),lastThumb=$("lastThumb"),lastTitle=$("lastTitle");
+let lastOpened=null;
+let returning=false;
+
+videos.forEach((v,i)=>{
+  const a=document.createElement("a");
+  a.className="item";a.href=v.url;a.target="_blank";a.rel="noopener noreferrer";a.dataset.index=i;
+  a.innerHTML=`<span class="num">${i+1}</span><span class="title"></span><span class="status"></span>`;
+  a.querySelector(".title").textContent=v.title;
+  list.appendChild(a);
+});
+
+function save(){localStorage.setItem("ytHelperIndex",String(current))}
+function videoId(url){
+  try{
+    const u=new URL(url);
+    if(u.hostname==="youtu.be")return u.pathname.slice(1).split("/")[0];
+    if(u.searchParams.get("v"))return u.searchParams.get("v");
+    const m=u.pathname.match(/\/(?:shorts|embed)\/([^/?]+)/);return m?m[1]:"";
+  }catch(e){return ""}
+}
+function setThumb(img,v){
+  const id=videoId(v.url);
+  if(!id){img.style.display="none";return}
+  img.style.display="block";img.src="https://i.ytimg.com/vi/"+encodeURIComponent(id)+"/hqdefault.jpg";
+  img.onerror=()=>{img.style.display="none"};
+}
+function scrollCurrent(instant=false){
+  const el=list.children[current];
+  if(!el){window.scrollTo({top:0,behavior:"smooth"});return}
+  requestAnimationFrame(()=>{
+    const offset=topEl.getBoundingClientRect().height;
+    const y=el.getBoundingClientRect().top+window.scrollY-offset-8;
+    window.scrollTo({top:Math.max(0,y),behavior:instant?"auto":"smooth"});
+  });
+}
+function render(scroll=false,instant=false){
+  const finished=current>=videos.length,v=videos[current];
+  progressText.textContent=finished?`${videos.length} / ${videos.length}`:`${current+1} / ${videos.length}`;
+  progressBar.style.width=`${Math.min(100,(current/videos.length)*100)}%`;
+  currentTitle.textContent=finished?"All videos completed 🎉":v.title;
+  openBtn.disabled=finished;nextBtn.disabled=finished;backBtn.disabled=current===0;
+  [...list.children].forEach((el,i)=>{
+    const done=i<current;
+    el.classList.toggle("done",done);el.classList.toggle("currentItem",i===current);
+    el.querySelector(".status").textContent=done?"✓":(i===current?"NOW":"");
+  });
+  if(scroll)scrollCurrent(instant);
+}
+function openCurrent(){
+  if(current>=videos.length)return;
+  const v=videos[current];lastOpened=v;
+  localStorage.setItem("ytHelperLastTitle",v.title);localStorage.setItem("ytHelperLastUrl",v.url);
+  current++;save();render(true);
+  window.open(v.url,"_blank","noopener");
+}
+function showReturnPlacard(){
+  if(current>=videos.length)return;
+  const v=videos[current];
+  placardTitle.textContent=v.title;
+  placardCount.textContent=`${current+1} / ${videos.length}`;
+  setThumb(nextThumb,v);
+  if(lastOpened){lastTitle.textContent=lastOpened.title;setThumb(lastThumb,lastOpened);lastBox.hidden=false}
+  else lastBox.hidden=true;
+  overlay.classList.add("show");overlay.setAttribute("aria-hidden","false");
+}
+function hideReturnPlacard(){
+  overlay.classList.remove("show");overlay.setAttribute("aria-hidden","true");
+}
+openBtn.onclick=openCurrent;
+continueBtn.onclick=()=>{hideReturnPlacard();openCurrent()};
+nextBtn.onclick=()=>{if(current<videos.length){current++;save();render(true)}};
+backBtn.onclick=()=>{if(current>0){current--;save();render(true)}};
+dismissBtn.onclick=hideReturnPlacard;
+overlay.addEventListener("click",e=>{if(e.target===overlay)hideReturnPlacard()});
+
+// Detect return to Chrome/this page and offer the next video.
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible"){
+    if(returning)setTimeout(showReturnPlacard,180);
+    returning=true;
+  }else returning=true;
+});
+window.addEventListener("focus",()=>{
+  if(returning&&document.visibilityState==="visible")setTimeout(showReturnPlacard,180);
+});
+
+// Tap the top-right x/y counter to jump.
+$("jumpMax").textContent=videos.length;
+progressText.onclick=()=>{
+  $("jumpInput").value=current+1;
+  $("jumpBox").classList.add("show");
+  setTimeout(()=>{$("jumpInput").focus();$("jumpInput").select()},50);
+};
+$("cancelJump").onclick=()=>$("jumpBox").classList.remove("show");
+$("goJump").onclick=()=>{
+  const n=Number($("jumpInput").value);
+  if(n>=1&&n<=videos.length){
+    current=n-1;save();$("jumpBox").classList.remove("show");render(true);
+  }
+};
+$("jumpInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("goJump").click()});
+$("jumpBox").addEventListener("click",e=>{if(e.target===$("jumpBox"))$("cancelJump").click()});
+
+render(false,true);
+</script>
+</body>
+</html>
