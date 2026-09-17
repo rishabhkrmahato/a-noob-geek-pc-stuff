@@ -3,194 +3,270 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="Pay Dr. Rishabh Kumar Mahato via UPI.">
   <title>Pay Dr. Rishabh Kumar Mahato</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #090b0f;
+      --surface: rgba(20, 23, 29, 0.82);
+      --surface-border: rgba(255, 255, 255, 0.09);
+      --text: #f4f7fb;
+      --muted: #9ba4b2;
+      --accent: #45e58a;
+      --accent-2: #34d6a0;
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
     body {
       margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 20px;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% -10%, rgba(69, 229, 138, 0.11), transparent 34%),
+        radial-gradient(circle at 10% 90%, rgba(31, 120, 255, 0.07), transparent 28%),
+        var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     .card {
-      background: #1c1c1c;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      width: min(100%, 420px);
+      padding: 30px;
       text-align: center;
-      padding: 30px 25px;
-      max-width: 400px;
-      width: 100%;
-      animation: fadeIn 1s ease-out;
+      border: 1px solid var(--surface-border);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(26, 29, 36, 0.88), rgba(15, 17, 22, 0.90));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      animation: rise 0.55s ease-out both;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .profile-link {
+      display: inline-flex;
+      margin-bottom: 18px;
     }
 
     .avatar {
-      width: 120px;
-      height: 120px;
+      width: 112px;
+      height: 112px;
+      object-fit: cover;
+      object-position: center 18%;
       border-radius: 50%;
-      margin: 0 auto 20px auto;
-      border: 3px solid #43e97b;
-      animation: popIn 1.2s ease-out;
-      cursor: pointer;
       display: block;
+      border: 2px solid rgba(69, 229, 138, 0.9);
+      box-shadow: 0 0 0 6px rgba(69, 229, 138, 0.06), 0 12px 30px rgba(0,0,0,0.28);
     }
 
-    @keyframes popIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+    .eyebrow {
+      margin: 0 0 6px;
+      font-size: 0.93rem;
+      line-height: 1.4;
+      color: var(--muted);
     }
+
+    .handle {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .handle:hover { text-decoration: underline; }
 
     h1 {
-      font-size: 1.6rem;
-      margin-bottom: 12px;
-      line-height: 1.3;
+      margin: 0;
+      font-size: clamp(1.35rem, 4vw, 1.65rem);
+      line-height: 1.25;
+      letter-spacing: -0.025em;
     }
 
-    h1 .header-line {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      font-size: 1rem;
-      color: #aaa;
-      margin-bottom: 8px;
-    }
-
-    h1 .header-line a {
-      color: #aaa;
-      text-decoration: none;
+    .subtitle {
+      margin: 7px 0 24px;
+      color: var(--muted);
       font-size: 0.9rem;
     }
 
-    h1 .header-line a:hover {
-      text-decoration: underline;
-    }
-
-    h1 span.name {
-      font-weight: 700;
-      color: #57ffa1;
-      font-size: 1.4rem;
-      display: block;
-    }
-
-    .upi-id {
-      font-weight: 600;
-      color: #43e97b;
-      margin: 15px 0;
-      word-wrap: break-word;
-      font-size: 0.95rem;
+    .qr-wrap {
+      width: min(100%, 286px);
+      aspect-ratio: 1;
+      margin: 0 auto 18px;
+      padding: 12px;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 20px 42px rgba(0,0,0,0.28);
     }
 
     .qr {
-      margin: 20px auto;
-      width: 220px;
-      height: 220px;
-      background: #fff;
-      padding: 12px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0,0,0,0.2) inset;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .qr img {
       width: 100%;
       height: 100%;
+      display: block;
+      border-radius: 14px;
+    }
+
+    .upi-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 100%;
+      margin: 0 auto 22px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: 12px;
+      background: rgba(255,255,255,0.035);
+      color: #bcefd1;
+      font-size: 0.9rem;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .upi-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(69,229,138,0.7);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .btn, .copy-btn {
+      min-height: 48px;
+      border-radius: 14px;
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
     }
 
     .btn {
-      display: inline-block;
-      padding: 12px 30px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
       text-decoration: none;
-      background: linear-gradient(90deg, #43e97b, #38f9d7);
-      color: #000;
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      animation: pulse 2.5s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 10px 20px rgba(67, 233, 123, 0.5); }
-    }
-
-    .btn:hover {
-      transform: translateY(-3px) scale(1.07);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+      color: #04120a;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 28px rgba(69,229,138,0.18);
     }
 
     .copy-btn {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #ddd;
-      background: none;
-      border: 1px solid #555;
-      border-radius: 8px;
-      padding: 6px 12px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, transform 0.2s;
+      padding: 0 16px;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.045);
     }
 
-    .copy-btn:hover {
-      background: #333;
-      color: #fff;
+    .btn:hover, .copy-btn:hover {
       transform: translateY(-2px);
     }
 
+    .btn:active, .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .copy-btn.copied {
+      border-color: rgba(69,229,138,0.35);
+      background: rgba(69,229,138,0.09);
+      color: #bff6d5;
+    }
+
     .footer {
-      margin-top: 20px;
-      font-size: 0.8rem;
-      color: #888;
+      margin-top: 22px;
+      font-size: 0.76rem;
+      color: #68717e;
+    }
+
+    @media (max-width: 440px) {
+      body { padding: 14px; }
+      .card { padding: 24px 18px 20px; border-radius: 24px; }
+      .avatar { width: 104px; height: 104px; }
+      .qr-wrap { width: min(100%, 270px); }
+      .actions { grid-template-columns: 1fr; }
+      .copy-btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <a href="https://gravatar.com/rishabhkrm" target="_blank">
-      <img class="avatar" src="https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/main/misc/drawn-me.png" alt="Dr. Rishabh Kumar Mahato">
+  <main class="card">
+    <a class="profile-link" href="https://gravatar.com/rishabhkrm" target="_blank" rel="noopener noreferrer" aria-label="Open Dr. Rishabh Kumar Mahato's profile">
+      <img
+        class="avatar"
+        src="https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/main/misc/current-me.jpg"
+        alt="Dr. Rishabh Kumar Mahato"
+      >
     </a>
-    <h1>
-      <div class="header-line">
-        <span>Pay</span>
-        <a href="https://www.google.com/search?q=@rishabhkrm" target="_blank">@rishabhkrm</a>
-      </div>
-      <span class="name">Dr. Rishabh Kumar Mahato</span>
-    </h1>
 
-    <div class="qr">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=dr.rishabhkrm@axisbank&pn=Dr.%20Rishabh%20Kumar%20Mahato&cu=INR&tn=THANK%20YOU" alt="UPI QR Code">
+    <p class="eyebrow">Pay <a class="handle" href="https://www.google.com/search?q=%40rishabhkrm" target="_blank" rel="noopener noreferrer">@rishabhkrm</a></p>
+    <h1>Dr. Rishabh Kumar Mahato</h1>
+    <p class="subtitle">Scan the QR code or pay directly with UPI</p>
+
+    <div class="qr-wrap">
+      <img
+        class="qr"
+        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi%3A%2F%2Fpay%3Fpa%3Ddr.rishabhkrm%40axisbank%26pn%3DDr.%2520Rishabh%2520Kumar%2520Mahato%26cu%3DINR%26tn%3DTHANK%2520YOU"
+        alt="UPI QR Code"
+      >
     </div>
 
-    <p class="upi-id">dr.rishabhkrm@axisbank</p>
+    <div class="upi-row" aria-label="UPI ID">
+      <span class="upi-dot" aria-hidden="true"></span>
+      <span>dr.rishabhkrm@axisbank</span>
+    </div>
 
-    <a class="btn" href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=Dr.%20Rishabh%20Kumar%20Mahato&cu=INR&tn=THANK%20YOU">Pay with UPI</a>
+    <div class="actions">
+      <a class="btn" href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=Dr.%20Rishabh%20Kumar%20Mahato&cu=INR&tn=THANK%20YOU">Pay with UPI</a>
+      <button class="copy-btn" type="button" onclick="copyUPI(this)">Copy UPI ID</button>
+    </div>
 
-    <button class="copy-btn" onclick="copyUPI()">Copy UPI ID</button>
-
-    <div class="footer">&copy; 2025 Dr. Rishabh Kumar Mahato</div>
-  </div>
+    <footer class="footer">© 2026 Dr. Rishabh Kumar Mahato</footer>
+  </main>
 
   <script>
-    function copyUPI() {
-      navigator.clipboard.writeText('dr.rishabhkrm@axisbank');
-      alert('UPI ID copied to clipboard!');
+    async function copyUPI(button) {
+      const upi = 'dr.rishabhkrm@axisbank';
+      try {
+        await navigator.clipboard.writeText(upi);
+        button.textContent = 'Copied ✓';
+        button.classList.add('copied');
+        setTimeout(() => {
+          button.textContent = 'Copy UPI ID';
+          button.classList.remove('copied');
+        }, 1800);
+      } catch (error) {
+        alert('Could not copy the UPI ID automatically.');
+      }
     }
   </script>
 </body>
