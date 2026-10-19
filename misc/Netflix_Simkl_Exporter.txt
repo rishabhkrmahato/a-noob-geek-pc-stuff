@@ -1,100 +1,175 @@
 //
-// HOW TO USE THIS SCRIPT:
-// 1. Open Netflix in Google Chrome and go to your Viewing Activity / Ratings page.
-// 2. Press F12 to open Developer Tools, then click the Console tab.
-// 3. Open this TXT file, copy the ENTIRE code below, and paste it into the Console.
-// 4. Press Enter and wait while the script loads your titles.
-// 5. A CSV file named "netflix_ratings_fixed.csv" will download automatically.
-// 6. Import the downloaded CSV into Simkl or use it as a spreadsheet here:
-//    https://simkl.com/apps/import/csv/
+// NETFLIX -> SIMKL VIEWING HISTORY EXPORTER
 //
-// NOTE: Keep the Netflix page open while the script runs.
-// If Chrome shows a security warning about pasting code, only proceed if you
-// understand and trust the script. Never paste code from an unknown source.
+// Created/tested: 19 October 2026
+// Website: Netflix Viewing Activity page (version/layout observed on 19 October 2026).
+// Note: Netflix does not expose a simple public website version number for this page.
 //
-// IMPORTANT: This script currently assigns every exported title a rating of 5.
-// It does not retrieve actual Netflix ratings.
+// DISCLAIMER:
+// This script relies on Netflix's current page structure and may stop working
+// if Netflix changes its website, HTML elements, or button behaviour.
+// Successful export does not guarantee that the entire viewing history was captured.
 //
+// HOW TO USE:
+// 1. Open Netflix in Google Chrome and go to your Viewing Activity page.
+// 2. Press F12 and select the Console tab.
+// 3. Copy and paste the entire script below, then press Enter.
+// 4. Keep the tab open while the script runs.
+// 5. The CSV file downloads automatically as netflix-ratings-seen.csv.
+// 6. Import it into Simkl: https://simkl.com/apps/import/csv/
 //
+// OUTPUT: One column -> Title. No ratings are exported.
+// This script is intended for the Netflix page layout observed on the date above.
+//
+(async function () {
+    console.log("Starting Netflix title extraction...");
 
+    const MAX_LOOPS = 300;
+    const WAIT_AFTER_CLICK = 3000;
+    const RETRY_WAIT = 2000;
+    const MAX_STALLED_LOOPS = 4;
 
-(async function() {
-    console.log("Starting reliable extraction... Simulating mouse actions.");
-    
+    const TITLE_SELECTOR =
+        '.retip-title, .title, .rowTitle, .history-title, a[href*="/title/"]';
+
+    const sleep = ms =>
+        new Promise(resolve => setTimeout(resolve, ms));
+
+    const getTitleElements = () =>
+        Array.from(document.querySelectorAll(TITLE_SELECTOR));
+
+    const getTitleCount = () => getTitleElements().length;
+
+    let previousCount = getTitleCount();
+    let stalledLoops = 0;
     let totalLoops = 0;
-    let maxLoops = 300; 
-    let lastCount = 0;
-    let fallbackCounter = 0;
 
-    while (totalLoops < maxLoops) {
+    while (totalLoops < MAX_LOOPS) {
         window.scrollTo(0, document.body.scrollHeight);
-        
-        // Target the exact "Show More" blue button text element
-        let buttons = Array.from(document.querySelectorAll('button, div, span, a'));
-        let showMoreBtn = buttons.find(el => {
-            let txt = el.innerText ? el.innerText.trim().toLowerCase() : '';
-            return el.offsetHeight > 0 && txt === 'show more';
+        await sleep(500);
+
+        // Find a visible element whose exact text is "Show More".
+        const showMoreBtn = Array.from(
+            document.querySelectorAll('button, div, span, a')
+        ).find(el => {
+            const text = (el.innerText || '').trim().toLowerCase();
+            return el.offsetHeight > 0 && text === 'show more';
         });
 
-        let currentCount = document.querySelectorAll('.retip-title, .title, .rowTitle, .history-title, a[href*="/title/"]').length;
-
         if (showMoreBtn) {
-            // Generate a real native mouse down/up event chain
-            console.log(`Clicking button. Current count: ${currentCount}`);
-            
-            showMoreBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
+            console.log(
+                `Loading more titles... Current elements: ${previousCount}`
+            );
+
+            // Trigger the click using the existing approach.
+            showMoreBtn.dispatchEvent(
+                new MouseEvent('mousedown', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                })
+            );
+
             showMoreBtn.click();
-            showMoreBtn.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
 
-            // Give Netflix 3 full seconds to fetch new items from the network
-            await new Promise(resolve => setTimeout(resolve, 3000));
-        }
+            showMoreBtn.dispatchEvent(
+                new MouseEvent('mouseup', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                })
+            );
 
-        // If the title count has stopped changing, wait a bit longer to bypass background network stalls
-        if (currentCount === lastCount && currentCount > 0) {
-            fallbackCounter++;
-            if (fallbackCounter >= 4) { 
-                console.log("Reached the end of list or network permanently throttled.");
-                break;
-            }
-            console.log("Waiting for network response stream...");
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            // Wait for Netflix to load additional content.
+            await sleep(WAIT_AFTER_CLICK);
         } else {
-            fallbackCounter = 0;
+            // Allow time for a temporarily missing button or delayed load.
+            await sleep(RETRY_WAIT);
         }
 
-        lastCount = currentCount;
+        // IMPORTANT: Count again AFTER waiting for the page to update.
+        const currentCount = getTitleCount();
+
+        if (currentCount > previousCount) {
+            console.log(`Title elements found: ${currentCount}`);
+            stalledLoops = 0;
+        } else {
+            stalledLoops++;
+            console.log(
+                `No increase in title elements (${stalledLoops}/${MAX_STALLED_LOOPS}).`
+            );
+        }
+
+        if (stalledLoops >= MAX_STALLED_LOOPS) {
+            console.log(
+                'No further titles detected. Finishing extraction.'
+            );
+            break;
+        }
+
+        previousCount = currentCount;
         totalLoops++;
     }
 
-    console.log("Formatting CSV file content...");
+    if (totalLoops >= MAX_LOOPS) {
+        console.warn('Reached the maximum loop limit.');
+    }
 
-    let output = "Title,Rating\n";
-    let finalCount = 0;
-    let uniqueTitles = new Set();
-    
-    // Scrape both classic lists and the specific hyperlink pathways used on modern account dashboards
-    document.querySelectorAll('.retip-title, .title, .rowTitle, .history-title, a[href*="/title/"]').forEach(el => {
-        let title = el.innerText.trim().replace(/"/g, '""');
-        if (title && !uniqueTitles.has(title) && !['show more', 'back to your account'].includes(title.toLowerCase())) {
+    console.log('Preparing CSV...');
+
+    const uniqueTitles = new Set();
+    const ignoredTitles = new Set([
+        'show more',
+        'back to your account'
+    ]);
+
+    getTitleElements().forEach(el => {
+        const title = (el.innerText || '').trim();
+
+        if (
+            title &&
+            !ignoredTitles.has(title.toLowerCase())
+        ) {
             uniqueTitles.add(title);
-            output += `"${title}",5\n`;
-            finalCount++;
         }
     });
 
-    console.log(`Successfully parsed ${finalCount} unique titles.`);
+    // Escape quotation marks according to CSV rules.
+    const escapeCSV = value =>
+        '"' + value.replace(/"/g, '""') + '"';
 
-    // Dispatch the CSV download straight away
-    let blob = new Blob([output], { type: 'text/csv;charset=utf-8;' });
-    let link = document.createElement("a");
-    let url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "netflix_ratings_fixed.csv");
-    link.style.visibility = 'hidden';
+    const output = [
+        'Title',
+        ...Array.from(uniqueTitles, escapeCSV)
+    ].join('\r\n') + '\r\n';
+
+    console.log(`Exported ${uniqueTitles.size} unique titles.`);
+
+    if (uniqueTitles.size === 0) {
+        console.error(
+            'No titles were found. Check that you are on the correct Netflix page.'
+        );
+        return;
+    }
+
+    const blob = new Blob(
+        ['\uFEFF', output],
+        { type: 'text/csv;charset=utf-8;' }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = 'netflix-ratings-seen.csv';
+    link.style.display = 'none';
+
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-    
-    console.log("File downloaded successfully!");
+    link.remove();
+
+    // Revoke the temporary download URL after a short delay.
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    console.log('CSV download initiated successfully!');
 })();
