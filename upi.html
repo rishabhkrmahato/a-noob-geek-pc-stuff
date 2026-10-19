@@ -3,209 +3,676 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b0d12">
+  <meta name="theme-color" content="#06080d">
   <meta name="description" content="Pay Dr. Rishabh Kumar Mahato via UPI.">
   <title>Pay Dr. Rishabh Kumar Mahato</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090b0f;
-      --surface: rgba(20, 23, 29, 0.82);
-      --surface-border: rgba(255, 255, 255, 0.09);
-      --text: #f4f7fb;
-      --muted: #9ba4b2;
-      --accent: #45e58a;
-      --accent-2: #34d6a0;
-      --shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+      --bg: #06080d;
+      --card-bg: rgba(15, 19, 28, 0.78);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-bright: rgba(255, 255, 255, 0.16);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #10b981;
+      --accent-cyan: #06b6d4;
+      --laser: #ef4444;
+      --shadow-card: 0 32px 80px -16px rgba(0, 0, 0, 0.85);
+      --mouse-x: 50%;
+      --mouse-y: 0%;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    html, body { min-height: 100%; }
+    html, body {
+      min-height: 100%;
+      margin: 0;
+    }
 
     body {
-      margin: 0;
       min-height: 100vh;
       display: grid;
       place-items: center;
-      padding: 24px;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 50% -10%, rgba(69, 229, 138, 0.11), transparent 34%),
-        radial-gradient(circle at 10% 90%, rgba(31, 120, 255, 0.07), transparent 28%),
-        var(--bg);
+      padding: 24px 16px;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text-main);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.14), transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(6, 182, 212, 0.10), transparent 40%),
+        radial-gradient(circle at 15% 85%, rgba(59, 130, 246, 0.08), transparent 40%);
+      background-size: 24px 24px, 100% 100%, 100% 100%, 100% 100%;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      position: relative;
     }
 
+    /* Ambient floating mesh glow */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.11), rgba(6, 182, 212, 0.06), transparent 70%);
+      filter: blur(50px);
+      z-index: -1;
+      animation: ambientDrift 10s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes ambientDrift {
+      0% { transform: translate(-15%, -10%) scale(0.95); }
+      100% { transform: translate(15%, 10%) scale(1.08); }
+    }
+
+    /* Floating Glass Toast Notification */
+    .toast {
+      position: fixed;
+      top: 22px;
+      left: 50%;
+      transform: translate(-50%, -24px) scale(0.95);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #ecfdf5;
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+      z-index: 100;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    .toast-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* Main Terminal Card */
     .card {
+      position: relative;
       width: min(100%, 420px);
-      padding: 30px;
+      padding: 30px 26px 24px;
       text-align: center;
-      border: 1px solid var(--surface-border);
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(26, 29, 36, 0.88), rgba(15, 17, 22, 0.90));
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      animation: rise 0.55s ease-out both;
+      border-radius: 30px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      box-shadow:
+        var(--shadow-card),
+        inset 0 1px 0 0 var(--border-bright);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      animation: cardEnter 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+      overflow: hidden;
     }
 
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px) scale(0.985); }
+    /* Interactive cursor spotlight overlay */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        500px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.055),
+        transparent 40%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(18px) scale(0.975); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* Profile Avatar + Status Ring */
     .profile-link {
+      position: relative;
       display: inline-flex;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
+      border-radius: 50%;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .profile-link:hover {
+      transform: scale(1.04);
     }
 
     .avatar {
-      width: 112px;
-      height: 112px;
+      width: 96px;
+      height: 96px;
       object-fit: cover;
       object-position: center 18%;
       border-radius: 50%;
       display: block;
-      border: 2px solid rgba(69, 229, 138, 0.9);
-      box-shadow: 0 0 0 6px rgba(69, 229, 138, 0.06), 0 12px 30px rgba(0,0,0,0.28);
+      border: 2px solid rgba(16, 185, 129, 0.85);
+      box-shadow:
+        0 0 0 5px rgba(16, 185, 129, 0.08),
+        0 14px 30px rgba(0, 0, 0, 0.45);
     }
 
     .eyebrow {
-      margin: 0 0 6px;
-      font-size: 0.93rem;
-      line-height: 1.4;
-      color: var(--muted);
+      margin: 0 0 4px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
     }
 
     .handle {
-      color: var(--text);
+      color: var(--text-main);
       text-decoration: none;
       font-weight: 600;
+      transition: color 0.15s ease;
     }
 
-    .handle:hover { text-decoration: underline; }
+    .handle:hover {
+      color: var(--accent);
+    }
+
+    .title-row {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      max-width: 100%;
+    }
 
     h1 {
       margin: 0;
-      font-size: clamp(1.35rem, 4vw, 1.65rem);
+      font-size: clamp(1.28rem, 4vw, 1.52rem);
+      font-weight: 700;
       line-height: 1.25;
       letter-spacing: -0.025em;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .verified-badge {
+      width: 19px;
+      height: 19px;
+      color: var(--accent);
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.35));
     }
 
     .subtitle {
-      margin: 7px 0 24px;
-      color: var(--muted);
-      font-size: 0.9rem;
+      margin: 6px 0 18px;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
-    .qr-wrap {
-      width: min(100%, 286px);
+    /* Request Pill (Shown when amount/note is active) */
+    .request-pill {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: -6px auto 14px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #a7f3d0;
+      font-size: 0.8rem;
+      font-weight: 600;
+      width: fit-content;
+      max-width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      animation: fadeSlide 0.25s ease-out;
+    }
+
+    .request-pill.active {
+      display: inline-flex;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* QR Stage & Camera Viewfinder */
+    .qr-stage {
+      position: relative;
+      width: min(100%, 268px);
       aspect-ratio: 1;
-      margin: 0 auto 18px;
-      padding: 12px;
-      border-radius: 24px;
-      background: #fff;
-      box-shadow: 0 20px 42px rgba(0,0,0,0.28);
+      margin: 0 auto 14px;
+      padding: 18px;
+      border-radius: 26px;
+      background: #ffffff;
+      box-shadow:
+        0 22px 50px -10px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      animation: stageBounce 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
     }
 
+    /* 4 L-Shaped Camera Viewfinder Brackets */
+    .corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-color: rgba(239, 68, 68, 0.75);
+      border-style: solid;
+      border-width: 0;
+      z-index: 3;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: cornerLock 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+
+    .corner.tl { top: 10px; left: 10px; border-top-width: 3px; border-left-width: 3px; border-top-left-radius: 10px; }
+    .corner.tr { top: 10px; right: 10px; border-top-width: 3px; border-right-width: 3px; border-top-right-radius: 10px; }
+    .corner.bl { bottom: 10px; left: 10px; border-bottom-width: 3px; border-left-width: 3px; border-bottom-left-radius: 10px; }
+    .corner.br { bottom: 10px; right: 10px; border-bottom-width: 3px; border-right-width: 3px; border-bottom-right-radius: 10px; }
+
+    @keyframes cornerLock {
+      0%, 70% {
+        border-color: rgba(239, 68, 68, 0.8);
+        transform: scale(1);
+      }
+      85% {
+        border-color: #10b981;
+        transform: scale(0.92);
+      }
+      100% {
+        border-color: rgba(16, 185, 129, 0.85);
+        transform: scale(1);
+      }
+    }
+
+    /* QR Image Focus & Subtle Bounce */
     .qr {
       width: 100%;
       height: 100%;
       display: block;
-      border-radius: 14px;
+      border-radius: 10px;
+      transform-origin: center;
+      animation: qrFocusBounce 1.15s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
     }
 
+    @keyframes stageBounce {
+      0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes qrFocusBounce {
+      0% {
+        opacity: 0;
+        filter: blur(8px);
+        transform: scale(0.84);
+      }
+      55% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: scale(1.035);
+      }
+      78% {
+        transform: scale(0.985);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: scale(1);
+      }
+    }
+
+    /* Red Laser Scanner Bar */
+    .scan-bar {
+      position: absolute;
+      left: 6%;
+      right: 6%;
+      top: 8%;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent 0%, #ef4444 20%, #fca5a5 50%, #ef4444 80%, transparent 100%);
+      box-shadow:
+        0 0 12px 2px rgba(239, 68, 68, 0.9),
+        0 0 24px 6px rgba(239, 68, 68, 0.45);
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0;
+      animation: laserSweep 2.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) 0.3s forwards;
+    }
+
+    .scan-bar::after {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: -14px;
+      height: 28px;
+      background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.28) 0%, transparent 75%);
+    }
+
+    @keyframes laserSweep {
+      0% { top: 8%; opacity: 0; }
+      10% { opacity: 1; }
+      38% { top: 90%; opacity: 1; }
+      68% { top: 8%; opacity: 1; }
+      88% { top: 50%; opacity: 0.85; transform: scaleX(1); }
+      100% { top: 50%; opacity: 0; transform: scaleX(0.15); }
+    }
+
+    /* Subtle Expandable Customizer (No Tip-Jar Chips) */
+    .customize-wrap {
+      margin-bottom: 14px;
+    }
+
+    .customize-toggle {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+
+    .customize-toggle:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .customize-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.28s cubic-bezier(0.22, 1, 0.36, 1), margin-top 0.28s ease;
+      margin-top: 0;
+    }
+
+    .customize-drawer.open {
+      grid-template-rows: 1fr;
+      margin-top: 10px;
+    }
+
+    .customize-inner {
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 8px;
+      padding: 0 2px;
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-prefix {
+      position: absolute;
+      left: 11px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .field {
+      width: 100%;
+      height: 38px;
+      border-radius: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+      font: inherit;
+      font-size: 0.83rem;
+      padding: 0 11px;
+      outline: none;
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .field.amount-field {
+      padding-left: 25px;
+    }
+
+    .field::placeholder {
+      color: var(--text-dim);
+    }
+
+    .field:focus {
+      border-color: rgba(16, 185, 129, 0.5);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* Interactive Monospace UPI ID Pill */
     .upi-row {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       max-width: 100%;
-      margin: 0 auto 22px;
-      padding: 9px 12px;
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
-      background: rgba(255,255,255,0.035);
-      color: #bcefd1;
-      font-size: 0.9rem;
-      font-weight: 600;
-      overflow-wrap: anywhere;
+      margin: 0 auto 20px;
+      padding: 8px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.035);
+      color: #d1fae5;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.83rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upi-row:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .upi-row:active {
+      transform: translateY(0) scale(0.98);
     }
 
     .upi-dot {
       width: 7px;
       height: 7px;
-      flex: 0 0 auto;
+      flex-shrink: 0;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 12px rgba(69,229,138,0.7);
+      box-shadow: 0 0 10px var(--accent);
+      animation: dotPulse 2.2s ease-in-out infinite;
     }
 
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+
+    .upi-copy-hint {
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+      opacity: 0.7;
+      transition: opacity 0.15s ease, color 0.15s ease;
+    }
+
+    .upi-row:hover .upi-copy-hint {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    /* Smart Action Buttons Layout */
     .actions {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
+      grid-template-columns: 1.35fr 1fr auto;
+      gap: 9px;
     }
 
-    .btn, .copy-btn {
-      min-height: 48px;
-      border-radius: 14px;
-      font: inherit;
-      font-size: 0.92rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    /* Desktop Mode automatically hides dead UPI deep-link and promotes Copy + Download */
+    body.is-desktop .btn-pay {
+      display: none;
+    }
+
+    body.is-desktop .actions {
+      grid-template-columns: 1.2fr 1fr;
     }
 
     .btn {
+      min-height: 46px;
+      border-radius: 13px;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0 18px;
+      gap: 7px;
       text-decoration: none;
-      color: #04120a;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 12px 28px rgba(69,229,138,0.18);
+      border: 1px solid transparent;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
     }
 
-    .copy-btn {
-      padding: 0 16px;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.045);
+    .btn-primary {
+      color: #021a12;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-cyan));
+      box-shadow:
+        0 10px 24px -6px rgba(16, 185, 129, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
     }
 
-    .btn:hover, .copy-btn:hover {
+    .btn-primary:hover {
       transform: translateY(-2px);
+      box-shadow:
+        0 14px 28px -6px rgba(16, 185, 129, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
     }
 
-    .btn:active, .copy-btn:active {
-      transform: translateY(0);
+    .btn-secondary {
+      padding: 0 14px;
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.045);
     }
 
-    .copy-btn.copied {
-      border-color: rgba(69,229,138,0.35);
-      background: rgba(69,229,138,0.09);
-      color: #bff6d5;
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.085);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    /* On Desktop, Copy UPI ID becomes the primary highlighted button */
+    body.is-desktop .btn-copy {
+      color: #021a12;
+      font-weight: 700;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--accent), var(--accent-cyan));
+      box-shadow:
+        0 10px 24px -6px rgba(16, 185, 129, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-icon-only {
+      padding: 0 13px;
+    }
+
+    body.is-desktop .btn-save-label {
+      display: inline;
+    }
+
+    body:not(.is-desktop) .btn-save-label {
+      display: none;
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.97);
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Supported UPI Apps Trust Strip */
+    .trust-strip {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+       flex-direction: column;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .apps-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .app-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      letter-spacing: 0.02em;
     }
 
     .footer {
-      margin-top: 22px;
-      font-size: 0.76rem;
-      color: #68717e;
+      margin-top: 6px;
+      font-size: 0.73rem;
+      color: var(--text-dim);
     }
 
     @media (max-width: 440px) {
-      body { padding: 14px; }
-      .card { padding: 24px 18px 20px; border-radius: 24px; }
-      .avatar { width: 104px; height: 104px; }
-      .qr-wrap { width: min(100%, 270px); }
-      .actions { grid-template-columns: 1fr; }
-      .copy-btn { width: 100%; }
+      .card { padding: 26px 18px 20px; border-radius: 26px; }
+      .qr-stage { width: min(100%, 252px); padding: 15px; }
+      .actions { grid-template-columns: 1fr 1fr; }
+      .btn-pay { grid-column: 1 / -1; }
+      .btn:not(.btn-pay) .btn-save-label { display: inline; }
+      .customize-inner { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -213,13 +680,20 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
       }
+      .scan-bar { display: none; }
     }
   </style>
 </head>
 <body>
-  <main class="card">
+
+  <!-- Floating Glass Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span class="toast-dot"></span>
+    <span id="toastMsg">UPI ID copied to clipboard</span>
+  </div>
+
+  <main class="card" id="card">
     <a class="profile-link" href="https://gravatar.com/rishabhkrm" target="_blank" rel="noopener noreferrer" aria-label="Open Dr. Rishabh Kumar Mahato's profile">
       <img
         class="avatar"
@@ -228,46 +702,274 @@
       >
     </a>
 
-    <p class="eyebrow">Pay <a class="handle" href="https://www.google.com/search?q=%22rishabhkrm%22" target="_blank" rel="noopener noreferrer">@rishabhkrm</a></p>
-    <h1>Dr. Rishabh Kumar Mahato</h1>
-    <p class="subtitle">Scan the QR code or pay directly with UPI</p>
+    <p class="eyebrow">Pay <a class="handle" href="https://www.google.com/search?q=%22rishabhkrm%22" target="_blank" rel="noopener noreferrer">@rishabhkrm</a> · Axis Bank</p>
+    
+    <div class="title-row">
+      <h1>Dr. Rishabh Kumar Mahato</h1>
+      <svg class="verified-badge" viewBox="0 0 24 24" fill="currentColor" aria-label="Verified Payee" title="Verified UPI Payee">
+        <path d="M12 2l2.4 2.1 3.1-.4 1.3 2.9 3 1.3-.4 3.1L23.5 13l-2.1 2.4.4 3.1-3 1.3-1.3 2.9-3.1-.4L12 24.4l-2.4-2.1-3.1.4-1.3-2.9-3-1.3.4-3.1L.5 13l2.1-2.4-.4-3.1 3-1.3 1.3-2.9 3.1.4L12 2zm-1.2 14.6l6.4-6.4-1.4-1.4-5 5-2.6-2.6-1.4 1.4 4 4z"/>
+      </svg>
+    </div>
 
-    <div class="qr-wrap">
+    <p class="subtitle" id="subtitleText">Scan QR with any UPI app on your phone</p>
+
+    <!-- Dynamic Request Pill (Only appears if amount/note is set) -->
+    <div id="requestPill" class="request-pill"></div>
+
+    <!-- QR Stage with 4 Viewfinder Brackets & Red Laser -->
+    <div class="qr-stage" id="qrStage" title="Tap to re-focus QR code" onclick="replayScan()">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+      <div class="scan-bar" id="scanBar" aria-hidden="true"></div>
       <img
+        id="qrImg"
         class="qr"
-        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi%3A%2F%2Fpay%3Fpa%3Ddr.rishabhkrm%40axisbank%26pn%3DDr.%2520Rishabh%2520Kumar%2520Mahato%26cu%3DINR%26tn%3DTHANK%2520YOU"
-        alt="UPI QR Code"
+        crossorigin="anonymous"
+        src="https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=6&data=upi%3A%2F%2Fpay%3Fpa%3Ddr.rishabhkrm%40axisbank%26pn%3DDr.%2520Rishabh%2520Kumar%2520Mahato%26cu%3DINR%26tn%3DTHANK%2520YOU"
+        alt="UPI QR Code for Dr. Rishabh Kumar Mahato"
       >
     </div>
 
-    <div class="upi-row" aria-label="UPI ID">
+    <!-- Optional Minimal Customizer (Hidden by default, zero clutter) -->
+    <div class="customize-wrap">
+      <button type="button" class="customize-toggle" onclick="toggleCustomizer()" aria-expanded="false" id="customToggleBtn">
+        <svg class="icon" style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>Add amount or note (optional)</span>
+      </button>
+
+      <div class="customize-drawer" id="customDrawer">
+        <div class="customize-inner">
+          <div class="input-box">
+            <span class="currency-prefix">₹</span>
+            <input type="number" id="amountInput" class="field amount-field" placeholder="Amount" min="1" max="100000" inputmode="decimal">
+          </div>
+          <div class="input-box">
+            <input type="text" id="noteInput" class="field" placeholder="Note (e.g. Consultation)" maxlength="32">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive UPI ID Pill -->
+    <div class="upi-row" role="button" tabindex="0" title="Click to copy UPI ID" onclick="copyUPI()" onkeydown="if(event.key==='Enter'||event.key===' ')copyUPI()">
       <span class="upi-dot" aria-hidden="true"></span>
       <span>dr.rishabhkrm@axisbank</span>
+      <svg class="upi-copy-hint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
     </div>
 
+    <!-- Smart Device-Aware Actions -->
     <div class="actions">
-      <a class="btn" href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=Dr.%20Rishabh%20Kumar%20Mahato&cu=INR&tn=THANK%20YOU">Pay with UPI</a>
-      <button class="copy-btn" type="button" onclick="copyUPI(this)">Copy UPI ID</button>
+      <a id="payBtn" class="btn btn-primary btn-pay" href="upi://pay?pa=dr.rishabhkrm@axisbank&pn=Dr.%20Rishabh%20Kumar%20Mahato&cu=INR&tn=THANK%20YOU">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        <span id="payBtnText">Pay with UPI App</span>
+      </a>
+
+      <button id="copyBtn" class="btn btn-secondary btn-copy" type="button" onclick="copyUPI()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span id="copyBtnText">Copy UPI ID</span>
+      </button>
+
+      <button class="btn btn-secondary btn-icon-only" type="button" title="Download QR Code Image" onclick="downloadQR()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span class="btn-save-label">Save QR</span>
+      </button>
     </div>
 
-    <footer class="footer">© 2026 Dr. Rishabh Kumar Mahato</footer>
+    <!-- Trust Strip & Footer -->
+    <div class="trust-strip">
+      <div class="apps-badges" aria-label="Supported UPI Apps">
+        <span class="app-pill">GPay</span>
+        <span class="app-pill">PhonePe</span>
+        <span class="app-pill">Paytm</span>
+        <span class="app-pill">BHIM</span>
+        <span class="app-pill">All UPI Apps</span>
+      </div>
+      <footer class="footer">© 2026 Dr. Rishabh Kumar Mahato</footer>
+    </div>
   </main>
 
   <script>
-    async function copyUPI(button) {
-      const upi = 'dr.rishabhkrm@axisbank';
+    const UPI_ID = 'dr.rishabhkrm@axisbank';
+    const PAYEE_NAME = 'Dr. Rishabh Kumar Mahato';
+    const DEFAULT_NOTE = 'THANK YOU';
+
+    const card = document.getElementById('card');
+    const qrImg = document.getElementById('qrImg');
+    const scanBar = document.getElementById('scanBar');
+    const payBtn = document.getElementById('payBtn');
+    const payBtnText = document.getElementById('payBtnText');
+    const amountInput = document.getElementById('amountInput');
+    const noteInput = document.getElementById('noteInput');
+    const requestPill = document.getElementById('requestPill');
+    const subtitleText = document.getElementById('subtitleText');
+
+    // 1. Smart Device Detection (Hide dead 'upi://' button on Desktop/Laptop)
+    const isMobileDevice = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      (navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform));
+
+    if (!isMobileDevice) {
+      document.body.classList.add('is-desktop');
+      subtitleText.textContent = 'Scan QR with any UPI app on your phone';
+    } else {
+      subtitleText.textContent = 'Scan QR or tap below to pay with any UPI app';
+    }
+
+    // 2. Interactive 3D Spotlight Effect on Card
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+
+    // 3. Tactile Haptic Helper
+    function haptic(ms = 14) {
+      if (navigator.vibrate) navigator.vibrate(ms);
+    }
+
+    // 4. Floating Glass Toast Notification
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    // 5. Copy UPI ID
+    async function copyUPI() {
+      haptic(15);
+      const copyBtnText = document.getElementById('copyBtnText');
       try {
-        await navigator.clipboard.writeText(upi);
-        button.textContent = 'Copied ✓';
-        button.classList.add('copied');
-        setTimeout(() => {
-          button.textContent = 'Copy UPI ID';
-          button.classList.remove('copied');
-        }, 1800);
-      } catch (error) {
-        alert('Could not copy the UPI ID automatically.');
+        await navigator.clipboard.writeText(UPI_ID);
+        copyBtnText.textContent = 'Copied ✓';
+        showToast('UPI ID copied to clipboard');
+        setTimeout(() => { copyBtnText.textContent = 'Copy UPI ID'; }, 1800);
+      } catch (err) {
+        showToast('UPI ID: ' + UPI_ID);
       }
     }
+
+    // 6. Replay Laser Scan & Camera Focus Animation
+    function replayScan() {
+      haptic(10);
+      const corners = document.querySelectorAll('.corner');
+      scanBar.style.animation = 'none';
+      qrImg.style.animation = 'none';
+      corners.forEach(c => c.style.animation = 'none');
+      void qrImg.offsetWidth; // trigger reflow
+      scanBar.style.animation = '';
+      qrImg.style.animation = '';
+      corners.forEach(c => c.style.animation = '');
+    }
+
+    // 7. Toggle Optional Amount/Note Drawer
+    function toggleCustomizer() {
+      haptic(10);
+      const drawer = document.getElementById('customDrawer');
+      const btn = document.getElementById('customToggleBtn');
+      const isOpen = drawer.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+      btn.querySelector('span').textContent = isOpen ? 'Hide custom amount / note' : 'Add amount or note (optional)';
+      if (isOpen) setTimeout(() => amountInput.focus(), 200);
+    }
+
+    // 8. Build Dynamic UPI URI & Refresh QR Code Live
+    let qrDebounce;
+    function updatePaymentDetails(triggerScan = true) {
+      const rawAmount = amountInput.value.trim();
+      const rawNote = noteInput.value.trim();
+      const validAmount = rawAmount && parseFloat(rawAmount) > 0 ? parseFloat(rawAmount).toFixed(2).replace(/\.00$/, '') : '';
+      const finalNote = rawNote || DEFAULT_NOTE;
+
+      const params = new URLSearchParams();
+      params.set('pa', UPI_ID);
+      params.set('pn', PAYEE_NAME);
+      if (validAmount) params.set('am', validAmount);
+      params.set('cu', 'INR');
+      params.set('tn', finalNote);
+
+      // Keep spaces as %20 instead of + for maximum UPI app compatibility
+      const upiURI = `upi://pay?${params.toString().replace(/\+/g, '%20')}`;
+      payBtn.href = upiURI;
+
+      // Update Pay Button Label & Request Pill
+      if (validAmount || rawNote) {
+        const parts = [];
+        if (validAmount) parts.push(`₹${Number(validAmount).toLocaleString('en-IN')}`);
+        if (rawNote) parts.push(rawNote);
+        requestPill.textContent = `Pay ${parts.join(' · ')}`;
+        requestPill.classList.add('active');
+        payBtnText.textContent = validAmount ? `Pay ₹${Number(validAmount).toLocaleString('en-IN')} via UPI` : 'Pay with UPI App';
+      } else {
+        requestPill.classList.remove('active');
+        payBtnText.textContent = 'Pay with UPI App';
+      }
+
+      // Debounce QR image regeneration so typing feels smooth
+      clearTimeout(qrDebounce);
+      qrDebounce = setTimeout(() => {
+        const newQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=6&data=${encodeURIComponent(upiURI)}`;
+        if (qrImg.src !== newQrUrl) {
+          qrImg.src = newQrUrl;
+          if (triggerScan) replayScan();
+        }
+      }, 420);
+    }
+
+    amountInput.addEventListener('input', () => updatePaymentDetails(true));
+    noteInput.addEventListener('input', () => updatePaymentDetails(true));
+
+    // 9. Download QR Code for Single-Device "Scan from Gallery"
+    async function downloadQR() {
+      haptic(15);
+      try {
+        showToast('Saving QR code to device...');
+        const response = await fetch(qrImg.src);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        const amtSuffix = amountInput.value.trim() ? `-Rs${amountInput.value.trim()}` : '';
+        link.download = `Dr-Rishabh-UPI-QR${amtSuffix}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+        showToast('QR saved! Open any UPI app → Scan from Gallery');
+      } catch (e) {
+        window.open(qrImg.src, '_blank');
+      }
+    }
+
+    // 10. URL Parameter Support (?am=500&tn=Consultation)
+    (function initFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const am = urlParams.get('am') || urlParams.get('amount');
+      const tn = urlParams.get('tn') || urlParams.get('note');
+      if (am || tn) {
+        if (am && !isNaN(parseFloat(am))) amountInput.value = parseFloat(am);
+        if (tn) noteInput.value = tn.slice(0, 32);
+        updatePaymentDetails(false);
+      }
+    })();
   </script>
 </body>
 </html>
