@@ -1,0 +1,100 @@
+//
+// HOW TO USE THIS SCRIPT:
+// 1. Open Netflix in Google Chrome and go to your Viewing Activity / Ratings page.
+// 2. Press F12 to open Developer Tools, then click the Console tab.
+// 3. Open this TXT file, copy the ENTIRE code below, and paste it into the Console.
+// 4. Press Enter and wait while the script loads your titles.
+// 5. A CSV file named "netflix_ratings_fixed.csv" will download automatically.
+// 6. Import the downloaded CSV into Simkl or use it as a spreadsheet here:
+//    https://simkl.com/apps/import/csv/
+//
+// NOTE: Keep the Netflix page open while the script runs.
+// If Chrome shows a security warning about pasting code, only proceed if you
+// understand and trust the script. Never paste code from an unknown source.
+//
+// IMPORTANT: This script currently assigns every exported title a rating of 5.
+// It does not retrieve actual Netflix ratings.
+//
+//
+
+
+(async function() {
+    console.log("Starting reliable extraction... Simulating mouse actions.");
+    
+    let totalLoops = 0;
+    let maxLoops = 300; 
+    let lastCount = 0;
+    let fallbackCounter = 0;
+
+    while (totalLoops < maxLoops) {
+        window.scrollTo(0, document.body.scrollHeight);
+        
+        // Target the exact "Show More" blue button text element
+        let buttons = Array.from(document.querySelectorAll('button, div, span, a'));
+        let showMoreBtn = buttons.find(el => {
+            let txt = el.innerText ? el.innerText.trim().toLowerCase() : '';
+            return el.offsetHeight > 0 && txt === 'show more';
+        });
+
+        let currentCount = document.querySelectorAll('.retip-title, .title, .rowTitle, .history-title, a[href*="/title/"]').length;
+
+        if (showMoreBtn) {
+            // Generate a real native mouse down/up event chain
+            console.log(`Clicking button. Current count: ${currentCount}`);
+            
+            showMoreBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
+            showMoreBtn.click();
+            showMoreBtn.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
+
+            // Give Netflix 3 full seconds to fetch new items from the network
+            await new Promise(resolve => setTimeout(resolve, 3000));
+        }
+
+        // If the title count has stopped changing, wait a bit longer to bypass background network stalls
+        if (currentCount === lastCount && currentCount > 0) {
+            fallbackCounter++;
+            if (fallbackCounter >= 4) { 
+                console.log("Reached the end of list or network permanently throttled.");
+                break;
+            }
+            console.log("Waiting for network response stream...");
+            await new Promise(resolve => setTimeout(resolve, 2000));
+        } else {
+            fallbackCounter = 0;
+        }
+
+        lastCount = currentCount;
+        totalLoops++;
+    }
+
+    console.log("Formatting CSV file content...");
+
+    let output = "Title,Rating\n";
+    let finalCount = 0;
+    let uniqueTitles = new Set();
+    
+    // Scrape both classic lists and the specific hyperlink pathways used on modern account dashboards
+    document.querySelectorAll('.retip-title, .title, .rowTitle, .history-title, a[href*="/title/"]').forEach(el => {
+        let title = el.innerText.trim().replace(/"/g, '""');
+        if (title && !uniqueTitles.has(title) && !['show more', 'back to your account'].includes(title.toLowerCase())) {
+            uniqueTitles.add(title);
+            output += `"${title}",5\n`;
+            finalCount++;
+        }
+    });
+
+    console.log(`Successfully parsed ${finalCount} unique titles.`);
+
+    // Dispatch the CSV download straight away
+    let blob = new Blob([output], { type: 'text/csv;charset=utf-8;' });
+    let link = document.createElement("a");
+    let url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "netflix_ratings_fixed.csv");
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    console.log("File downloaded successfully!");
+})();
