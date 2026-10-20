@@ -637,7 +637,7 @@
       padding-top: 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
-       flex-direction: column;
+      flex-direction: column;
       gap: 6px;
       align-items: center;
     }
@@ -696,7 +696,9 @@
   <main class="card" id="card">
     <a class="profile-link" href="https://gravatar.com/rishabhkrm" target="_blank" rel="noopener noreferrer" aria-label="Open Dr. Rishabh Kumar Mahato's profile">
       <img
+        id="avatarImg"
         class="avatar"
+        crossorigin="anonymous"
         src="https://raw.githubusercontent.com/rishabhkrmahato/a-noob-geek-pc-stuff/main/misc/current-me.jpg"
         alt="Dr. Rishabh Kumar Mahato"
       >
@@ -782,7 +784,7 @@
         <span id="copyBtnText">Copy UPI ID</span>
       </button>
 
-      <button class="btn btn-secondary btn-icon-only" type="button" title="Download QR Code Image" onclick="downloadQR()">
+      <button class="btn btn-secondary btn-icon-only" type="button" title="Download Full UPI Card Image" onclick="downloadQR()">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
@@ -811,6 +813,7 @@
     const DEFAULT_NOTE = 'THANK YOU';
 
     const card = document.getElementById('card');
+    const avatarImg = document.getElementById('avatarImg');
     const qrImg = document.getElementById('qrImg');
     const scanBar = document.getElementById('scanBar');
     const payBtn = document.getElementById('payBtn');
@@ -937,24 +940,375 @@
     amountInput.addEventListener('input', () => updatePaymentDetails(true));
     noteInput.addEventListener('input', () => updatePaymentDetails(true));
 
-    // 9. Download QR Code for Single-Device "Scan from Gallery"
+    // Helper: Load CORS-safe Image for Canvas
+    function loadCorsImage(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    // 9. Render & Download Full Styled UPI Card (Matches Card Cutout)
     async function downloadQR() {
       haptic(15);
+      showToast('Generating full UPI QR card...');
+
       try {
-        showToast('Saving QR code to device...');
-        const response = await fetch(qrImg.src);
-        const blob = await response.blob();
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+
+        const [avatarBitmap, qrBitmap] = await Promise.all([
+          loadCorsImage(avatarImg.src).catch(() => null),
+          loadCorsImage(qrImg.src)
+        ]);
+
+        const rawAmount = amountInput.value.trim();
+        const rawNote = noteInput.value.trim();
+        const validAmount = rawAmount && parseFloat(rawAmount) > 0 ? parseFloat(rawAmount).toFixed(2).replace(/\.00$/, '') : '';
+        const hasRequestPill = Boolean(validAmount || rawNote);
+
+        const W = 960;
+        const H = hasRequestPill ? 1350 : 1290;
+        const canvas = document.createElement('canvas');
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext('2d');
+
+        // 1. Deep Obsidian Outer Background
+        ctx.fillStyle = '#06080d';
+        ctx.fillRect(0, 0, W, H);
+
+        // Ambient top emerald glow
+        const topGlow = ctx.createRadialGradient(W / 2, 60, 20, W / 2, 60, 520);
+        topGlow.addColorStop(0, 'rgba(16, 185, 129, 0.18)');
+        topGlow.addColorStop(1, 'rgba(16, 185, 129, 0)');
+        ctx.fillStyle = topGlow;
+        ctx.fillRect(0, 0, W, H);
+
+        // Ambient bottom-right cyan glow
+        const botGlow = ctx.createRadialGradient(W * 0.82, H * 0.88, 20, W * 0.82, H * 0.88, 460);
+        botGlow.addColorStop(0, 'rgba(6, 182, 212, 0.12)');
+        botGlow.addColorStop(1, 'rgba(6, 182, 212, 0)');
+        ctx.fillStyle = botGlow;
+        ctx.fillRect(0, 0, W, H);
+
+        // 2. Main Glass Card Container
+        const cardX = 56;
+        const cardY = 52;
+        const cardW = W - cardX * 2;
+        const cardH = H - cardY * 2;
+        const cardR = 60;
+
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.78)';
+        ctx.shadowBlur = 65;
+        ctx.shadowOffsetY = 26;
+
+        const cardGrad = ctx.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+        cardGrad.addColorStop(0, '#121722');
+        cardGrad.addColorStop(1, '#0b0e15');
+        ctx.fillStyle = cardGrad;
+        ctx.beginPath();
+        ctx.roundRect(cardX, cardY, cardW, cardH, cardR);
+        ctx.fill();
+        ctx.restore();
+
+        // Card Subtle Outer & Top Highlight Border
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.11)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(cardX, cardY, cardW, cardH, cardR);
+        ctx.stroke();
+
+        // 3. Profile Avatar with Emerald Ring
+        const avatarCX = W / 2;
+        const avatarCY = cardY + 148;
+        const avatarR = 88;
+
+        // Soft outer ring halo
+        ctx.beginPath();
+        ctx.arc(avatarCX, avatarCY, avatarR + 10, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.12)';
+        ctx.lineWidth = 10;
+        ctx.stroke();
+
+        if (avatarBitmap) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(avatarCX, avatarCY, avatarR, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip();
+
+          // Aspect-ratio cover crop matching CSS object-position: center 18%
+          const imgW = avatarBitmap.width;
+          const imgH = avatarBitmap.height;
+          const scale = Math.max((avatarR * 2) / imgW, (avatarR * 2) / imgH);
+          const drawW = imgW * scale;
+          const drawH = imgH * scale;
+          const dx = avatarCX - drawW / 2;
+          const dy = (avatarCY - avatarR) - (drawH - avatarR * 2) * 0.18;
+          ctx.drawImage(avatarBitmap, dx, dy, drawW, drawH);
+          ctx.restore();
+        }
+
+        // Crisp emerald border on avatar
+        ctx.beginPath();
+        ctx.arc(avatarCX, avatarCY, avatarR, 0, Math.PI * 2);
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 4.5;
+        ctx.stroke();
+
+        // 4. Eyebrow: Pay @rishabhkrm · Axis Bank
+        let curY = avatarCY + avatarR + 48;
+        ctx.font = '500 26px Inter, system-ui, sans-serif';
+        const p1 = 'Pay ';
+        const p2 = '@rishabhkrm';
+        const p3 = ' · Axis Bank';
+        const w1 = ctx.measureText(p1).width;
+        ctx.font = '700 26px Inter, system-ui, sans-serif';
+        const w2 = ctx.measureText(p2).width;
+        ctx.font = '500 26px Inter, system-ui, sans-serif';
+        const w3 = ctx.measureText(p3).width;
+        const startEyebrowX = (W - (w1 + w2 + w3)) / 2;
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText(p1, startEyebrowX, curY);
+        ctx.font = '700 26px Inter, system-ui, sans-serif';
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillText(p2, startEyebrowX + w1, curY);
+        ctx.font = '500 26px Inter, system-ui, sans-serif';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText(p3, startEyebrowX + w1 + w2, curY);
+
+        // 5. Name Heading + Verified Badge
+        curY += 52;
+        ctx.font = '700 44px Inter, system-ui, sans-serif';
+        const nameW = ctx.measureText(PAYEE_NAME).width;
+        const badgeR = 17;
+        const badgeGap = 14;
+        const totalTitleW = nameW + badgeGap + badgeR * 2;
+        const titleStartX = (W - totalTitleW) / 2;
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillText(PAYEE_NAME, titleStartX, curY);
+
+        // Emerald Verified Badge
+        const badgeCX = titleStartX + nameW + badgeGap + badgeR;
+        const badgeCY = curY - 14;
+        ctx.save();
+        ctx.shadowColor = 'rgba(16, 185, 129, 0.45)';
+        ctx.shadowBlur = 14;
+        ctx.fillStyle = '#10b981';
+        ctx.beginPath();
+        const spikes = 12;
+        for (let i = 0; i < spikes * 2; i++) {
+          const r = i % 2 === 0 ? badgeR : badgeR * 0.82;
+          const angle = (i * Math.PI) / spikes;
+          const x = badgeCX + Math.cos(angle) * r;
+          const y = badgeCY + Math.sin(angle) * r;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+
+        // Checkmark inside badge
+        ctx.strokeStyle = '#061510';
+        ctx.lineWidth = 3.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(badgeCX - 7, badgeCY + 0.5);
+        ctx.lineTo(badgeCX - 2, badgeCY + 5.5);
+        ctx.lineTo(badgeCX + 7.5, badgeCY - 4.5);
+        ctx.stroke();
+
+        // 6. Subtitle
+        curY += 42;
+        ctx.textAlign = 'center';
+        ctx.font = '500 25px Inter, system-ui, sans-serif';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText('Scan QR with any UPI app on your phone', W / 2, curY);
+
+        // Optional Request Pill (if amount or note is entered)
+        if (hasRequestPill) {
+          curY += 32;
+          const parts = [];
+          if (validAmount) parts.push(`₹${Number(validAmount).toLocaleString('en-IN')}`);
+          if (rawNote) parts.push(rawNote);
+          const reqLabel = `Pay ${parts.join(' · ')}`;
+          ctx.font = '600 24px Inter, system-ui, sans-serif';
+          const reqW = ctx.measureText(reqLabel).width + 48;
+          const reqH = 46;
+          const reqX = (W - reqW) / 2;
+
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.14)';
+          ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.roundRect(reqX, curY, reqW, reqH, 999);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.fillStyle = '#a7f3d0';
+          ctx.fillText(reqLabel, W / 2, curY + 31);
+          curY += reqH;
+        }
+
+        // 7. White QR Container Box + 4 Emerald Viewfinder Brackets
+        const qrBoxSize = 510;
+        const qrBoxX = (W - qrBoxSize) / 2;
+        const qrBoxY = curY + 36;
+        const qrBoxR = 48;
+
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.55)';
+        ctx.shadowBlur = 45;
+        ctx.shadowOffsetY = 18;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.roundRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize, qrBoxR);
+        ctx.fill();
+        ctx.restore();
+
+        // Draw QR Image inside white box
+        const qrPad = 38;
+        ctx.drawImage(qrBitmap, qrBoxX + qrPad, qrBoxY + qrPad, qrBoxSize - qrPad * 2, qrBoxSize - qrPad * 2);
+
+        // Draw 4 Emerald Viewfinder Corner Brackets
+        const cInset = 20;
+        const cLen = 40;
+        const cRad = 18;
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.88)';
+        ctx.lineWidth = 5.5;
+        ctx.lineCap = 'round';
+
+        // Top-Left
+        ctx.beginPath();
+        ctx.moveTo(qrBoxX + cInset, qrBoxY + cInset + cLen);
+        ctx.lineTo(qrBoxX + cInset, qrBoxY + cInset + cRad);
+        ctx.quadraticCurveTo(qrBoxX + cInset, qrBoxY + cInset, qrBoxX + cInset + cRad, qrBoxY + cInset);
+        ctx.lineTo(qrBoxX + cInset + cLen, qrBoxY + cInset);
+        ctx.stroke();
+
+        // Top-Right
+        ctx.beginPath();
+        ctx.moveTo(qrBoxX + qrBoxSize - cInset - cLen, qrBoxY + cInset);
+        ctx.lineTo(qrBoxX + qrBoxSize - cInset - cRad, qrBoxY + cInset);
+        ctx.quadraticCurveTo(qrBoxX + qrBoxSize - cInset, qrBoxY + cInset, qrBoxX + qrBoxSize - cInset, qrBoxY + cInset + cRad);
+        ctx.lineTo(qrBoxX + qrBoxSize - cInset, qrBoxY + cInset + cLen);
+        ctx.stroke();
+
+        // Bottom-Left
+        ctx.beginPath();
+        ctx.moveTo(qrBoxX + cInset, qrBoxY + qrBoxSize - cInset - cLen);
+        ctx.lineTo(qrBoxX + cInset, qrBoxY + qrBoxSize - cInset - cRad);
+        ctx.quadraticCurveTo(qrBoxX + cInset, qrBoxY + qrBoxSize - cInset, qrBoxX + cInset + cRad, qrBoxY + qrBoxSize - cInset);
+        ctx.lineTo(qrBoxX + cInset + cLen, qrBoxY + qrBoxSize - cInset);
+        ctx.stroke();
+
+        // Bottom-Right
+        ctx.beginPath();
+        ctx.moveTo(qrBoxX + qrBoxSize - cInset - cLen, qrBoxY + qrBoxSize - cInset);
+        ctx.lineTo(qrBoxX + qrBoxSize - cInset - cRad, qrBoxY + qrBoxSize - cInset);
+        ctx.quadraticCurveTo(qrBoxX + qrBoxSize - cInset, qrBoxY + qrBoxSize - cInset, qrBoxX + qrBoxSize - cInset, qrBoxY + qrBoxSize - cInset - cRad);
+        ctx.lineTo(qrBoxX + qrBoxSize - cInset, qrBoxY + qrBoxSize - cInset - cLen);
+        ctx.stroke();
+
+        // 8. Monospace UPI ID Pill
+        const pillY = qrBoxY + qrBoxSize + 40;
+        ctx.font = '500 25px "JetBrains Mono", monospace';
+        const upiTextW = ctx.measureText(UPI_ID).width;
+        const pillW = upiTextW + 86;
+        const pillH = 62;
+        const pillX = (W - pillW) / 2;
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.10)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(pillX, pillY, pillW, pillH, 999);
+        ctx.fill();
+        ctx.stroke();
+
+        // Glowing green dot inside UPI pill
+        const dotX = pillX + 32;
+        const dotY = pillY + pillH / 2;
+        ctx.save();
+        ctx.shadowColor = '#10b981';
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = '#10b981';
+        ctx.beginPath();
+        ctx.arc(dotX, dotY, 7.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#d1fae5';
+        ctx.fillText(UPI_ID, dotX + 20, pillY + 40);
+
+        // 9. Divider Line + Supported Apps Badges + Footer
+        const divY = pillY + pillH + 38;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cardX + 54, divY);
+        ctx.lineTo(cardX + cardW - 54, divY);
+        ctx.stroke();
+
+        const apps = ['GPay', 'PhonePe', 'Paytm', 'BHIM', 'All UPI Apps'];
+        ctx.font = '600 20px Inter, system-ui, sans-serif';
+        const badgePadX = 20;
+        const badgeH = 38;
+        const badgeGapX = 12;
+        const badgeWidths = apps.map(a => ctx.measureText(a).width + badgePadX * 2);
+        const totalBadgesW = badgeWidths.reduce((a, b) => a + b, 0) + badgeGapX * (apps.length - 1);
+        let curBadgeX = (W - totalBadgesW) / 2;
+        const badgesY = divY + 26;
+
+        apps.forEach((app, idx) => {
+          const bw = badgeWidths[idx];
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.035)';
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.roundRect(curBadgeX, badgesY, bw, badgeH, 11);
+          ctx.fill();
+          ctx.stroke();
+
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText(app, curBadgeX + bw / 2, badgesY + 26);
+          curBadgeX += bw + badgeGapX;
+        });
+
+        // Footer Copyright
+        ctx.textAlign = 'center';
+        ctx.font = '400 21px Inter, system-ui, sans-serif';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText('© 2026 Dr. Rishabh Kumar Mahato', W / 2, badgesY + badgeH + 38);
+
+        // Export Canvas as High-Res PNG
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
         const blobUrl = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = blobUrl;
-        const amtSuffix = amountInput.value.trim() ? `-Rs${amountInput.value.trim()}` : '';
-        link.download = `Dr-Rishabh-UPI-QR${amtSuffix}.png`;
+        const amtSuffix = validAmount ? `-Rs${validAmount}` : '';
+        link.download = `Dr-Rishabh-UPI-Card${amtSuffix}.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(blobUrl);
-        showToast('QR saved! Open any UPI app → Scan from Gallery');
+
+        showToast('QR Card saved! Open any UPI app → Scan from Gallery');
       } catch (e) {
+        // Fallback if browser blocks canvas export
         window.open(qrImg.src, '_blank');
       }
     }
