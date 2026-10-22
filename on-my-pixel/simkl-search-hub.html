@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101421">
+<meta name="description" content="A polished all-in-one search hub for Simkl titles.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2397aaff'/%3E%3Cstop offset='1' stop-color='%23d5a7ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='19' fill='%23151b2b'/%3E%3Ccircle cx='28' cy='28' r='16' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3Cpath d='M40 40 L53 53' stroke='%23d5a7ff' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M15 28h26M28 12c-8 9-8 23 0 32M28 12c8 9 8 23 0 32' stroke='%2397aaff' stroke-width='1.7' fill='none' opacity='.75'/%3E%3C/svg%3E">
+<title>Simkl Search Hub</title>
+<style>
+:root{color-scheme:dark;--bg:#0d1019;--panel:#171d2b;--panel2:#111725;--line:#2d374d;--muted:#9ba8c1;--text:#f4f6ff;--lav:#b7c3ff;--lav2:#d5b5ff;--mint:#9ee7d0;--shadow:0 22px 60px #0005}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 6% -10%,#39456c 0,transparent 35%),radial-gradient(ellipse at 100% 18%,#3a254d55 0,transparent 28%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input{font:inherit}button{touch-action:manipulation}.wrap{width:min(1120px,100%);margin:auto;padding:22px clamp(15px,4vw,38px) 38px}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:2px 0 30px}.brand{display:flex;align-items:center;gap:11px}.logo{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(140deg,#aab8ff25,#d7aaff18);border:1px solid #8996d64a;color:var(--lav);box-shadow:inset 0 1px #ffffff12}.brand-name{font-size:.94rem;font-weight:850;letter-spacing:.055em}.brand-sub{display:block;font-size:.72rem;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:1px}.top-pill{font-size:.74rem;font-weight:700;color:#c5cde2;border:1px solid var(--line);border-radius:99px;padding:7px 11px;background:#ffffff05;white-space:nowrap}
+.hero{display:grid;grid-template-columns:1fr minmax(330px,.88fr);gap:24px;align-items:center;margin-bottom:27px}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--mint);font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.13em;margin-bottom:12px}.eyebrow:before{content:"";width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 12px #9ee7d080}h1{font-size:clamp(2.3rem,5.3vw,4.25rem);line-height:.99;letter-spacing:-.065em;margin:0 0 15px}.gradient{background:linear-gradient(100deg,#bdc8ff 0%,#e0baff 55%,#9ee7d0 100%);color:transparent;background-clip:text}.lead{color:#b6c0d5;max-width:48ch;margin:0;font-size:.98rem}.querybox{padding:19px;border:1px solid #414a64;border-radius:22px;background:linear-gradient(145deg,#1b2233ed,#141a27f2);box-shadow:var(--shadow);position:relative;overflow:hidden}.querybox:before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,#d2c5ff80,transparent)}.box-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.box-title strong{font-size:.92rem}.simkl-badge{font-size:.69rem;color:var(--lav);background:#aebcff12;border:1px solid #aebcff30;padding:4px 8px;border-radius:99px}
+.fields{display:grid;grid-template-columns:minmax(0,1fr) 105px;gap:10px}.field label{display:block;font-size:.77rem;font-weight:750;color:#d0d7e8;margin-bottom:6px}.field input{width:100%;min-width:0;border:1px solid #3b465e;border-radius:12px;background:#0e1420;color:var(--text);padding:11px 12px;outline:none}.field input:focus,.filter:focus{border-color:var(--lav);box-shadow:0 0 0 3px #b7c3ff20}.field input::placeholder,.filter::placeholder{color:#6f7c95}.preview{margin-top:12px;border:1px solid #2c3549;background:#0f1521;border-radius:12px;padding:10px 12px;min-height:44px;overflow-wrap:anywhere;color:#dce2f4;font-size:.87rem}.preview .placeholder{color:#75829b}.button-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.btn{border:1px solid #414b62;background:#252d40;color:#f1f3ff;border-radius:11px;min-height:41px;padding:9px 13px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:.82rem;font-weight:780;cursor:pointer;transition:transform .16s,border-color .16s,background .16s}.btn:hover{border-color:#8795c9;background:#303a52;transform:translateY(-1px)}.btn:active{transform:scale(.98)}.btn.primary{background:linear-gradient(105deg,#c0caff,#d8b8ff);border-color:transparent;color:#151827}.btn.primary:hover{background:linear-gradient(105deg,#d0d8ff,#e3ccff)}.btn.subtle{background:transparent;color:#b8c2d7}.hint{font-size:.74rem;color:var(--muted);margin:10px 1px 0}.mode-notice{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.76rem;color:var(--mint);min-height:18px}.mode-dot{width:6px;height:6px;background:currentColor;border-radius:50%;flex:0 0 auto}
+.section{margin-top:30px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:13px}.section-head h2{font-size:1.15rem;letter-spacing:-.025em;margin:0}.section-head p{font-size:.81rem;color:var(--muted);margin:4px 0 0}.count{font-size:.75rem;color:var(--muted);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.preset{position:relative;display:flex;align-items:center;gap:12px;min-height:78px;width:100%;padding:13px 14px;text-align:left;text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#1b2231,#151b28);cursor:pointer;overflow:hidden;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s;isolation:isolate}.preset:before{content:"";position:absolute;inset:0;background:radial-gradient(250px circle at var(--mx,50%) var(--my,50%),#b8c4ff12,transparent 48%);opacity:0;transition:opacity .18s;z-index:-1}.preset:hover,.preset:focus-visible{border-color:#7584b5;transform:translateY(-2px);box-shadow:0 10px 24px #0002}.preset:hover:before{opacity:1}.preset:active{transform:scale(.99)}.preset:focus-visible,.btn:focus-visible,.chip:focus-visible{outline:2px solid var(--lav);outline-offset:3px}.preset-icon{width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;border:1px solid #3b465e;border-radius:13px;background:#111725;color:var(--lav);font-size:.76rem;font-weight:900;letter-spacing:-.04em}.preset-copy{flex:1;min-width:0}.preset-name{display:block;font-size:.9rem;line-height:1.24;font-weight:800}.preset-desc{display:block;font-size:.73rem;color:var(--muted);line-height:1.35;margin-top:4px}.arrow{color:#8492ae;font-size:1.1rem;align-self:center}.quick .preset{background:linear-gradient(145deg,#222b40,#171e2e);border-color:#3a4561}.quick .preset.stream{border-color:#716aa0;background:linear-gradient(145deg,#292744,#191d2e)}.quick .preset.stream .preset-icon{color:#e0caff;border-color:#5b507b;background:#24203a}
+.filters{display:flex;gap:9px;margin-bottom:12px}.filter{flex:1;min-width:0;border:1px solid #39445b;border-radius:12px;background:#121826;color:var(--text);padding:11px 13px;outline:none}.chips{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}.chip{border:1px solid #343e54;border-radius:99px;padding:7px 11px;background:#151b28;color:#aeb9d0;font-size:.77rem;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s,color .15s}.chip:hover{border-color:#7584b5}.chip[aria-pressed=true]{background:#b7c3ff1a;border-color:#8c9bdb;color:#e0e5ff}.empty{padding:18px;border:1px dashed #3d4860;border-radius:14px;color:var(--muted);font-size:.86rem}.hidden{display:none!important}
+.soundtrack-box{margin-top:14px;border:1px solid #414b64;background:#191f2e;border-radius:16px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.soundtrack-box strong{font-size:.88rem}.soundtrack-box p{margin:3px 0 0;color:var(--muted);font-size:.75rem}.soundtrack-actions{display:flex;gap:8px;flex-wrap:wrap}
+footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:34px;padding:17px 2px 0;border-top:1px solid #293246;color:#7f8ba3;font-size:.74rem}footer span{line-height:1.5}.toast{position:fixed;z-index:10;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translate(-50%,18px);opacity:0;pointer-events:none;max-width:calc(100vw - 28px);padding:11px 15px;border-radius:13px;background:#e3e8ff;color:#171b2a;font-weight:800;font-size:.82rem;box-shadow:var(--shadow);transition:opacity .2s,transform .2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.dialog-backdrop{position:fixed;inset:0;z-index:20;background:#080a10bb;display:grid;place-items:center;padding:18px;backdrop-filter:blur(8px)}.dialog{width:min(440px,100%);padding:20px;border:1px solid #4a5571;border-radius:20px;background:#171d2b;box-shadow:var(--shadow)}.dialog h3{margin:0 0 7px;font-size:1.15rem}.dialog p{margin:0 0 14px;color:#aeb9cf;font-size:.85rem}.manual-copy{width:100%;min-height:86px;resize:vertical;background:#0c111b;color:#f4f6ff;border:1px solid #3c4760;border-radius:11px;padding:11px;overflow-wrap:anywhere}.dialog-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:12px}
+@media(max-width:790px){.hero{grid-template-columns:1fr;gap:18px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-copy{padding-right:4vw}}
+@media(max-width:480px){.wrap{padding:15px 13px 28px}.grid{grid-template-columns:1fr;gap:8px}.preset{min-height:68px;padding:11px 12px}.hero{margin-bottom:21px}.section{margin-top:26px}.fields{grid-template-columns:minmax(0,1fr) 92px}.top-pill{display:none}.brand-name{font-size:.87rem}.lead{font-size:.92rem}.querybox{padding:15px;border-radius:18px}.section-head{align-items:center}.soundtrack-box{align-items:flex-start;flex-direction:column}.soundtrack-actions{width:100%}.soundtrack-actions .btn{flex:1}footer{flex-direction:column;align-items:flex-start;gap:4px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">
+    <span class="logo" aria-hidden="true"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="7.1" stroke="currentColor" stroke-width="1.8"/><path d="M5.1 10.5h10.8M10.5 3.4c-3.4 3.8-3.4 10.4 0 14.2M10.5 3.4c3.4 3.8 3.4 10.4 0 14.2M15.7 15.7 21 21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg></span>
+    <div><div class="brand-name">SIMKL SEARCH HUB</div><span class="brand-sub">One title. Many destinations.</span></div>
+  </div>
+  <span class="top-pill">PERSONAL SEARCH DASHBOARD</span>
+</header>
+
+<section class="hero">
+  <div class="hero-copy"><div class="eyebrow">Your entertainment launchpad</div><h1>Every search,<br><span class="gradient">one place.</span></h1><p class="lead">Jump from Simkl to databases, reviews, communities, streaming guides and more. Choose what your searches include, then tap any destination.</p></div>
+  <div class="querybox">
+    <div class="box-title"><strong>Search settings</strong><span class="simkl-badge">SIMKL READY</span></div>
+    <div class="fields">
+      <div class="field"><label for="title">Title</label><input id="title" autocomplete="off" placeholder="e.g. Don't Look Up"></div>
+      <div class="field"><label for="year">Year</label><input id="year" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="2021" aria-describedby="year-hint"><span id="year-hint" class="hidden">Numbers only</span></div>
+    </div>
+    <div class="preview" id="preview" aria-live="polite"><span class="placeholder">Enter a title to prepare searches.</span></div>
+    <div class="button-row">
+      <button class="btn primary" id="copy-both" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" stroke-width="1.8"/></svg> Copy title + year</button>
+      <button class="btn" id="copy-title" type="button">Copy title only</button>
+      <button class="btn subtle" id="clear" type="button">Clear</button>
+    </div>
+    <div class="mode-notice" id="mode-notice" aria-live="polite"><span class="mode-dot"></span><span>Search mode: title + year</span></div>
+    <p class="hint">Copying either format also switches every search button to that format.</p>
+  </div>
+</section>
+
+<section class="section quick" id="quick-section">
+  <div class="section-head"><div><h2>Quick access</h2><p>Fixed favourites, always here.</p></div><span class="count">6 shortcuts</span></div>
+  <div class="grid" id="quick"></div>
+</section>
+
+<section class="section hidden" id="recent-section">
+  <div class="section-head"><div><h2>Most used</h2><p>Personal ranking saved only in this browser.</p></div><button class="btn subtle" id="reset-usage" type="button">Reset history</button></div>
+  <div class="grid" id="recent"></div>
+</section>
+
+<section class="section" id="all-section">
+  <div class="section-head"><div><h2>Explore all searches</h2><p>Filter by service name or browse a category.</p></div><span class="count" id="all-count"></span></div>
+  <div class="filters"><input class="filter" id="filter" type="search" placeholder="Find a service…" aria-label="Find a service"></div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="all"></div>
+  <div class="empty hidden" id="no-results">No matching searches. Try another name or category.</div>
+  <div class="soundtrack-box">
+    <div><strong>Soundtrack search</strong><p>Search the soundtrack for the current title or title + year.</p></div>
+    <div class="soundtrack-actions"><button class="btn" id="soundtrack-google" type="button">Search Google ↗</button><button class="btn" id="soundtrack-site" type="button">Search Soundtrakd ↗</button></div>
+  </div>
+</section>
+<footer><span>Made for your Simkl workflow · no account needed</span><span>Usage history stays in this browser</span></footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="dialog-root"></div>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const titleEl=$('title'),yearEl=$('year');
+titleEl.value=params.get('title')||'';
+yearEl.value=(params.get('year')||'').replace(/\D/g,'').slice(0,4);
+let searchMode='both',activeCategory='All',toastTimer;
+const categories=['All','Everyday','Databases','Video & streaming','Reviews & news','Community','Anime','TV & schedules','Tools'];
+const presets=[
+{id:'google',name:'Google',abbr:'G',desc:'The web, broadly searched',cat:'Everyday',url:q=>'https://www.google.com/search?q='+q},
+{id:'imdb',name:'IMDb',abbr:'IMDb',desc:'Cast, credits and title details',cat:'Everyday',url:q=>'https://www.imdb.com/find/?q='+q},
+{id:'youtube',name:'YouTube',abbr:'▶',desc:'Trailers, clips and videos',cat:'Everyday',url:q=>'https://www.youtube.com/results?search_query='+q},
+{id:'x',name:'X',abbr:'𝕏',desc:'Posts and conversations',cat:'Everyday',url:q=>'https://x.com/search?q='+q},
+{id:'reddit',name:'Reddit',abbr:'r/',desc:'Community discussions',cat:'Everyday',url:q=>'https://www.reddit.com/search/?q='+q},
+{id:'streamwithvpn',name:'Stream with VPN',abbr:'VPN',desc:'Copy query, then paste into site search',cat:'Video & streaming',special:'stream'},
+{id:'imdb-reviews',name:'IMDb Reviews',abbr:'IMDb★',desc:'Find reviews for the title',cat:'Reviews & news',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'site:imdb.com/title/ '+decoded(q)+' reviews'})},
+{id:'imdb-theaters',name:'IMDb In Theaters',abbr:'IMDb↗',desc:'Search theatrical releases',cat:'TV & schedules',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'IMDb in theaters '+decoded(q)})},
+{id:'tmdb',name:'TMDb',abbr:'TMDb',desc:'Movie and TV database',cat:'Databases',url:q=>'https://www.themoviedb.org/search?query='+q},
+{id:'tvdb',name:'TVDB',abbr:'TVDB',desc:'TV and movie database',cat:'Databases',url:q=>'https://thetvdb.com/search?query='+q},
+{id:'mal',name:'MyAnimeList',abbr:'MAL',desc:'Anime and manga database',cat:'Anime',url:q=>'https://myanimelist.net/search/all?q='+q},
+{id:'commonsense',name:'Common Sense Media',abbr:'CS',desc:'Age guidance and family reviews',cat:'Reviews & news',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'site:commonsensemedia.org '+decoded(q)})},
+{id:'plex',name:'Plex',abbr:'PLEX',desc:'Explore Plex titles',cat:'Video & streaming',url:q=>'https://watch.plex.tv/search?query='+q},
+{id:'stremio',name:'Stremio',abbr:'STR',desc:'Search Stremio-related results',cat:'Video & streaming',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'Stremio '+decoded(q)})},
+{id:'opensubtitles',name:'OpenSubtitles',abbr:'SUB',desc:'Search subtitle files',cat:'Tools',url:q=>'https://www.opensubtitles.com/en/en/search-all/q-'+q+'/hearing_impaired-include/machine_translated-/trusted_sources-'},
+{id:'rotten-tomatoes',name:'Rotten Tomatoes',abbr:'RT',desc:'Reviews and audience scores',cat:'Reviews & news',url:q=>'https://www.rottentomatoes.com/search?search='+q},
+{id:'rt-google',name:'Search Rotten Tomatoes',abbr:'RT+',desc:'Find RT pages through Google',cat:'Reviews & news',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'site:rottentomatoes.com '+decoded(q)})},
+{id:'fandom',name:'Fandom',abbr:'FAN',desc:'Search across Fandom wikis',cat:'Community',url:q=>'https://community.fandom.com/wiki/Special:Search?'+new URLSearchParams({query:decoded(q),scope:'cross-wiki'})},
+{id:'fanfiction',name:'FanFiction',abbr:'FF',desc:'Fan-created stories',cat:'Community',url:q=>'https://www.fanfiction.net/search/?'+new URLSearchParams({keywords:decoded(q),ready:'1',type:'story'})},
+{id:'screenrant',name:'Screen Rant',abbr:'SR',desc:'Entertainment articles and news',cat:'Reviews & news',url:q=>'https://screenrant.com/search/?q='+q},
+{id:'tvguide',name:'TV Guide',abbr:'TVG',desc:'Search shows and listings',cat:'TV & schedules',url:q=>'https://www.tvguide.com/s/'+slug(decoded(q))+'/'},
+{id:'metacritic',name:'Metacritic',abbr:'MC',desc:'Critic and user scores',cat:'Reviews & news',url:q=>'https://www.metacritic.com/search/'+encodeURIComponent(decoded(q)).replace(/%20/g,'%20')+'/'},
+{id:'boxoffice',name:'Box Office Mojo',abbr:'BOM',desc:'Box office and release data',cat:'Reviews & news',url:q=>'https://www.boxofficemojo.com/search/?q='+q},
+{id:'variety',name:'Variety',abbr:'V',desc:'Film and entertainment industry news',cat:'Reviews & news',url:q=>'https://variety.com/results/?'+new URLSearchParams({q:decoded(q),size:'n_10_n','sort-field':'relevance','sort-direction':'desc'})},
+{id:'ign',name:'IGN',abbr:'IGN',desc:'Entertainment and gaming coverage',cat:'Reviews & news',url:q=>'https://www.ign.com/search?q='+q},
+{id:'imgur',name:'Imgur',abbr:'IMG',desc:'Images and community posts',cat:'Community',url:q=>'https://imgur.com/search?q='+q},
+{id:'giphy',name:'GIPHY',abbr:'GIF',desc:'GIFs and reactions',cat:'Tools',url:q=>'https://giphy.com/search/'+encodeURIComponent(slug(decoded(q))).replace(/%27/gi,"'")},
+{id:'justwatch',name:'JustWatch',abbr:'JW',desc:'Where to stream a title',cat:'Video & streaming',url:q=>'https://www.justwatch.com/in/search?q='+q},
+{id:'reelgood',name:'Reelgood',abbr:'RG',desc:'Streaming availability guide',cat:'Video & streaming',url:q=>'https://reelgood.com/search?q='+q},
+{id:'crunchyroll',name:'Crunchyroll',abbr:'CR',desc:'Anime catalogue',cat:'Anime',url:q=>'https://www.crunchyroll.com/search?q='+q},
+{id:'ann',name:'Anime News Network',abbr:'ANN',desc:'Anime news and encyclopedia',cat:'Anime',url:q=>'https://www.animenewsnetwork.com/search?q='+q},
+{id:'animecountdown',name:'Anime Countdown',abbr:'AC',desc:'Search anime releases',cat:'Anime',url:q=>'https://animecountdown.com/search?q='+q},
+{id:'countdown-to',name:'Countdown To',abbr:'CD',desc:'Find release and episode countdowns',cat:'TV & schedules',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'Countdown to '+decoded(q)})},
+{id:'soundtrakd',name:'Soundtrakd',abbr:'ST',desc:'Movie and TV soundtrack search',cat:'Tools',url:q=>'https://www.soundtrakd.com/search?q='+q}
+];
+const quickIds=['google','imdb','youtube','reddit','x','streamwithvpn'];
+function decoded(q){try{return decodeURIComponent(q.replace(/\+/g,' '))}catch(e){return q.replace(/\+/g,' ')}}
+function slug(s){return s.toLowerCase().replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function query(){const t=titleEl.value.trim();if(!t)return '';return searchMode==='both'&&yearEl.value.trim()?[t,yearEl.value.trim()].join(' '):t}
+function encodedQuery(){return encodeURIComponent(query()).replace(/%20/g,'+')}
+function renderPreview(){const q=query();$('preview').textContent=q||'Enter a title to prepare searches.';$('mode-notice').innerHTML='<span class="mode-dot"></span><span>Search mode: '+(searchMode==='both'?'title + year':'title only')+'</span>'}
+function toast(s){const el=$('toast');el.textContent=s;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2500)}
+function usageRead(){try{return JSON.parse(localStorage.getItem('simklSearchHubUsage')||'{}')}catch(e){return {}}}
+function usageWrite(id){try{const u=usageRead();u[id]=(u[id]||0)+1;localStorage.setItem('simklSearchHubUsage',JSON.stringify(u))}catch(e){}}
+function validQuery(){if(!titleEl.value.trim()){toast('Add a title first.');titleEl.focus();return false}return true}
+async function copyText(text){if(!text)return false;if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}throw new Error('Clipboard API unavailable')}
+function openSearch(p){if(!validQuery())return;const q=encodedQuery();if(p.special==='stream'){streamAction();return}usageWrite(p.id);window.open(p.url(q),'_blank','noopener,noreferrer');renderRecent()}
+function card(p){const b=document.createElement('button');b.type='button';b.className='preset'+(p.id==='streamwithvpn'?' stream':'');b.addEventListener('click',()=>openSearch(p));const ico=document.createElement('span');ico.className='preset-icon';ico.textContent=p.abbr;const copy=document.createElement('span');copy.className='preset-copy';const n=document.createElement('span');n.className='preset-name';n.textContent=p.name;const d=document.createElement('span');d.className='preset-desc';d.textContent=p.desc;copy.append(n,d);const a=document.createElement('span');a.className='arrow';a.textContent='↗';b.append(ico,copy,a);return b}
+function renderQuick(){$('quick').replaceChildren(...quickIds.map(id=>card(presets.find(p=>p.id===id))))}
+function renderRecent(){const u=usageRead();const ranked=presets.filter(p=>(u[p.id]||0)>0).sort((a,b)=>(u[b.id]||0)-(u[a.id]||0)).slice(0,6);$('recent-section').classList.toggle('hidden',ranked.length===0);$('recent').replaceChildren(...ranked.map(card))}
+function renderCategories(){const root=$('chips');root.replaceChildren();categories.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=c;b.setAttribute('aria-pressed',String(c===activeCategory));b.addEventListener('click',()=>{activeCategory=c;renderCategories();renderAll()});root.append(b)})}
+function renderAll(){const f=$('filter').value.trim().toLowerCase();const arr=presets.filter(p=>(activeCategory==='All'||p.cat===activeCategory)&&(!f||(p.name+' '+p.desc+' '+p.cat).toLowerCase().includes(f)));$('all').replaceChildren(...arr.map(card));$('no-results').classList.toggle('hidden',arr.length>0);$('all-count').textContent=arr.length+' searches'}
+function setMode(mode){searchMode=mode;renderPreview()}
+async function copyAction(mode){setMode(mode);if(!titleEl.value.trim()){toast('Enter a title first.');titleEl.focus();return}const text=query();try{await copyText(text);toast((mode==='both'?'Title + year':'Title only')+' copied · all searches switched');}catch(e){showClipboardDialog(text,'Copy the text below to use it. Clipboard access was blocked or unavailable.');}}
+function showClipboardDialog(text,description){const root=$('dialog-root');root.replaceChildren();const back=document.createElement('div');back.className='dialog-backdrop';const box=document.createElement('div');box.className='dialog';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');const h=document.createElement('h3');h.textContent='Copy your search';const p=document.createElement('p');p.textContent=description;const area=document.createElement('textarea');area.className='manual-copy';area.value=text;area.readOnly=true;const actions=document.createElement('div');actions.className='dialog-actions';const close=document.createElement('button');close.className='btn subtle';close.textContent='Close';close.onclick=()=>root.replaceChildren();const retry=document.createElement('button');retry.className='btn primary';retry.textContent='Try copy again';retry.onclick=async()=>{try{await copyText(text);root.replaceChildren();toast('Copied successfully.');}catch(e){area.focus();area.select();toast('Copy failed — text selected for manual copying.')}};actions.append(close,retry);box.append(h,p,area,actions);back.append(box);back.addEventListener('click',e=>{if(e.target===back)root.replaceChildren()});root.append(back);area.focus();area.select()}
+async function streamAction(){if(!validQuery())return;const text=query();try{await copyText(text);usageWrite('streamwithvpn');renderRecent();const tab=window.open('https://www.streamwithvpn.com/','_blank','noopener,noreferrer');if(!tab){toast('Copied! Pop-up blocked — open Stream with VPN manually.')}else{toast('Copied '+(searchMode==='both'?'title + year':'title only')+'. Paste it into Stream with VPN.')}}catch(e){showClipboardDialog(text,'The Stream with VPN page has not been opened yet. Copy the text below first; then you can open the site.');const root=$('dialog-root');const btn=document.createElement('button');btn.className='btn primary';btn.textContent='I copied it — open Stream with VPN';btn.onclick=()=>{window.open('https://www.streamwithvpn.com/','_blank','noopener,noreferrer');root.replaceChildren();usageWrite('streamwithvpn');renderRecent()};root.querySelector('.dialog-actions').prepend(btn)}}
+function soundtrack(site){if(!validQuery())return;const q=encodedQuery();const dest=site==='google'?'https://www.google.com/search?'+new URLSearchParams({q:'soundtrack '+query()}):'https://www.soundtrakd.com/search?q='+q;usageWrite(site==='google'?'soundtrack-google':'soundtrakd');window.open(dest,'_blank','noopener,noreferrer');renderRecent()}
+titleEl.addEventListener('input',renderPreview);yearEl.addEventListener('input',()=>{const start=yearEl.selectionStart;const cleaned=yearEl.value.replace(/\D/g,'').slice(0,4);if(yearEl.value!==cleaned){yearEl.value=cleaned;try{yearEl.setSelectionRange(Math.min(start,cleaned.length),Math.min(start,cleaned.length))}catch(e){}}renderPreview()});
+$('copy-both').addEventListener('click',()=>copyAction('both'));$('copy-title').addEventListener('click',()=>copyAction('title'));
+$('clear').addEventListener('click',()=>{titleEl.value='';yearEl.value='';renderPreview();titleEl.focus()});
+$('filter').addEventListener('input',renderAll);
+$('reset-usage').addEventListener('click',()=>{try{localStorage.removeItem('simklSearchHubUsage')}catch(e){}renderRecent();toast('Usage history cleared.')});
+$('soundtrack-google').addEventListener('click',()=>soundtrack('google'));$('soundtrack-site').addEventListener('click',()=>soundtrack('soundtrakd'));
+document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const c=e.target.closest&&e.target.closest('.preset');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')},{passive:true});
+renderPreview();renderQuick();renderCategories();renderAll();renderRecent();
+})();
+</script>
+</body>
+</html>
