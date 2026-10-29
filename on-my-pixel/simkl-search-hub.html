@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#101421">
-<meta name="description" content="A polished all-in-one search hub for Simkl titles.">
+<meta name="description" content="A lively, personal search launchpad for films, series, streaming services and entertainment databases.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2397aaff'/%3E%3Cstop offset='1' stop-color='%23d5a7ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='19' fill='%23151b2b'/%3E%3Ccircle cx='28' cy='28' r='16' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3Cpath d='M40 40 L53 53' stroke='%23d5a7ff' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M15 28h26M28 12c-8 9-8 23 0 32M28 12c8 9 8 23 0 32' stroke='%2397aaff' stroke-width='1.7' fill='none' opacity='.75'/%3E%3C/svg%3E">
 <title>Simkl Search Hub</title>
 <style>
@@ -23,6 +23,56 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
 @media(max-width:790px){.hero{grid-template-columns:1fr;gap:18px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-copy{padding-right:4vw}}
 @media(max-width:480px){.wrap{padding:15px 13px 28px}.grid{grid-template-columns:1fr;gap:8px}.preset{min-height:68px;padding:11px 12px}.hero{margin-bottom:21px}.section{margin-top:26px}.fields{grid-template-columns:minmax(0,1fr) 92px}.top-pill{display:none}.brand-name{font-size:.87rem}.lead{font-size:.92rem}.querybox{padding:15px;border-radius:18px}.section-head{align-items:center}.soundtrack-box{align-items:flex-start;flex-direction:column}.soundtrack-actions{width:100%}.soundtrack-actions .btn{flex:1}footer{flex-direction:column;align-items:flex-start;gap:4px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Personal polish: flowing colour, clearer navigation, and calm brand accents. */
+:root{--accent:#b7c3ff;--surface-glow:#a9b6ff10}
+.jump-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-13px 0 27px;padding:8px 10px;border:1px solid #2b3448;border-radius:14px;background:#1117259c}
+.jump-label{font-size:.69rem;text-transform:uppercase;letter-spacing:.1em;font-weight:850;color:#7786a4;padding:0 5px}
+.jump-nav a{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid transparent;border-radius:9px;color:#c9d3ea;text-decoration:none;font-size:.76rem;font-weight:750;transition:background .18s,border-color .18s,transform .18s}
+.jump-nav a:hover{background:#ffffff08;border-color:#3b4660;transform:translateY(-1px)}
+.flow-word{display:inline-block;background:linear-gradient(105deg,#76e3ff 0%,#a9a1ff 24%,#f0a6dc 48%,#a1efd0 72%,#76e3ff 100%);background-size:280% 100%;background-position:0 50%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:waterflow 6.5s ease-in-out infinite;text-shadow:0 0 28px #9eaaff12}
+@keyframes waterflow{0%,100%{background-position:0% 50%;filter:hue-rotate(0deg)}50%{background-position:100% 50%;filter:hue-rotate(14deg)}}
+.querybox{animation:query-float 6.8s ease-in-out infinite;transform-origin:50% 50%;transition:border-color .25s,box-shadow .25s}
+.querybox:focus-within{animation-play-state:paused;border-color:#aab7ff99;box-shadow:0 24px 65px #0007,0 0 0 1px #d4baff1b}
+.querybox:after{content:"";position:absolute;z-index:0;pointer-events:none;width:210px;height:210px;right:-90px;top:-125px;border-radius:50%;background:radial-gradient(circle,#c4b2ff25 0, #90ddff0c 42%,transparent 70%)}
+.querybox>*{position:relative;z-index:1}
+@keyframes query-float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(.12deg)}}
+.field input{transition:border-color .2s,box-shadow .2s,background .2s,transform .2s}
+.field input:hover{border-color:#69789a;background:#111827}
+.field input:focus{transform:translateY(-1px)}
+.preview{transition:border-color .2s,background .2s}
+.querybox:focus-within .preview{border-color:#5b6688;background:#111827}
+.section-head{align-items:center}
+.preset{--accent:#b7c3ff;border-color:color-mix(in srgb,var(--accent) 27%,var(--line));background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 7%,#1b2231),#151b28 78%)}
+.preset:before{background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 20%,transparent),transparent 52%)}
+.preset:hover,.preset:focus-visible{border-color:color-mix(in srgb,var(--accent) 68%,#7584b5);box-shadow:0 10px 24px #0002,0 8px 28px color-mix(in srgb,var(--accent) 10%,transparent)}
+.preset-icon{border-color:color-mix(in srgb,var(--accent) 40%,#3b465e);background:color-mix(in srgb,var(--accent) 10%,#111725);color:var(--accent);transition:transform .22s,background .22s}
+.preset:hover .preset-icon{transform:rotate(-4deg) scale(1.06);background:color-mix(in srgb,var(--accent) 18%,#111725)}
+.quick .preset{background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 9%,#222b40),#171e2e);border-color:color-mix(in srgb,var(--accent) 30%,#3a4561)}
+.quick .preset:hover{background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 15%,#222b40),#171e2e)}
+.directory-toggle{white-space:nowrap}
+.directory-results{margin-top:3px}
+.directory-results.hidden{display:none!important}
+.directory-hint{font-size:.78rem;color:#8998b5;margin:10px 1px 0}
+.chip{transition:background .2s,border-color .2s,color .2s,transform .2s}
+.chip:hover{transform:translateY(-1px)}
+.chip[aria-pressed=true]{box-shadow:0 0 0 3px #b7c3ff0b}
+.soundtrack-box{position:relative;overflow:hidden;background:linear-gradient(120deg,#191f2e,#1c2034 60%,#172a31);border-color:#3b4861}
+.soundtrack-box:before{content:"♫";position:absolute;right:22%;top:-32px;font-size:8rem;font-weight:900;color:#d5b5ff08;pointer-events:none}
+.site-footer{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:stretch;gap:13px;margin-top:42px;padding:20px;border:1px solid #39425a;border-radius:18px;overflow:hidden;background:linear-gradient(120deg,#171d2b,#141a28 55%,#1c2031);color:#8f9bb4;font-size:.75rem}
+.site-footer:before{content:"";position:absolute;z-index:-1;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#e50914,#00a8e0,#2374f7,#b7c3ff,#a1efd0,#e0baff);background-size:200% 100%;animation:footer-ribbon 8s linear infinite}
+@keyframes footer-ribbon{to{background-position:200% 0}}
+.footer-top{display:flex;align-items:center;gap:12px}
+.footer-mark{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border:1px solid #7d8dbe55;border-radius:13px;background:linear-gradient(135deg,#b7c3ff18,#d5b5ff18);color:#d9ccff;font-size:1.15rem}
+.footer-copy strong{display:block;color:#dbe2f4;font-size:.88rem;letter-spacing:-.01em}
+.footer-copy span{display:block;margin-top:3px;line-height:1.55}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:7px;padding-top:12px;border-top:1px solid #ffffff0c;line-height:1.7}
+.footer-bottom a{color:#bfcaff;text-decoration:none;font-weight:800}
+.footer-bottom a:hover{text-decoration:underline;color:#e2c7ff}
+.footer-tag{color:#d5b5ff;font-weight:800;letter-spacing:.02em}
+@media(max-width:480px){.jump-nav{gap:3px;margin:-8px 0 22px;padding:6px}.jump-label{width:100%;padding:2px 5px}.jump-nav a{flex:1;justify-content:center;padding:8px 6px;font-size:.72rem}.site-footer{padding:16px}.footer-bottom{align-items:flex-start;flex-direction:column;gap:4px}.directory-toggle{font-size:.74rem;padding:8px 10px}.section-head{gap:8px}}
+@media(prefers-reduced-motion:reduce){.flow-word,.querybox,.site-footer:before{animation:none!important}.preset-icon{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -30,13 +80,19 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
 <header>
   <div class="brand">
     <span class="logo" aria-hidden="true"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="7.1" stroke="currentColor" stroke-width="1.8"/><path d="M5.1 10.5h10.8M10.5 3.4c-3.4 3.8-3.4 10.4 0 14.2M10.5 3.4c3.4 3.8 3.4 10.4 0 14.2M15.7 15.7 21 21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg></span>
-    <div><div class="brand-name">SIMKL SEARCH HUB</div><span class="brand-sub">One title. Many destinations.</span></div>
+    <div><div class="brand-name">SIMKL SEARCH HUB</div><span class="brand-sub">Your watchlist, with shortcuts.</span></div>
   </div>
   <span class="top-pill">PERSONAL SEARCH DASHBOARD</span>
 </header>
+<nav class="jump-nav" aria-label="Quick page navigation">
+  <span class="jump-label">Jump to</span>
+  <a href="#quick-section">✦ Pinned picks</a>
+  <a href="#all-section">⌕ Find a service</a>
+  <a href="#soundtrack-box">♫ Soundtracks</a>
+</nav>
 
 <section class="hero">
-  <div class="hero-copy"><div class="eyebrow">Your entertainment launchpad</div><h1>Every search,<br><span class="gradient">one place.</span></h1><p class="lead">Jump from Simkl to databases, reviews, communities, streaming guides and more. Choose what your searches include, then tap any destination.</p></div>
+  <div class="hero-copy"><div class="eyebrow">Your entertainment launchpad</div><h1><span class="flow-word">Every</span> search,<br><span class="gradient">one place.</span></h1><p class="lead">One title can travel a long way. Search streaming apps, databases, reviews and communities from one colourful little launchpad.</p></div>
   <div class="querybox">
     <div class="box-title"><strong>Search settings</strong><span class="simkl-badge">SIMKL READY</span></div>
     <div class="fields">
@@ -55,7 +111,7 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
 </section>
 
 <section class="section quick" id="quick-section">
-  <div class="section-head"><div><h2>Quick access</h2><p>Fixed favourites, always here.</p></div><span class="count">6 shortcuts</span></div>
+  <div class="section-head"><div><h2>Pinned destinations</h2><p>Your favourite searches, always within reach.</p></div><span class="count">9 pinned</span></div>
   <div class="grid" id="quick"></div>
 </section>
 
@@ -65,17 +121,24 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
 </section>
 
 <section class="section" id="all-section">
-  <div class="section-head"><div><h2>Explore all searches</h2><p>Filter by service name or browse a category.</p></div><span class="count" id="all-count"></span></div>
+  <div class="section-head"><div><h2>Explore all searches</h2><p>Type a name or choose a category to narrow things down.</p></div><button class="btn subtle directory-toggle" id="toggle-directory" type="button" aria-expanded="false" aria-controls="directory-results">Browse directory ↓</button></div>
   <div class="filters"><input class="filter" id="filter" type="search" placeholder="Find a service…" aria-label="Find a service"></div>
   <div class="chips" id="chips"></div>
-  <div class="grid" id="all"></div>
-  <div class="empty hidden" id="no-results">No matching searches. Try another name or category.</div>
-  <div class="soundtrack-box">
+  <p class="directory-hint" id="directory-hint">Choose a category or browse the full directory when you need more options.</p>
+  <div class="directory-results hidden" id="directory-results">
+    <div class="section-head"><span class="count" id="all-count"></span><span class="count">Tap any card to search</span></div>
+    <div class="grid" id="all"></div>
+    <div class="empty hidden" id="no-results">No matching searches. Try another name or category.</div>
+  </div>
+  <div class="soundtrack-box" id="soundtrack-box">
     <div><strong>Soundtrack search</strong><p>Search the soundtrack for the current title or title + year.</p></div>
     <div class="soundtrack-actions"><button class="btn" id="soundtrack-google" type="button">Search Google ↗</button><button class="btn" id="soundtrack-site" type="button">Search Soundtrakd ↗</button></div>
   </div>
 </section>
-<footer><span>Made for your Simkl workflow · no account needed</span><span>Usage history stays in this browser</span></footer>
+<footer class="site-footer">
+  <div class="footer-top"><span class="footer-mark" aria-hidden="true">✦</span><div class="footer-copy"><strong>Made for the love of the watchlist.</strong><span>A little search magic for entertainment nerds. No account needed; your usage history stays in this browser.</span></div></div>
+  <div class="footer-bottom"><span>© 2026 <a href="https://github.com/rishabhkrmahato" target="_blank" rel="noopener noreferrer">rishabhkrmahato</a> · <span class="footer-tag">@rishabhkrm™</span> · All vibes reserved.</span><span>Unofficial fan-made hub · All service names and trademarks belong to their respective owners.</span></div>
+</footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="dialog-root"></div>
@@ -87,7 +150,8 @@ const params=new URLSearchParams(location.search);
 const titleEl=$('title'),yearEl=$('year');
 titleEl.value=params.get('title')||'';
 yearEl.value=(params.get('year')||'').replace(/\D/g,'').slice(0,4);
-let searchMode='both',activeCategory='All',toastTimer;
+let searchMode='both',activeCategory='All',toastTimer,directoryOpen=false;
+const accents={google:'#4285f4',imdb:'#f5c518',youtube:'#ff0033',reddit:'#ff4500',x:'#e7ebf5',streamwithvpn:'#aab7d4',netflix:'#e50914',primevideo:'#00a8e0',hotstar:'#2878ff','imdb-reviews':'#f5c518','imdb-theaters':'#f5c518',tmdb:'#01b4e4',tvdb:'#63c77a',mal:'#4778c7',commonsense:'#ffad43',plex:'#e5a00d',stremio:'#9a69ff',opensubtitles:'#f1c34b','rotten-tomatoes':'#fa320a','rt-google':'#fa320a',fandom:'#3da9fc',fanfiction:'#5d91d2',screenrant:'#e82f2f',tvguide:'#e6b54a',metacritic:'#6cc644',boxoffice:'#4db6ac',variety:'#d22a2a',ign:'#d31e31',imgur:'#35a7b4',giphy:'#9b59ff',justwatch:'#fbc034',reelgood:'#e44665',crunchyroll:'#f47521',ann:'#f28d35',animecountdown:'#b3dfff','countdown-to':'#83d8c6',soundtrakd:'#c4a4ff'};
 const categories=['All','Everyday','Databases','Video & streaming','Reviews & news','Community','Anime','TV & schedules','Tools'];
 const presets=[
 {id:'google',name:'Google',abbr:'G',desc:'The web, broadly searched',cat:'Everyday',url:q=>'https://www.google.com/search?q='+q},
@@ -104,6 +168,9 @@ const presets=[
 {id:'commonsense',name:'Common Sense Media',abbr:'CS',desc:'Age guidance and family reviews',cat:'Reviews & news',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'site:commonsensemedia.org '+decoded(q)})},
 {id:'plex',name:'Plex',abbr:'PLEX',desc:'Explore Plex titles',cat:'Video & streaming',url:q=>'https://watch.plex.tv/search?query='+q},
 {id:'stremio',name:'Stremio',abbr:'STR',desc:'Search Stremio-related results',cat:'Video & streaming',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'Stremio '+decoded(q)})},
+{id:'netflix',name:'Netflix',abbr:'N',desc:'Search the Netflix catalogue',cat:'Video & streaming',url:q=>'https://www.netflix.com/search?q='+encodeURIComponent(decoded(q))},
+{id:'primevideo',name:'Prime Video',abbr:'prime',desc:'Search Prime Video titles',cat:'Video & streaming',url:q=>'https://www.primevideo.com/region/eu/search?ie=UTF8&ref_=atv_nb_sug&phrase='+encodeURIComponent(decoded(q)).replace(/%20/g,'+')},
+{id:'hotstar',name:'Hotstar',abbr:'JH',desc:'Search Hotstar / JioHotstar',cat:'Video & streaming',url:q=>'https://www.hotstar.com/in/search?search_query='+encodeURIComponent(decoded(q))},
 {id:'opensubtitles',name:'OpenSubtitles',abbr:'SUB',desc:'Search subtitle files',cat:'Tools',url:q=>'https://www.opensubtitles.com/en/en/search-all/q-'+q+'/hearing_impaired-include/machine_translated-/trusted_sources-'},
 {id:'rotten-tomatoes',name:'Rotten Tomatoes',abbr:'RT',desc:'Reviews and audience scores',cat:'Reviews & news',url:q=>'https://www.rottentomatoes.com/search?search='+q},
 {id:'rt-google',name:'Search Rotten Tomatoes',abbr:'RT+',desc:'Find RT pages through Google',cat:'Reviews & news',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'site:rottentomatoes.com '+decoded(q)})},
@@ -125,7 +192,7 @@ const presets=[
 {id:'countdown-to',name:'Countdown To',abbr:'CD',desc:'Find release and episode countdowns',cat:'TV & schedules',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'Countdown to '+decoded(q)})},
 {id:'soundtrakd',name:'Soundtrakd',abbr:'ST',desc:'Movie and TV soundtrack search',cat:'Tools',url:q=>'https://www.soundtrakd.com/search?q='+q}
 ];
-const quickIds=['google','imdb','youtube','reddit','x','streamwithvpn'];
+const quickIds=['netflix','primevideo','hotstar','google','imdb','youtube','reddit','x','streamwithvpn'];
 function decoded(q){try{return decodeURIComponent(q.replace(/\+/g,' '))}catch(e){return q.replace(/\+/g,' ')}}
 function slug(s){return s.toLowerCase().replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 function query(){const t=titleEl.value.trim();if(!t)return '';return searchMode==='both'&&yearEl.value.trim()?[t,yearEl.value.trim()].join(' '):t}
@@ -137,11 +204,12 @@ function usageWrite(id){try{const u=usageRead();u[id]=(u[id]||0)+1;localStorage.
 function validQuery(){if(!titleEl.value.trim()){toast('Add a title first.');titleEl.focus();return false}return true}
 async function copyText(text){if(!text)return false;if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}throw new Error('Clipboard API unavailable')}
 function openSearch(p){if(!validQuery())return;const q=encodedQuery();if(p.special==='stream'){streamAction();return}usageWrite(p.id);window.open(p.url(q),'_blank','noopener,noreferrer');renderRecent()}
-function card(p){const b=document.createElement('button');b.type='button';b.className='preset'+(p.id==='streamwithvpn'?' stream':'');b.addEventListener('click',()=>openSearch(p));const ico=document.createElement('span');ico.className='preset-icon';ico.textContent=p.abbr;const copy=document.createElement('span');copy.className='preset-copy';const n=document.createElement('span');n.className='preset-name';n.textContent=p.name;const d=document.createElement('span');d.className='preset-desc';d.textContent=p.desc;copy.append(n,d);const a=document.createElement('span');a.className='arrow';a.textContent='↗';b.append(ico,copy,a);return b}
+function card(p){const b=document.createElement('button');b.type='button';b.className='preset';b.dataset.id=p.id;b.style.setProperty('--accent',accents[p.id]||'#b7c3ff');b.addEventListener('click',()=>openSearch(p));const ico=document.createElement('span');ico.className='preset-icon';ico.textContent=p.abbr;const copy=document.createElement('span');copy.className='preset-copy';const n=document.createElement('span');n.className='preset-name';n.textContent=p.name;const d=document.createElement('span');d.className='preset-desc';d.textContent=p.desc;copy.append(n,d);const a=document.createElement('span');a.className='arrow';a.textContent='↗';b.append(ico,copy,a);return b}
 function renderQuick(){$('quick').replaceChildren(...quickIds.map(id=>card(presets.find(p=>p.id===id))))}
 function renderRecent(){const u=usageRead();const ranked=presets.filter(p=>(u[p.id]||0)>0).sort((a,b)=>(u[b.id]||0)-(u[a.id]||0)).slice(0,6);$('recent-section').classList.toggle('hidden',ranked.length===0);$('recent').replaceChildren(...ranked.map(card))}
-function renderCategories(){const root=$('chips');root.replaceChildren();categories.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=c;b.setAttribute('aria-pressed',String(c===activeCategory));b.addEventListener('click',()=>{activeCategory=c;renderCategories();renderAll()});root.append(b)})}
-function renderAll(){const f=$('filter').value.trim().toLowerCase();const arr=presets.filter(p=>(activeCategory==='All'||p.cat===activeCategory)&&(!f||(p.name+' '+p.desc+' '+p.cat).toLowerCase().includes(f)));$('all').replaceChildren(...arr.map(card));$('no-results').classList.toggle('hidden',arr.length>0);$('all-count').textContent=arr.length+' searches'}
+function setDirectoryOpen(open){directoryOpen=!!open;$('directory-results').classList.toggle('hidden',!directoryOpen);$('toggle-directory').setAttribute('aria-expanded',String(directoryOpen));$('toggle-directory').textContent=directoryOpen?'Hide directory ↑':'Browse directory ↓';$('directory-hint').classList.toggle('hidden',directoryOpen)}
+function renderCategories(){const root=$('chips');root.replaceChildren();categories.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=c;b.setAttribute('aria-pressed',String(c===activeCategory));b.addEventListener('click',()=>{activeCategory=c;setDirectoryOpen(true);renderCategories();renderAll()});root.append(b)})}
+function renderAll(){const f=$('filter').value.trim().toLowerCase();const arr=presets.filter(p=>(activeCategory==='All'||p.cat===activeCategory)&&(!f||(p.name+' '+p.desc+' '+p.cat).toLowerCase().includes(f)));$('all').replaceChildren(...arr.map(card));$('no-results').classList.toggle('hidden',arr.length>0);$('all-count').textContent=arr.length+' destinations';if(f)setDirectoryOpen(true)}
 function setMode(mode){searchMode=mode;renderPreview()}
 async function copyAction(mode){setMode(mode);if(!titleEl.value.trim()){toast('Enter a title first.');titleEl.focus();return}const text=query();try{await copyText(text);toast((mode==='both'?'Title + year':'Title only')+' copied · all searches switched');}catch(e){showClipboardDialog(text,'Copy the text below to use it. Clipboard access was blocked or unavailable.');}}
 function showClipboardDialog(text,description){const root=$('dialog-root');root.replaceChildren();const back=document.createElement('div');back.className='dialog-backdrop';const box=document.createElement('div');box.className='dialog';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');const h=document.createElement('h3');h.textContent='Copy your search';const p=document.createElement('p');p.textContent=description;const area=document.createElement('textarea');area.className='manual-copy';area.value=text;area.readOnly=true;const actions=document.createElement('div');actions.className='dialog-actions';const close=document.createElement('button');close.className='btn subtle';close.textContent='Close';close.onclick=()=>root.replaceChildren();const retry=document.createElement('button');retry.className='btn primary';retry.textContent='Try copy again';retry.onclick=async()=>{try{await copyText(text);root.replaceChildren();toast('Copied successfully.');}catch(e){area.focus();area.select();toast('Copy failed — text selected for manual copying.')}};actions.append(close,retry);box.append(h,p,area,actions);back.append(box);back.addEventListener('click',e=>{if(e.target===back)root.replaceChildren()});root.append(back);area.focus();area.select()}
@@ -150,11 +218,12 @@ function soundtrack(site){if(!validQuery())return;const q=encodedQuery();const d
 titleEl.addEventListener('input',renderPreview);yearEl.addEventListener('input',()=>{const start=yearEl.selectionStart;const cleaned=yearEl.value.replace(/\D/g,'').slice(0,4);if(yearEl.value!==cleaned){yearEl.value=cleaned;try{yearEl.setSelectionRange(Math.min(start,cleaned.length),Math.min(start,cleaned.length))}catch(e){}}renderPreview()});
 $('copy-both').addEventListener('click',()=>copyAction('both'));$('copy-title').addEventListener('click',()=>copyAction('title'));
 $('clear').addEventListener('click',()=>{titleEl.value='';yearEl.value='';renderPreview();titleEl.focus()});
-$('filter').addEventListener('input',renderAll);
+$('filter').addEventListener('input',()=>{if($('filter').value.trim())setDirectoryOpen(true);renderAll()});
+$('toggle-directory').addEventListener('click',()=>setDirectoryOpen(!directoryOpen));
 $('reset-usage').addEventListener('click',()=>{try{localStorage.removeItem('simklSearchHubUsage')}catch(e){}renderRecent();toast('Usage history cleared.')});
 $('soundtrack-google').addEventListener('click',()=>soundtrack('google'));$('soundtrack-site').addEventListener('click',()=>soundtrack('soundtrakd'));
 document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const c=e.target.closest&&e.target.closest('.preset');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')},{passive:true});
-renderPreview();renderQuick();renderCategories();renderAll();renderRecent();
+renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(false);renderRecent();
 })();
 </script>
 </body>
