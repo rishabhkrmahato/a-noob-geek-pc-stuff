@@ -74,6 +74,9 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
 @media(prefers-reduced-motion:reduce){.flow-word,.querybox,.site-footer:before{animation:none!important}.preset-icon{transition:none!important}}
 
 </style>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#0d0f17">
+<link rel="apple-touch-icon" href="./icon-192.png">
 </head>
 <body>
 <div class="wrap">
@@ -225,6 +228,164 @@ $('soundtrack-google').addEventListener('click',()=>soundtrack('google'));$('sou
 document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const c=e.target.closest&&e.target.closest('.preset');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')},{passive:true});
 renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(false);renderRecent();
 })();
+</script>
+<!-- PWA Install UI & Logic -->
+<style>
+  #pwa-install-pill {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  }
+  #pwa-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 16px;
+  }
+  #pwa-sheet {
+    width: 100%;
+    max-width: 420px;
+    background: #151824;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 22px;
+    color: #f3f4f6;
+    font-family: system-ui, -apple-system, sans-serif;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    animation: pwaSlideUp 0.3s ease-out;
+  }
+  @keyframes pwaSlideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .pwa-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .pwa-header img { width: 52px; height: 52px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
+  .pwa-title { font-size: 18px; font-weight: 700; margin: 0; color: #fff; }
+  .pwa-sub { font-size: 13px; color: #9ca3af; margin: 2px 0 0 0; }
+  .pwa-badges { list-style: none; padding: 0; margin: 14px 0 18px 0; display: grid; gap: 8px; font-size: 13.5px; color: #d1d5db; }
+  .pwa-badges li { background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 10px; }
+  .pwa-btn-primary {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6366f1, #38bdf8);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .pwa-btn-secondary {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 13px;
+    cursor: pointer;
+  }
+</style>
+
+<!-- Persistent Floating Install Pill -->
+<button id="pwa-install-pill">📲 Install App</button>
+
+<!-- Bottom Sheet Modal -->
+<div id="pwa-backdrop">
+  <div id="pwa-sheet">
+    <div class="pwa-header">
+      <img src="./icon-192.png" alt="Simkl Search Hub Icon">
+      <div>
+        <h3 class="pwa-title">Install Simkl Search Hub</h3>
+        <p class="pwa-sub">Get the full native app experience</p>
+      </div>
+    </div>
+    <ul class="pwa-badges">
+      <li>⚡ <strong>Works Offline:</strong> Opens instantly even with zero internet</li>
+      <li>📱 <strong>Full-Screen UI:</strong> No browser address bar or tab clutter</li>
+      <li>🪶 <strong>Ultra Lightweight:</strong> Takes less than 100 KB on your phone</li>
+    </ul>
+    <button id="pwa-install-btn" class="pwa-btn-primary">Install App Now</button>
+    <button id="pwa-dismiss-btn" class="pwa-btn-secondary">Continue in browser for now</button>
+  </div>
+</div>
+
+<script>
+  // 1. Register Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js');
+    });
+  }
+
+  // 2. Check if already running as installed standalone app
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+  let deferredPrompt;
+  const backdrop = document.getElementById('pwa-backdrop');
+  const installBtn = document.getElementById('pwa-install-btn');
+  const dismissBtn = document.getElementById('pwa-dismiss-btn');
+  const installPill = document.getElementById('pwa-install-pill');
+
+  if (!isStandalone) {
+    // Catch Chrome's native install event
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installPill.style.display = 'flex';
+      // Pop up the bottom sheet after 1.2 seconds
+      setTimeout(() => { backdrop.style.display = 'flex'; }, 1200);
+    });
+
+    // When user clicks "Install App Now"
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          backdrop.style.display = 'none';
+          installPill.style.display = 'none';
+        }
+        deferredPrompt = null;
+      }
+    });
+
+    // When user clicks "Continue in browser" -> hide modal, keep floating pill
+    dismissBtn.addEventListener('click', () => {
+      backdrop.style.display = 'none';
+      installPill.style.display = 'flex';
+    });
+
+    // Clicking floating pill re-opens the bottom sheet
+    installPill.addEventListener('click', () => {
+      backdrop.style.display = 'flex';
+    });
+
+    // Hide everything once installed
+    window.addEventListener('appinstalled', () => {
+      backdrop.style.display = 'none';
+      installPill.style.display = 'none';
+    });
+  }
 </script>
 </body>
 </html>
