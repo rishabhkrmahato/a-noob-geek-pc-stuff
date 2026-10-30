@@ -1,25 +1,23 @@
 {
   "name": "Simkl Search Hub",
-  "short_name": "Simkl Hub",
-  "description": "Your entertainment launchpad and watchlist search shortcuts.",
-  "start_url": "./index.html",
+  "short_name": "Search Hub",
+  "description": "A lively search launchpad for films, series, streaming apps and entertainment databases.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0d0f17",
-  "theme_color": "#0d0f17",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#0b0d18",
+  "theme_color": "#0b0d18",
+  "categories": ["entertainment", "utilities"],
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Pinned picks", "short_name": "Pinned", "url": "./#quick-section" },
+    { "name": "Find a service", "short_name": "Explore", "url": "./#all-section" },
+    { "name": "Soundtracks", "short_name": "Soundtracks", "url": "./#soundtrack-box" }
   ]
 }

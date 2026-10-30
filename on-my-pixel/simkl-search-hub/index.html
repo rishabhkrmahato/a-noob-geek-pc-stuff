@@ -3,9 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#101421">
+<meta name="theme-color" content="#0b0d18">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Search Hub">
 <meta name="description" content="A lively, personal search launchpad for films, series, streaming services and entertainment databases.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2397aaff'/%3E%3Cstop offset='1' stop-color='%23d5a7ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='19' fill='%23151b2b'/%3E%3Ccircle cx='28' cy='28' r='16' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3Cpath d='M40 40 L53 53' stroke='%23d5a7ff' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M15 28h26M28 12c-8 9-8 23 0 32M28 12c8 9 8 23 0 32' stroke='%2397aaff' stroke-width='1.7' fill='none' opacity='.75'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
 <title>Simkl Search Hub</title>
 <style>
 :root{color-scheme:dark;--bg:#0d1019;--panel:#171d2b;--panel2:#111725;--line:#2d374d;--muted:#9ba8c1;--text:#f4f6ff;--lav:#b7c3ff;--lav2:#d5b5ff;--mint:#9ee7d0;--shadow:0 22px 60px #0005}
@@ -76,9 +84,74 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
 @media(max-width:480px){.jump-nav{gap:3px;margin:-8px 0 22px;padding:6px}.jump-label{width:100%;padding:2px 5px}.jump-nav a{flex:1;justify-content:center;padding:8px 6px;font-size:.72rem}.site-footer{padding:16px}.footer-bottom{align-items:flex-start;flex-direction:column;gap:4px}.directory-toggle{font-size:.74rem;padding:8px 10px}.section-head{gap:8px}}
 @media(prefers-reduced-motion:reduce){.flow-word,.querybox,.site-footer:before{animation:none!important}.preset-icon{transition:none!important}}
 
+
+/* ===== v2: edge-to-edge, lively type, polish ===== */
+:root{--bg:#0b0d18;--head:"Bricolage Grotesque","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;--body:"Figtree","Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif;--pop:#ffd36b;--pink:#ff7ac6;--cyan:#5fe3ff;--violet:#a78bfa;--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+html{background:var(--bg);scroll-padding-top:calc(var(--sat) + 12px);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{min-height:100dvh;font-family:var(--body);font-size:16px;line-height:1.5;overscroll-behavior-y:none;background:radial-gradient(ellipse at 6% -6%,#4b3a8f 0,transparent 38%),radial-gradient(ellipse at 100% 16%,#7b2b6c55 0,transparent 30%),radial-gradient(ellipse at 40% 105%,#0f4b5c55 0,transparent 42%),var(--bg)}
+body:before{content:"";position:fixed;z-index:40;inset:0 0 auto;height:var(--sat);pointer-events:none;background:#0b0d18d9;-webkit-backdrop-filter:blur(16px) saturate(1.6);backdrop-filter:blur(16px) saturate(1.6);-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.wrap{padding-top:calc(var(--sat) + 16px);padding-left:max(clamp(15px,4vw,38px),env(safe-area-inset-left,0px));padding-right:max(clamp(15px,4vw,38px),env(safe-area-inset-right,0px));padding-bottom:calc(38px + var(--sab))}
+h1,h2,h3,.brand-name,.btn,.preset-name,.preset-icon,.box-title strong,.chip,.jump-nav a{font-family:var(--head)}
+h1{font-size:clamp(2.5rem,11.2vw,4.6rem);font-weight:800;line-height:1.06;letter-spacing:-.035em;margin-bottom:16px}
+.flow-word,.gradient{display:inline-block;padding:.08em .16em .22em .12em;margin:-.08em -.16em -.22em -.12em;-webkit-box-decoration-break:clone;box-decoration-break:clone;background-image:linear-gradient(100deg,var(--cyan) 0%,var(--violet) 25%,var(--pink) 50%,var(--pop) 72%,var(--cyan) 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;text-shadow:none;filter:none;animation:waterflow 7s ease-in-out infinite}
+@keyframes waterflow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.lead{font-size:1.04rem;line-height:1.6;color:#c0c8e0}
+.brand-name{font-size:1.05rem;font-weight:800;letter-spacing:-.01em}
+.brand-sub,.top-pill,.simkl-badge,.jump-label{letter-spacing:.01em;text-transform:none}
+.eyebrow{text-transform:none;letter-spacing:.01em;font-size:.92rem;font-weight:700;color:var(--pop)}
+.eyebrow:before{background:var(--pop);box-shadow:0 0 14px var(--pop)}
+.section-head h2{font-size:1.45rem;font-weight:800;letter-spacing:-.025em}
+.preset,.querybox{border-radius:20px}
+.preset-name{font-size:1rem;font-weight:700}.preset-desc{font-size:.78rem}
+.preset-icon{border-radius:15px;font-weight:800}
+.btn{font-weight:700;font-size:.9rem;border-radius:14px;min-height:46px;position:relative}
+.button-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.button-row .btn{flex:1 1 calc(50% - 5px)}
+.btn.seg{background:#1a2033;border-color:#3b4562;color:#c9d1ea}
+.btn.seg[aria-pressed=true]{background:linear-gradient(105deg,#b7a6ff,#ff9bd6 60%,#ffd36b);color:#1a1230;border-color:transparent;box-shadow:0 8px 24px #ff7ac638}
+.btn .chk{display:none}.btn[aria-pressed=true] .chk{display:inline;font-weight:900}
+.btn .tag{position:absolute;top:-9px;left:12px;padding:2px 8px;border-radius:99px;background:var(--pop);color:#2a1d00;font-size:.62rem;font-weight:800;line-height:1.4;pointer-events:none}
+.btn.dice{background:#2a2142;border-color:#6d56a8;color:#eadfff}
+.btn.dice svg{transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+.mode-notice{font-size:.84rem;font-weight:600;line-height:1.4;align-items:flex-start}.mode-dot{margin-top:6px}
+.hint{font-size:.78rem}
+.grid .preset:disabled{opacity:.72;filter:grayscale(.55);border:1px dashed #465069;background:repeating-linear-gradient(135deg,#ffffff07 0 10px,transparent 10px 20px),#161b28}
+.grid .preset:disabled .arrow{display:none}
+.grid .preset:disabled:after{content:"\23F8  Paused";flex:0 0 auto;padding:3px 9px;border-radius:99px;border:1px solid #ffd36b45;background:#ffd36b1c;color:var(--pop);font-size:.66rem;font-weight:800;white-space:nowrap}
+.toast{z-index:45}.dialog-backdrop{z-index:50}
+.site-footer{margin-top:46px;padding:0;gap:0;align-items:stretch;text-align:center;border-color:#ffffff1a;border-radius:26px;background:linear-gradient(150deg,#1b1637,#121528 60%,#0f2230)}
+.site-footer:before{z-index:0;height:18px;background:repeating-linear-gradient(90deg,#ffffff2b 0 12px,transparent 12px 24px) 0 50%/auto 7px no-repeat,#090b15;border-bottom:1px solid #ffffff12;animation:none}
+.f-body{display:flex;flex-direction:column;align-items:center;gap:10px;padding:34px 22px 26px}
+.f-reel{font-size:1.8rem;filter:drop-shadow(0 0 14px #ffd36b88)}
+.f-title{font-family:var(--head);font-size:1.6rem;font-weight:800;letter-spacing:-.02em;color:#fff}
+.f-copy{margin:0;max-width:34ch;color:#b0b9d3;font-size:.9rem;line-height:1.6}
+.f-sign{margin-top:8px;display:inline-flex;padding:11px 22px;border-radius:99px;font-family:var(--head);font-weight:800;font-size:1.08rem;color:#1a1230;text-decoration:none;background:linear-gradient(100deg,var(--cyan),#b7a6ff,#ff9bd6,var(--pop),var(--cyan));background-size:260% 100%;animation:waterflow 7s ease-in-out infinite;box-shadow:0 10px 30px #b7a6ff40;transition:transform .2s}
+.f-sign:hover{transform:translateY(-2px) rotate(-1deg)}.f-sign:active{transform:scale(.96)}
+.f-legal{margin:10px 0 0;color:#8089a6;font-size:.74rem;line-height:1.75}.f-legal a{color:#cfd6ff;text-decoration:none;font-weight:700}
+@media(max-width:790px){
+.jump-nav{position:fixed;z-index:30;left:0;right:0;bottom:0;margin:0;gap:4px;justify-content:space-around;border:0;border-top:1px solid #ffffff1f;border-radius:24px 24px 0 0;padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + var(--sab)) max(10px,env(safe-area-inset-left,0px));background:#0d1022bd;-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+.jump-label{display:none}
+.jump-nav a{flex:1;flex-direction:column;gap:1px;padding:6px 4px;border-radius:14px;font-size:.72rem;font-weight:700;color:#c9d1ea}
+.jump-nav a b{font-size:1.15rem;line-height:1.2;color:var(--pop)}
+.jump-nav a:active{background:#ffffff12;transform:scale(.96)}
+.wrap{padding-bottom:calc(96px + var(--sab))}
+.toast{bottom:calc(88px + var(--sab))}
+}
+@media(display-mode:standalone){.btn,.preset,.chip,h1,.jump-nav,header{-webkit-user-select:none;user-select:none}}
+@media(prefers-reduced-motion:reduce){.gradient,.f-sign{animation:none!important}.btn.dice svg{transition:none}}
+
+/* ===== v3: breathing + 3D tilt card, subtler default tag ===== */
+.querybox{--rx:0;--ry:0;--s:1;transform:perspective(900px) rotateX(calc(var(--rx)*1deg)) rotateY(calc(var(--ry)*1deg)) scale(var(--s));transition:transform .9s cubic-bezier(.3,1.7,.5,1),border-color .25s,box-shadow .25s;animation:breathe 6.5s ease-in-out infinite;box-shadow:calc(var(--ry)*-1.5px) calc(22px + var(--rx)*1.5px) 60px #0006;will-change:transform}
+.querybox.tilting{transition:transform .14s cubic-bezier(.2,.8,.3,1),border-color .25s,box-shadow .25s;animation-play-state:paused}
+@keyframes breathe{0%,100%{scale:1;translate:0 0}50%{scale:1.012;translate:0 -3px}}
+.querybox:after{animation:orb 6.5s ease-in-out infinite}
+@keyframes orb{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.2)}}
+.querybox>.glare{position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;opacity:0;transition:opacity .35s;background:radial-gradient(380px circle at var(--gx,70%) var(--gy,0%),#ffffff1c,transparent 60%)}
+.querybox.tilting>.glare{opacity:1}
+.btn .tag{top:-8px;left:12px;padding:1px 6px;font-size:.55rem;font-weight:700;letter-spacing:.02em;background:#1c1833;color:var(--pop);border:1px solid #ffd36b50}
+@media(prefers-reduced-motion:reduce){.querybox:after{animation:none!important}.querybox{transition:none!important}}
 </style>
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#0d0f17">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <link rel="icon" type="image/png" href="./icon-192.png">
 </head>
@@ -87,33 +160,34 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
 <header>
   <div class="brand">
     <span class="logo" aria-hidden="true"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="7.1" stroke="currentColor" stroke-width="1.8"/><path d="M5.1 10.5h10.8M10.5 3.4c-3.4 3.8-3.4 10.4 0 14.2M10.5 3.4c3.4 3.8 3.4 10.4 0 14.2M15.7 15.7 21 21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg></span>
-    <div><div class="brand-name">SIMKL SEARCH HUB</div><span class="brand-sub">Your watchlist, with shortcuts.</span></div>
+    <div><div class="brand-name">Simkl Search Hub</div><span class="brand-sub">Your watchlist, with shortcuts.</span></div>
   </div>
-  <span class="top-pill">PERSONAL SEARCH DASHBOARD</span>
+  <span class="top-pill">Personal search dashboard</span>
 </header>
 <nav class="jump-nav" aria-label="Quick page navigation">
   <span class="jump-label">Jump to</span>
-  <a href="#quick-section">✦ Pinned picks</a>
-  <a href="#all-section">⌕ Find a service</a>
-  <a href="#soundtrack-box">♫ Soundtracks</a>
+  <a href="#quick-section"><b aria-hidden="true">✦</b>Pinned picks</a>
+  <a href="#all-section"><b aria-hidden="true">⌕</b>Find a service</a>
+  <a href="#soundtrack-box"><b aria-hidden="true">♫</b>Soundtracks</a>
 </nav>
 
 <section class="hero">
   <div class="hero-copy"><div class="eyebrow">Your entertainment launchpad</div><h1><span class="flow-word">Every</span> search,<br><span class="gradient">one place.</span></h1><p class="lead">One title can travel a long way. Search streaming apps, databases, reviews and communities from one colourful little launchpad.</p></div>
-  <div class="querybox">
+  <div class="querybox"><span class="glare" aria-hidden="true"></span>
     <div class="box-title"><strong>Search settings</strong><span class="simkl-badge">SIMKL READY</span></div>
     <div class="fields">
-      <div class="field"><label for="title">Title</label><input id="title" autocomplete="off" placeholder="e.g. Don't Look Up"></div>
-      <div class="field"><label for="year">Year</label><input id="year" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="2021" aria-describedby="year-hint"><span id="year-hint" class="hidden">Numbers only</span></div>
+      <div class="field"><label for="title">Title</label><input id="title" autocomplete="off" placeholder="e.g. Interstellar"></div>
+      <div class="field"><label for="year">Year</label><input id="year" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="2014" aria-describedby="year-hint"><span id="year-hint" class="hidden">Numbers only</span></div>
     </div>
     <div class="preview" id="preview" aria-live="polite"><span class="placeholder">Enter a title to prepare searches.</span></div>
     <div class="button-row">
-      <button class="btn primary" id="copy-both" type="button"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" stroke-width="1.8"/></svg> Copy title + year</button>
-      <button class="btn" id="copy-title" type="button">Copy title only</button>
+      <button class="btn seg" id="copy-both" type="button" aria-pressed="true"><span class="chk" aria-hidden="true">✓</span>Copy title + year<span class="tag">Default</span></button>
+      <button class="btn seg" id="copy-title" type="button" aria-pressed="false"><span class="chk" aria-hidden="true">✓</span>Copy title only</button>
+      <button class="btn dice" id="randomize" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/></svg>Randomize</button>
       <button class="btn subtle" id="clear" type="button">Clear</button>
     </div>
     <div class="mode-notice" id="mode-notice" aria-live="polite"><span class="mode-dot"></span><span>Search mode: title + year</span></div>
-    <p class="hint">Copying either format also switches every search button to that format.</p>
+    <p class="hint">Default is title + year. Copying either format switches every search button to it.</p>
   </div>
 </section>
 
@@ -143,8 +217,13 @@ footer{display:flex;justify-content:space-between;align-items:center;gap:12px;ma
   </div>
 </section>
 <footer class="site-footer">
-  <div class="footer-top"><span class="footer-mark" aria-hidden="true">✦</span><div class="footer-copy"><strong>Made for the love of the watchlist.</strong><span>A little search magic for entertainment nerds. No account needed; your usage history stays in this browser.</span></div></div>
-  <div class="footer-bottom"><span>© 2026 <a href="https://github.com/rishabhkrmahato" target="_blank" rel="noopener noreferrer">rishabhkrmahato</a> · <span class="footer-tag">@rishabhkrm™</span> · All vibes reserved.</span><span>Unofficial fan-made hub · All service names and trademarks belong to their respective owners.</span></div>
+  <div class="f-body">
+    <div class="f-reel" aria-hidden="true">🎬</div>
+    <strong class="f-title">That’s a wrap!</strong>
+    <p class="f-copy">Made with popcorn, curiosity and far too many open tabs. No account needed; your usage history stays in this browser.</p>
+    <a class="f-sign" href="https://www.google.com/search?q=rishabhkrm&amp;nfpr=1" target="_blank" rel="noopener noreferrer" aria-label="rishabhkrm: opens a Google search, then a Gravatar profile on alternate clicks">@rishabhkrm™</a>
+    <p class="f-legal">© 2026 <a href="https://github.com/rishabhkrmahato" target="_blank" rel="noopener noreferrer">rishabhkrmahato</a> · All vibes reserved<br>Fan-made hub · All service names and trademarks belong to their respective owners.</p>
+  </div>
 </footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -204,7 +283,9 @@ function decoded(q){try{return decodeURIComponent(q.replace(/\+/g,' '))}catch(e)
 function slug(s){return s.toLowerCase().replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 function query(){const t=titleEl.value.trim();if(!t)return '';return searchMode==='both'&&yearEl.value.trim()?[t,yearEl.value.trim()].join(' '):t}
 function encodedQuery(){return encodeURIComponent(query()).replace(/%20/g,'+')}
-function renderPreview(){const q=query();$('preview').textContent=q||'Enter a title to prepare searches.';$('mode-notice').innerHTML='<span class="mode-dot"></span><span>Search mode: '+(searchMode==='both'?'title + year':'title only')+'</span>'}
+function renderPreview(){const q=query(),both=searchMode==='both',noYear=!yearEl.value.trim();$('preview').textContent=q||'Enter a title to prepare searches.';$('copy-both').setAttribute('aria-pressed',String(both));$('copy-title').setAttribute('aria-pressed',String(!both));$('mode-notice').innerHTML='<span class="mode-dot"></span><span>'+(both?'Default mode: title + year.'+(noYear?' Add a year to include it.':''):'Title only mode. Tap “Copy title + year” to return to the default.')+'</span>'}
+const picks=[['Interstellar','2014'],['Inception','2010'],['Parasite','2019'],['The Dark Knight','2008'],['Dune','2021'],['Oppenheimer','2023'],['Spider-Man: Across the Spider-Verse','2023'],['Your Name','2016'],['Spirited Away','2001'],['Everything Everywhere All at Once','2022'],['Mad Max: Fury Road','2015'],['The Grand Budapest Hotel','2014'],['Whiplash','2014'],['Get Out','2017'],['Knives Out','2019'],['Arrival','2016'],['La La Land','2016'],['Top Gun: Maverick','2022'],['The Matrix','1999'],['Breaking Bad','2008'],['Stranger Things','2016'],['Succession','2018'],['Dark','2017'],['Squid Game','2021'],['Severance','2022'],['Arcane','2021'],['Death Note','2006'],['Demon Slayer','2019'],['Panchayat','2020'],['Scam 1992','2020'],['Mirzapur','2018'],['3 Idiots','2009'],['Dangal','2016'],['RRR','2022'],['Drishyam','2015'],['Tumbbad','2018'],['Kohrra','2023']];
+let lastPick=-1,spins=0;
 function toast(s){const el=$('toast');el.textContent=s;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2500)}
 function usageRead(){try{return JSON.parse(localStorage.getItem('simklSearchHubUsage')||'{}')}catch(e){return {}}}
 function usageWrite(id){try{const u=usageRead();u[id]=(u[id]||0)+1;localStorage.setItem('simklSearchHubUsage',JSON.stringify(u))}catch(e){}}
@@ -230,12 +311,22 @@ async function streamAction(){if(!validQuery())return;const text=query();try{awa
 function soundtrack(site){if(!validQuery())return;const q=encodedQuery();const dest=site==='google'?'https://www.google.com/search?'+new URLSearchParams({q:'soundtrack '+query()}):'https://www.soundtrakd.com/search?q='+q;usageWrite(site==='google'?'soundtrack-google':'soundtrakd');window.open(dest,'_blank','noopener,noreferrer');renderRecent()}
 titleEl.addEventListener('input',renderPreview);yearEl.addEventListener('input',()=>{const start=yearEl.selectionStart;const cleaned=yearEl.value.replace(/\D/g,'').slice(0,4);if(yearEl.value!==cleaned){yearEl.value=cleaned;try{yearEl.setSelectionRange(Math.min(start,cleaned.length),Math.min(start,cleaned.length))}catch(e){}}renderPreview()});
 $('copy-both').addEventListener('click',()=>copyAction('both'));$('copy-title').addEventListener('click',()=>copyAction('title'));
+$('randomize').addEventListener('click',()=>{let i;do{i=Math.floor(Math.random()*picks.length)}while(i===lastPick);lastPick=i;titleEl.value=picks[i][0];yearEl.value=picks[i][1];renderPreview();spins+=360;$('randomize').querySelector('svg').style.transform='rotate('+spins+'deg)';toast('Try: '+picks[i][0]+' ('+picks[i][1]+')')});
 $('clear').addEventListener('click',()=>{titleEl.value='';yearEl.value='';renderPreview();titleEl.focus()});
 $('filter').addEventListener('input',()=>{if($('filter').value.trim())setDirectoryOpen(true);renderAll()});
 $('toggle-directory').addEventListener('click',()=>setDirectoryOpen(!directoryOpen));
 $('reset-usage').addEventListener('click',()=>{try{localStorage.removeItem('simklSearchHubUsage')}catch(e){}renderRecent();toast('Usage history cleared.')});
 $('soundtrack-google').addEventListener('click',()=>soundtrack('google'));$('soundtrack-site').addEventListener('click',()=>soundtrack('soundtrakd'));
 document.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;const c=e.target.closest&&e.target.closest('.preset');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')},{passive:true});
+(function(){const box=document.querySelector('.querybox');if(!box||matchMedia('(prefers-reduced-motion: reduce)').matches)return;let raf=0,px=0,py=0,touch=false;
+function apply(){raf=0;const r=box.getBoundingClientRect(),x=Math.min(1,Math.max(0,(px-r.left)/r.width)),y=Math.min(1,Math.max(0,(py-r.top)/r.height)),m=touch?4:5;box.style.setProperty('--ry',((x-.5)*2*m).toFixed(2));box.style.setProperty('--rx',((.5-y)*2*m).toFixed(2));box.style.setProperty('--gx',(x*100).toFixed(1)+'%');box.style.setProperty('--gy',(y*100).toFixed(1)+'%')}
+function move(e){px=e.clientX;py=e.clientY;touch=e.pointerType==='touch';box.classList.add('tilting');if(!raf)raf=requestAnimationFrame(apply)}
+function rest(){cancelAnimationFrame(raf);raf=0;box.classList.remove('tilting');box.style.setProperty('--rx','0');box.style.setProperty('--ry','0');box.style.setProperty('--s','1')}
+box.addEventListener('pointerenter',move);box.addEventListener('pointermove',move);
+box.addEventListener('pointerdown',e=>{move(e);box.style.setProperty('--s',touch?'.985':'.99')});
+box.addEventListener('pointerup',e=>{box.style.setProperty('--s','1');if(e.pointerType==='touch')rest()});
+box.addEventListener('pointerleave',rest);box.addEventListener('pointercancel',rest)})();
+(function(){const a=document.querySelector('.f-sign');if(!a)return;const dest=[['https://www.google.com/search?q=rishabhkrm&nfpr=1','Google search'],['https://gravatar.com/rishabhkrm','Gravatar profile']];let i=0;const hint=()=>{a.title='Opens: '+dest[i][1]+' (alternates on each click)'};hint();a.addEventListener('click',e=>{e.preventDefault();window.open(dest[i][0],'_blank','noopener,noreferrer');i=1-i;hint()})})();
 renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(false);renderRecent();
 })();
 </script>
@@ -243,18 +334,18 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
 <style>
   #pwa-install-pill {
     position: fixed;
-    top: 16px;
-    right: 16px;
+    top: calc(env(safe-area-inset-top, 0px) + 10px);
+    right: 14px;
     z-index: 9998;
     display: none;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #8b5cf6, #ff7ac6);
     color: #fff;
     border: none;
     padding: 8px 14px;
     border-radius: 999px;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: var(--body);
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -269,7 +360,7 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
     display: none;
     align-items: flex-end;
     justify-content: center;
-    padding: 16px;
+    padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
   }
   #pwa-sheet {
     width: 100%;
@@ -279,7 +370,7 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
     border-radius: 24px;
     padding: 22px;
     color: #f3f4f6;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: var(--body);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     animation: pwaSlideUp 0.3s ease-out;
   }
@@ -289,7 +380,7 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
   }
   .pwa-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
   .pwa-header img { width: 52px; height: 52px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
-  .pwa-title { font-size: 18px; font-weight: 700; margin: 0; color: #fff; }
+  .pwa-title { font-family: var(--head); font-size: 18px; font-weight: 700; margin: 0; color: #fff; }
   .pwa-sub { font-size: 13px; color: #9ca3af; margin: 2px 0 0 0; }
   .pwa-badges { list-style: none; padding: 0; margin: 14px 0 18px 0; display: grid; gap: 8px; font-size: 13.5px; color: #d1d5db; }
   .pwa-badges li { background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 10px; }
@@ -298,7 +389,7 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
     padding: 13px;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #6366f1, #38bdf8);
+    background: linear-gradient(135deg, #a78bfa, #ff7ac6);
     color: #fff;
     font-size: 15px;
     font-weight: 700;
