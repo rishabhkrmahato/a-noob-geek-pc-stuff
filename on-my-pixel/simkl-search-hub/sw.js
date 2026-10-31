@@ -1,5 +1,5 @@
 // Simkl Search Hub service worker. Bump VERSION whenever you push changes.
-const VERSION = 'v4';
+const VERSION = 'v7';
 const SHELL = 'shell-' + VERSION;
 const FONTS = 'fonts-v1';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];

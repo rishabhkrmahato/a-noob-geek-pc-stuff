@@ -150,6 +150,55 @@ h1{font-size:clamp(2.5rem,11.2vw,4.6rem);font-weight:800;line-height:1.06;letter
 .querybox.tilting>.glare{opacity:1}
 .btn .tag{top:-8px;left:12px;padding:1px 6px;font-size:.55rem;font-weight:700;letter-spacing:.02em;background:#1c1833;color:var(--pop);border:1px solid #ffd36b50}
 @media(prefers-reduced-motion:reduce){.querybox:after{animation:none!important}.querybox{transition:none!important}}
+
+/* ===== v4: setup guide, install pill, sheets ===== */
+header{gap:10px;flex-wrap:nowrap}.brand{min-width:0}
+.setup-btn{position:relative;flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border:1.5px solid transparent;border-radius:999px;cursor:pointer;color:#fff;font:700 .8rem var(--head);background:linear-gradient(#151b2e,#151b2e) padding-box,linear-gradient(100deg,var(--cyan),var(--violet),var(--pink),var(--pop)) border-box;transition:transform .25s cubic-bezier(.3,1.6,.5,1),box-shadow .25s}
+.setup-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px #a78bfa40}.setup-btn:active{transform:scale(.95)}
+.setup-btn.fresh:after{content:"";position:absolute;top:-3px;right:-2px;width:10px;height:10px;border-radius:50%;background:var(--pop);animation:ping 2.2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 #ffd36baa}70%,100%{box-shadow:0 0 0 9px #ffd36b00}}
+.sheet-backdrop{position:fixed;inset:0;z-index:48;display:flex;align-items:flex-end;justify-content:center;background:#05070ecc;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .22s}
+.sheet-backdrop.open{opacity:1}
+.sheet{width:100%;max-width:520px;max-height:92dvh;overflow:auto;overscroll-behavior:contain;padding:10px 20px calc(22px + var(--sab));background:linear-gradient(160deg,#1b1738,#12162a 55%,#0f1f2e);border:1px solid #ffffff1f;border-bottom:0;border-radius:26px 26px 0 0;box-shadow:0 -20px 60px #0008;transform:translateY(40px);transition:transform .45s cubic-bezier(.3,1.4,.5,1)}
+.sheet-backdrop.open .sheet{transform:none}
+.sheet-grab{width:42px;height:4px;border-radius:9px;background:#ffffff30;margin:0 auto 14px}
+@media(min-width:700px){.sheet-backdrop{align-items:center;padding:24px}.sheet{border-radius:26px;border-bottom:1px solid #ffffff1f;padding-bottom:22px}.sheet-grab{display:none}}
+.sheet-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+.sheet-head h3{margin:0;font-size:1.35rem;font-weight:800;letter-spacing:-.02em;color:#fff}
+.sheet-head p{margin:4px 0 0;color:#aab3cf;font-size:.88rem;line-height:1.5}
+.sheet-x{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid #ffffff22;background:#ffffff0d;color:#dfe5ff;cursor:pointer;font-size:1rem}
+.steps{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px}
+.steps li{display:flex;gap:12px;padding:14px;border:1px solid #ffffff17;border-radius:18px;background:#ffffff08}
+.steps .n{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font:800 .85rem var(--head);color:#1a1230;background:linear-gradient(135deg,var(--cyan),var(--pink))}
+.steps li>div{min-width:0;flex:1}.steps strong{font-family:var(--head);font-size:1rem;color:#fff}
+.steps p{margin:6px 0 10px;color:#b4bdd8;font-size:.84rem;line-height:1.55}.steps b{color:#fff}
+.steps .btn{min-height:40px;padding:0 14px;display:inline-flex;align-items:center;text-decoration:none}
+.urlbox{display:flex;gap:8px}
+.urlbox code{flex:1;min-width:0;padding:10px 12px;border-radius:12px;background:#0b0d18;border:1px solid #ffffff17;color:#9ff0d0;font:600 .74rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-all}
+.urlbox .btn{min-height:0;padding:0 14px}
+.steps p.warn{color:var(--pop)}
+.sheet-tip{display:flex;gap:10px;align-items:center;margin-top:14px;padding:12px 14px;border-radius:16px;border:1px dashed #ffd36b55;background:#ffd36b10;font-size:.84rem;color:#e9e3c8}
+.sheet-tip span{flex:1}.sheet-tip .btn{min-height:38px;padding:0 14px}
+html.setup-open{overflow:hidden}
+.toast{z-index:10000}
+body #pwa-sheet{max-height:90dvh;overflow:auto}
+.pwa-fine{margin:10px 0 0;text-align:center;font-size:12px;color:#8b93ad}
+
+/* ===== v5: install button beside Add to Simkl ===== */
+.header-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.install-cta{position:relative;overflow:hidden;display:none;align-items:center;justify-content:center;gap:7px;padding:9px 15px;border:0;border-radius:999px;cursor:pointer;font:800 .84rem var(--head);color:#1a1230;background:linear-gradient(100deg,#ffd36b,#ff9bd6,#b7a6ff,#5fe3ff,#ffd36b);background-size:250% 100%;animation:ctaflow 4s linear infinite,ctabounce 2.4s cubic-bezier(.28,.84,.42,1) infinite,ctaglow 2.4s ease-in-out infinite}
+.install-cta.show{display:inline-flex}
+.install-cta:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,#ffffffb0 50%,transparent 65%);transform:translateX(-120%);animation:ctashine 2.8s ease-in-out infinite;pointer-events:none}
+.install-cta .ico{display:inline-block;animation:ctawiggle 2.4s ease-in-out infinite}
+@keyframes ctaflow{to{background-position:250% 0}}
+@keyframes ctabounce{0%,55%,100%{transform:translateY(0) scale(1)}10%{transform:translateY(-8px) scale(1.07)}20%{transform:translateY(0) scale(.96)}30%{transform:translateY(-3px) scale(1.03)}42%{transform:translateY(0) scale(1)}}
+@keyframes ctaglow{0%,100%{box-shadow:0 6px 18px #b7a6ff55,0 0 0 0 #ff9bd666}50%{box-shadow:0 6px 22px #ff9bd688,0 0 30px #ffd36bb0,0 0 0 8px #ff9bd600}}
+@keyframes ctashine{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+@keyframes ctawiggle{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(-14deg)}20%{transform:rotate(12deg)}30%{transform:rotate(-8deg)}40%{transform:rotate(0)}}
+@media(max-width:560px){header.has-install{flex-wrap:wrap;row-gap:12px}header.has-install .header-actions{width:100%}header.has-install .header-actions>*{flex:1;justify-content:center}header.has-install .install-cta{flex:1.3}}
+@media(prefers-reduced-motion:reduce){.install-cta,.install-cta:before,.install-cta .ico{animation:none!important}.install-cta{background-position:0 0}}
+.pwa-manual{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#ffffff0a;border:1px dashed #ffffff2a;font-size:13.5px;line-height:1.5;color:#e5e7eb}
+.pwa-link{display:block;margin:10px auto 0;background:none;border:0;color:#8b93ad;font:600 12px var(--body);text-decoration:underline;cursor:pointer}
 </style>
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
@@ -162,7 +211,10 @@ h1{font-size:clamp(2.5rem,11.2vw,4.6rem);font-weight:800;line-height:1.06;letter
     <span class="logo" aria-hidden="true"><svg width="25" height="25" viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="7.1" stroke="currentColor" stroke-width="1.8"/><path d="M5.1 10.5h10.8M10.5 3.4c-3.4 3.8-3.4 10.4 0 14.2M10.5 3.4c3.4 3.8 3.4 10.4 0 14.2M15.7 15.7 21 21" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg></span>
     <div><div class="brand-name">Simkl Search Hub</div><span class="brand-sub">Your watchlist, with shortcuts.</span></div>
   </div>
-  <span class="top-pill">Personal search dashboard</span>
+  <div class="header-actions">
+  <button class="install-cta" id="install-cta" type="button" aria-label="Install Search Hub as an app"><span class="ico" aria-hidden="true">📲</span>Install app</button>
+  <button class="setup-btn fresh" id="open-setup" type="button" aria-haspopup="dialog"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Add to Simkl</button>
+  </div>
 </header>
 <nav class="jump-nav" aria-label="Quick page navigation">
   <span class="jump-label">Jump to</span>
@@ -228,6 +280,7 @@ h1{font-size:clamp(2.5rem,11.2vw,4.6rem);font-weight:800;line-height:1.06;letter
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="dialog-root"></div>
+<div id="setup-root"></div>
 <script>
 (function(){
 'use strict';
@@ -239,6 +292,14 @@ yearEl.value=(params.get('year')||'').replace(/\D/g,'').slice(0,4);
 let searchMode='both',activeCategory='All',toastTimer,directoryOpen=false;
 const accents={google:'#4285f4',imdb:'#f5c518',youtube:'#ff0033',reddit:'#ff4500',x:'#e7ebf5',streamwithvpn:'#aab7d4',netflix:'#e50914',primevideo:'#00a8e0',hotstar:'#2878ff','imdb-reviews':'#f5c518','imdb-theaters':'#f5c518',tmdb:'#01b4e4',tvdb:'#63c77a',mal:'#4778c7',commonsense:'#ffad43',plex:'#e5a00d',stremio:'#9a69ff',opensubtitles:'#f1c34b','rotten-tomatoes':'#fa320a','rt-google':'#fa320a',fandom:'#3da9fc',fanfiction:'#5d91d2',screenrant:'#e82f2f',tvguide:'#e6b54a',metacritic:'#6cc644',boxoffice:'#4db6ac',variety:'#d22a2a',ign:'#d31e31',imgur:'#35a7b4',giphy:'#9b59ff',justwatch:'#fbc034',reelgood:'#e44665',crunchyroll:'#f47521',ann:'#f28d35',animecountdown:'#b3dfff','countdown-to':'#83d8c6',soundtrakd:'#c4a4ff'};
 const categories=['All','Everyday','Databases','Video & streaming','Reviews & news','Community','Anime','TV & schedules','Tools'];
+function detectDesktop(){try{const n=navigator,uad=n.userAgentData;
+if(uad&&uad.mobile===true)return false;
+if(/Android|iPhone|iPad|iPod|Mobile|Silk|Kindle|BlackBerry|Opera Mini/i.test(n.userAgent||''))return false;
+if(!(matchMedia('(pointer: fine)').matches&&matchMedia('(hover: hover)').matches))return false;
+if(Math.min(screen.width,screen.height)<600)return false;
+if((n.maxTouchPoints||0)>0&&Math.max(screen.width,screen.height)<1000)return false;
+return true}catch(e){return false}}
+let IS_DESKTOP=detectDesktop();
 const presets=[
 {id:'google',name:'Google',abbr:'G',desc:'The web, broadly searched',cat:'Everyday',url:q=>'https://www.google.com/search?q='+q},
 {id:'imdb',name:'IMDb',abbr:'IMDb',desc:'Cast, credits and title details',cat:'Everyday',url:q=>'https://www.imdb.com/find/?q='+q},
@@ -254,9 +315,9 @@ const presets=[
 {id:'commonsense',name:'Common Sense Media',abbr:'CS',desc:'Age guidance and family reviews',cat:'Reviews & news',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'site:commonsensemedia.org '+decoded(q)})},
 {id:'plex',name:'Plex',abbr:'PLEX',desc:'Explore Plex titles',cat:'Video & streaming',url:q=>'https://watch.plex.tv/search?query='+q},
 {id:'stremio',name:'Stremio',abbr:'STR',desc:'Search Stremio-related results',cat:'Video & streaming',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'Stremio '+decoded(q)})},
-{id:'netflix',name:'Netflix',abbr:'N',desc:'Paused: web works; Android app search is unreliable',cat:'Video & streaming',disabled:true,url:q=>'https://www.netflix.com/search?q='+encodeURIComponent(decoded(q))},
-{id:'primevideo',name:'Prime Video',abbr:'prime',desc:'Paused: web works; Android app search is unreliable',cat:'Video & streaming',disabled:true,url:q=>'https://www.primevideo.com/region/eu/search?ie=UTF8&ref_=atv_nb_sug&phrase='+encodeURIComponent(decoded(q)).replace(/%20/g,'+')},
-{id:'hotstar',name:'Hotstar',abbr:'JH',desc:'Paused: web works; Android app search is unreliable',cat:'Video & streaming',disabled:true,url:q=>'https://www.hotstar.com/in/search?search_query='+encodeURIComponent(decoded(q))},
+{id:'netflix',name:'Netflix',abbr:'N',desc:'Search the Netflix catalogue',lockedDesc:'Paused: web works; Android app search is unreliable',cat:'Video & streaming',desktopOnly:true,url:q=>'https://www.netflix.com/search?q='+encodeURIComponent(decoded(q))},
+{id:'primevideo',name:'Prime Video',abbr:'prime',desc:'Search Prime Video titles',lockedDesc:'Paused: web works; Android app search is unreliable',cat:'Video & streaming',desktopOnly:true,url:q=>'https://www.primevideo.com/region/eu/search?ie=UTF8&ref_=atv_nb_sug&phrase='+encodeURIComponent(decoded(q)).replace(/%20/g,'+')},
+{id:'hotstar',name:'Hotstar',abbr:'JH',desc:'Search Hotstar titles',lockedDesc:'Paused: web works; Android app search is unreliable',cat:'Video & streaming',desktopOnly:true,url:q=>'https://www.hotstar.com/in/search?search_query='+encodeURIComponent(decoded(q))},
 {id:'opensubtitles',name:'OpenSubtitles',abbr:'SUB',desc:'Search subtitle files',cat:'Tools',url:q=>'https://www.opensubtitles.com/en/en/search-all/q-'+q+'/hearing_impaired-include/machine_translated-/trusted_sources-'},
 {id:'rotten-tomatoes',name:'Rotten Tomatoes',abbr:'RT',desc:'Reviews and audience scores',cat:'Reviews & news',url:q=>'https://www.rottentomatoes.com/search?search='+q},
 {id:'rt-google',name:'Search Rotten Tomatoes',abbr:'RT+',desc:'Find RT pages through Google',cat:'Reviews & news',url:q=>'https://www.google.com/search?'+new URLSearchParams({q:'site:rottentomatoes.com '+decoded(q)})},
@@ -292,13 +353,13 @@ function usageWrite(id){try{const u=usageRead();u[id]=(u[id]||0)+1;localStorage.
 function validQuery(){if(!titleEl.value.trim()){toast('Add a title first.');titleEl.focus();return false}return true}
 async function copyText(text){if(!text)return false;if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}throw new Error('Clipboard API unavailable')}
 function openSearch(p){if(!validQuery())return;const q=encodedQuery();if(p.special==='stream'){streamAction();return}usageWrite(p.id);window.open(p.url(q),'_blank','noopener,noreferrer');renderRecent()}
-function card(p){const b=document.createElement('button');b.type='button';b.className='preset';b.dataset.id=p.id;b.style.setProperty('--accent',accents[p.id]||'#b7c3ff');if(p.disabled){
+function card(p){const b=document.createElement('button');b.type='button';b.className='preset';b.dataset.id=p.id;b.style.setProperty('--accent',accents[p.id]||'#b7c3ff');const locked=!!p.desktopOnly&&!IS_DESKTOP;if(locked){
   b.disabled=true;
-  b.title='Temporarily disabled: the website search works, but Android app search does not reliably accept the title.';
+  b.title='Paused on mobile: this search works on desktop, but Android app search does not reliably accept the title.';
   b.setAttribute('aria-label',p.name+'. Disabled because app search is unreliable on Android.');
 }else{
   b.addEventListener('click',()=>openSearch(p));
-}const ico=document.createElement('span');ico.className='preset-icon';ico.textContent=p.abbr;const copy=document.createElement('span');copy.className='preset-copy';const n=document.createElement('span');n.className='preset-name';n.textContent=p.name;const d=document.createElement('span');d.className='preset-desc';d.textContent=p.desc;copy.append(n,d);const a=document.createElement('span');a.className='arrow';a.textContent='↗';b.append(ico,copy,a);return b}
+}const ico=document.createElement('span');ico.className='preset-icon';ico.textContent=p.abbr;const copy=document.createElement('span');copy.className='preset-copy';const n=document.createElement('span');n.className='preset-name';n.textContent=p.name;const d=document.createElement('span');d.className='preset-desc';d.textContent=locked?p.lockedDesc:p.desc;copy.append(n,d);const a=document.createElement('span');a.className='arrow';a.textContent='↗';b.append(ico,copy,a);return b}
 function renderQuick(){$('quick').replaceChildren(...quickIds.map(id=>card(presets.find(p=>p.id===id))))}
 function renderRecent(){const u=usageRead();const ranked=presets.filter(p=>(u[p.id]||0)>0).sort((a,b)=>(u[b.id]||0)-(u[a.id]||0)).slice(0,6);$('recent-section').classList.toggle('hidden',ranked.length===0);$('recent').replaceChildren(...ranked.map(card))}
 function setDirectoryOpen(open){directoryOpen=!!open;$('directory-results').classList.toggle('hidden',!directoryOpen);$('toggle-directory').setAttribute('aria-expanded',String(directoryOpen));$('toggle-directory').textContent=directoryOpen?'Hide directory ↑':'Browse directory ↓';$('directory-hint').classList.toggle('hidden',directoryOpen)}
@@ -327,30 +388,43 @@ box.addEventListener('pointerdown',e=>{move(e);box.style.setProperty('--s',touch
 box.addEventListener('pointerup',e=>{box.style.setProperty('--s','1');if(e.pointerType==='touch')rest()});
 box.addEventListener('pointerleave',rest);box.addEventListener('pointercancel',rest)})();
 (function(){const a=document.querySelector('.f-sign');if(!a)return;const dest=[['https://www.google.com/search?q=rishabhkrm&nfpr=1','Google search'],['https://gravatar.com/rishabhkrm','Gravatar profile']];let i=0;const hint=()=>{a.title='Opens: '+dest[i][1]+' (alternates on each click)'};hint();a.addEventListener('click',e=>{e.preventDefault();window.open(dest[i][0],'_blank','noopener,noreferrer');i=1-i;hint()})})();
+(function(){
+const root=$('setup-root'),opener=$('open-setup');if(!root||!opener)return;
+const PH_TITLE='%+TITLE+%',PH_YEAR='%YEAR%'; // Simkl placeholders: change them here if Simkl ever renames them
+const hubBase=()=>(location.origin&&location.origin!=='null'?location.origin+location.pathname:location.href.split(/[?#]/)[0]).replace(/index\.html$/,'');
+const local=/^(localhost|127\.|192\.168\.|10\.)/.test(location.hostname)||location.protocol==='file:';
+const link=()=>hubBase()+'?title='+PH_TITLE+'&year='+PH_YEAR;
+try{if(localStorage.getItem('simklHubSetupSeen'))opener.classList.remove('fresh')}catch(e){}
+const TPL=`<div class="sheet-backdrop"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="setup-title"><div class="sheet-grab" aria-hidden="true"></div>
+<div class="sheet-head"><div><h3 id="setup-title">Add Search Hub to Simkl</h3><p>Three quick steps, then every title on Simkl is one tap from your hub.</p></div><button class="sheet-x" type="button" aria-label="Close">✕</button></div>
+<ol class="steps">
+<li><span class="n">1</span><div><strong>Copy your hub link</strong><div class="urlbox"><code id="setup-url"></code><button class="btn" id="setup-copy" type="button">Copy</button></div><p>Simkl swaps <b>${PH_TITLE}</b> and <b>${PH_YEAR}</b> for the title you’re viewing, so both arrive pre-filled.</p><p class="warn hidden" id="setup-warn">You’re on a local copy. Simkl needs your published address, so open the live site and use this button there.</p></div></li>
+<li><span class="n">2</span><div><strong>Paste it into Simkl</strong><p>Open Custom Search, add a new link, name it <b>Search Hub</b>, paste the link and save.</p><a class="btn primary" href="https://simkl.com/settings/custom-search/" target="_blank" rel="noopener noreferrer">Open Simkl settings ↗</a></div></li>
+<li><span class="n">3</span><div><strong>Use it from any title</strong><p>On a movie, show or anime page, look for <b>Custom Search</b> under Watch Now (tap More if it’s hidden) and pick Search Hub. In the Simkl app it’s under Search On. The title and year arrive pre-filled.</p><a class="btn" id="setup-test" target="_blank" rel="noopener noreferrer">Try a test link ↗</a></div></li>
+</ol>
+<div class="sheet-tip hidden" id="setup-install"><span>📲 Install the app too, so the hub is one tap away.</span><button class="btn" id="setup-install-btn" type="button">Install</button></div></div></div>`;
+function onKey(e){if(e.key==='Escape')close()}
+function close(){document.documentElement.classList.remove('setup-open');const b=root.firstElementChild;if(b)b.classList.remove('open');document.removeEventListener('keydown',onKey);setTimeout(()=>root.replaceChildren(),240);opener.focus()}
+function open(){
+try{localStorage.setItem('simklHubSetupSeen','1')}catch(e){}opener.classList.remove('fresh');
+root.innerHTML=TPL;const back=root.firstElementChild,q=x=>root.querySelector(x);
+q('#setup-url').textContent=link();q('#setup-test').href=hubBase()+'?title=Interstellar&year=2014';
+if(local)q('#setup-warn').classList.remove('hidden');
+if(window.hubInstall&&window.hubInstall.available())q('#setup-install').classList.remove('hidden');
+back.addEventListener('click',async e=>{const t=e.target;
+if(t===back||t.closest('.sheet-x')){close();return}
+if(t.closest('#setup-copy')){const text=link();try{await copyText(text);toast('Link copied. Paste it into Simkl.')}catch(err){showClipboardDialog(text,'Copy the link below, then paste it into Simkl.')}return}
+if(t.closest('#setup-install-btn')){close();setTimeout(()=>window.hubInstall.open(),260)}});
+document.documentElement.classList.add('setup-open');document.addEventListener('keydown',onKey);
+requestAnimationFrame(()=>{back.classList.add('open');q('.sheet-x').focus()})}
+opener.addEventListener('click',open)})();
+function refreshGate(){const d=detectDesktop();if(d!==IS_DESKTOP){IS_DESKTOP=d;renderQuick();renderRecent();renderAll()}}
+['(pointer: fine)','(hover: hover)'].forEach(x=>{const m=matchMedia(x);m.addEventListener?m.addEventListener('change',refreshGate):m.addListener&&m.addListener(refreshGate)});
 renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(false);renderRecent();
 })();
 </script>
 <!-- PWA Install UI & Logic -->
 <style>
-  #pwa-install-pill {
-    position: fixed;
-    top: calc(env(safe-area-inset-top, 0px) + 10px);
-    right: 14px;
-    z-index: 9998;
-    display: none;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #8b5cf6, #ff7ac6);
-    color: #fff;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-family: var(--body);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-  }
   #pwa-backdrop {
     position: fixed;
     inset: 0;
@@ -407,8 +481,6 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
   }
 </style>
 
-<!-- Persistent Floating Install Pill -->
-<button id="pwa-install-pill">📲 Install App</button>
 
 <!-- Bottom Sheet Modal -->
 <div id="pwa-backdrop">
@@ -416,17 +488,22 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
     <div class="pwa-header">
       <img src="./icon-192.png" alt="Simkl Search Hub Icon">
       <div>
-        <h3 class="pwa-title">Install Simkl Search Hub</h3>
-        <p class="pwa-sub">Get the full native app experience</p>
+        <h3 class="pwa-title">Keep Search Hub one tap away</h3>
+        <p class="pwa-sub">Install once. Use it with Simkl or on its own.</p>
       </div>
     </div>
     <ul class="pwa-badges">
-      <li>⚡ <strong>Works Offline:</strong> Opens instantly even with zero internet</li>
-      <li>📱 <strong>Full-Screen UI:</strong> No browser address bar or tab clutter</li>
-      <li>🪶 <strong>Ultra Lightweight:</strong> Takes less than 100 KB on your phone</li>
+      <li>🚀 <strong>Install once, open forever:</strong> a home-screen icon replaces bookmarks and retyping the address</li>
+      <li>🔗 <strong>Made for Simkl’s Custom Search:</strong> jump in from any title with the name and year already filled in</li>
+      <li>🧭 <strong>Great on its own too:</strong> no Simkl? Type any title and fan out to dozens of sites in one tap</li>
+      <li>⚡ <strong>Feels like a real app:</strong> full screen, instant launch, and your most-used picks right on top</li>
+      <li>🔒 <strong>Tiny and private:</strong> no app store, no account, nothing to sign up for</li>
     </ul>
-    <button id="pwa-install-btn" class="pwa-btn-primary">Install App Now</button>
-    <button id="pwa-dismiss-btn" class="pwa-btn-secondary">Continue in browser for now</button>
+    <p class="pwa-manual hidden" id="pwa-hint"></p>
+    <button id="pwa-install-btn" class="pwa-btn-primary">Install Search Hub</button>
+    <button id="pwa-dismiss-btn" class="pwa-btn-secondary">Maybe later</button>
+    <button id="pwa-installed-btn" class="pwa-link hidden" type="button">I already installed it</button>
+    <p class="pwa-fine">Free · no app store · remove anytime</p>
   </div>
 </div>
 
@@ -438,55 +515,53 @@ renderPreview();renderQuick();renderCategories();renderAll();setDirectoryOpen(fa
     });
   }
 
-  // 2. Check if already running as installed standalone app
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-  let deferredPrompt;
-  const backdrop = document.getElementById('pwa-backdrop');
-  const installBtn = document.getElementById('pwa-install-btn');
-  const dismissBtn = document.getElementById('pwa-dismiss-btn');
-  const installPill = document.getElementById('pwa-install-pill');
-
-  if (!isStandalone) {
-    // Catch Chrome's native install event
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installPill.style.display = 'flex';
-      // Pop up the bottom sheet after 1.2 seconds
-      setTimeout(() => { backdrop.style.display = 'flex'; }, 1200);
-    });
-
-    // When user clicks "Install App Now"
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          backdrop.style.display = 'none';
-          installPill.style.display = 'none';
-        }
-        deferredPrompt = null;
-      }
-    });
-
-    // When user clicks "Continue in browser" -> hide modal, keep floating pill
-    dismissBtn.addEventListener('click', () => {
-      backdrop.style.display = 'none';
-      installPill.style.display = 'flex';
-    });
-
-    // Clicking floating pill re-opens the bottom sheet
-    installPill.addEventListener('click', () => {
-      backdrop.style.display = 'flex';
-    });
-
-    // Hide everything once installed
-    window.addEventListener('appinstalled', () => {
-      backdrop.style.display = 'none';
-      installPill.style.display = 'none';
-    });
+  // 2. Install state: no automatic popups. The header button opens the sheet on demand.
+  const isStandalone = ['standalone','minimal-ui','fullscreen','window-controls-overlay'].some(m => matchMedia('(display-mode: ' + m + ')').matches) || window.navigator.standalone === true || (document.referrer || '').startsWith('android-app://');
+  const $p = id => document.getElementById(id);
+  const backdrop=$p('pwa-backdrop'), installBtn=$p('pwa-install-btn'), dismissBtn=$p('pwa-dismiss-btn'),
+        manual=$p('pwa-hint'), doneBtn=$p('pwa-installed-btn'), cta=$p('install-cta'), hdr=document.querySelector('header');
+  const FLAG='simklHubInstalled';
+  const getFlag=()=>{try{return localStorage.getItem(FLAG)==='1'}catch(e){return false}};
+  const setFlag=v=>{try{v?localStorage.setItem(FLAG,'1'):localStorage.removeItem(FLAG)}catch(e){}};
+  let deferredPrompt=null, installed=isStandalone||getFlag();
+  if(isStandalone)setFlag(true);
+  function paint(){const canInstall=!!deferredPrompt&&!installed;cta.classList.toggle('show',canInstall);hdr.classList.toggle('has-install',canInstall)}
+  function manualText(){
+    const ua=navigator.userAgent||'';
+    if(/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1))return 'On iPhone or iPad (Safari): tap the Share button, then “Add to Home Screen”.';
+    if(/Android|Mobile/i.test(ua)||matchMedia('(pointer: coarse)').matches)return 'Tap your browser menu (⋮), then choose “Install app” or “Add to Home screen”.';
+    return 'Look for the install icon at the right end of the address bar, or open the browser menu and choose “Install Search Hub”.';
   }
+  function openSheet(){
+    const can=!!deferredPrompt;
+    installBtn.classList.toggle('hidden',!can);
+    manual.classList.toggle('hidden',can); doneBtn.classList.toggle('hidden',can);
+    manual.textContent=manualText();
+    backdrop.style.display='flex';
+  }
+  const closeSheet=()=>{backdrop.style.display='none'};
+  function markInstalled(){installed=true;setFlag(true);closeSheet();paint()}
+  window.hubInstall={available:()=>!!deferredPrompt&&!installed,open:openSheet};
+  paint();
+
+  // The browser only fires this when the app is NOT installed, so it also corrects a stale "installed" flag (e.g. after uninstalling).
+  window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;if(installed&&!isStandalone){installed=false;setFlag(false)}paint();if(backdrop.style.display==='flex')openSheet()});
+  window.addEventListener('appinstalled',markInstalled);
+  // Best-effort check for an app installed earlier (needs related_applications in the manifest)
+  if(!installed&&navigator.getInstalledRelatedApps){navigator.getInstalledRelatedApps().then(a=>{if(a&&a.length&&!deferredPrompt){installed=true;setFlag(true);paint()}}).catch(()=>{})}
+
+  cta.addEventListener('click',openSheet);
+  installBtn.addEventListener('click',async()=>{
+    if(!deferredPrompt)return;
+    deferredPrompt.prompt();
+    const {outcome}=await deferredPrompt.userChoice;
+    deferredPrompt=null;
+    if(outcome==='accepted')markInstalled();else{paint();openSheet()}
+  });
+  dismissBtn.addEventListener('click',closeSheet);
+  doneBtn.addEventListener('click',markInstalled);
+  backdrop.addEventListener('click',(e)=>{if(e.target===backdrop)closeSheet()});
+  document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeSheet()});
 </script>
 </body>
 </html>
