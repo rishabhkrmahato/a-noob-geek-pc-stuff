@@ -1,7 +1,8 @@
 // Simkl Search Hub service worker. Bump VERSION whenever you push changes.
-const VERSION = 'v8';
-const SHELL = 'shell-' + VERSION;
-const FONTS = 'fonts-v1';
+const VERSION = 'v9';
+const CACHE_PREFIX = 'simkl-search-hub-';
+const SHELL = CACHE_PREFIX + 'shell-' + VERSION;
+const FONTS = CACHE_PREFIX + 'fonts-v1';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -15,7 +16,7 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== SHELL && k !== FONTS).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => k.startsWith(CACHE_PREFIX) && k !== SHELL && k !== FONTS).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -44,16 +45,17 @@ self.addEventListener('fetch', e => {
   if (req.mode === 'navigate') {
     e.respondWith(
       fetch(req)
-        .then(r => { const copy = r.clone(); caches.open(SHELL).then(c => c.put('./index.html', copy)); return r; })
-        .catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match('./index.html')))
+        .then(async r => { const cache = await caches.open(SHELL); await cache.put('./index.html', r.clone()).catch(() => {}); return r; })
+      .catch(() => caches.open(SHELL).then(c => c.match(req, { ignoreSearch: true }).then(r => r || c.match('./index.html'))))
     );
     return;
   }
 
   // Other same-origin files: cached copy now, refreshed in background
   e.respondWith(
-    caches.match(req).then(hit => {
-      const net = fetch(req).then(r => { if (r.ok) { const copy = r.clone(); caches.open(SHELL).then(c => c.put(req, copy)); } return r; }).catch(() => hit);
+    caches.open(SHELL).then(async cache => {
+      const hit = await cache.match(req);
+      const net = fetch(req).then(async r => { if (r.ok) await cache.put(req, r.clone()).catch(() => {}); return r; }).catch(() => hit);
       return hit || net;
     })
   );
