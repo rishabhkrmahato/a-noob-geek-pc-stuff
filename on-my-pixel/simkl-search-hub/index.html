@@ -199,6 +199,11 @@ body #pwa-sheet{max-height:90dvh;overflow:auto}
 @media(prefers-reduced-motion:reduce){.install-cta,.install-cta:before,.install-cta .ico{animation:none!important}.install-cta{background-position:0 0}}
 .pwa-manual{margin:0 0 14px;padding:12px 14px;border-radius:14px;background:#ffffff0a;border:1px dashed #ffffff2a;font-size:13.5px;line-height:1.5;color:#e5e7eb}
 .pwa-link{display:block;margin:10px auto 0;background:none;border:0;color:#8b93ad;font:600 12px var(--body);text-decoration:underline;cursor:pointer}
+.simkl-search-cta{margin-top:14px;padding:12px 12px 0;border-top:1px solid #ffffff10}
+.btn.simkl-search{width:100%;min-height:44px;padding:8px 12px;justify-content:flex-start;background:linear-gradient(110deg,#211b2b,#1b1c2b);border-color:#66465a;color:#f2dce5}
+.btn.simkl-search:hover{background:linear-gradient(110deg,#2a202f,#202032);border-color:#a86a83}
+.simkl-mark{display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#e65370;color:#fff;font:800 .8rem var(--head)}
+.simkl-arrow{margin-left:auto;color:#e6a9bf}
 </style>
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icon-192.png">
@@ -237,6 +242,9 @@ body #pwa-sheet{max-height:90dvh;overflow:auto}
       <button class="btn seg" id="copy-title" type="button" aria-pressed="false"><span class="chk" aria-hidden="true">✓</span>Copy title only</button>
       <button class="btn dice" id="randomize" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4" stroke="currentColor" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/></svg>Randomize</button>
       <button class="btn subtle" id="clear" type="button">Clear</button>
+    </div>
+    <div class="simkl-search-cta">
+      <button class="btn simkl-search" id="simkl-search" type="button"><span class="simkl-mark" aria-hidden="true">S</span>Search Simkl<span class="simkl-arrow" aria-hidden="true">↗</span></button>
     </div>
     <div class="mode-notice" id="mode-notice" aria-live="polite"><span class="mode-dot"></span><span>Search mode: title + year</span></div>
     <p class="hint">Default is title + year. Copying either format switches every search button to it.</p>
@@ -372,6 +380,7 @@ async function streamAction(){if(!validQuery())return;const text=query();try{awa
 function soundtrack(site){if(!validQuery())return;const q=encodedQuery();const dest=site==='google'?'https://www.google.com/search?'+new URLSearchParams({q:'soundtrack '+query()}):'https://www.soundtrakd.com/search?q='+q;usageWrite(site==='google'?'soundtrack-google':'soundtrakd');window.open(dest,'_blank','noopener,noreferrer');renderRecent()}
 titleEl.addEventListener('input',renderPreview);yearEl.addEventListener('input',()=>{const start=yearEl.selectionStart;const cleaned=yearEl.value.replace(/\D/g,'').slice(0,4);if(yearEl.value!==cleaned){yearEl.value=cleaned;try{yearEl.setSelectionRange(Math.min(start,cleaned.length),Math.min(start,cleaned.length))}catch(e){}}renderPreview()});
 $('copy-both').addEventListener('click',()=>copyAction('both'));$('copy-title').addEventListener('click',()=>copyAction('title'));
+$('simkl-search').addEventListener('click',()=>{if(!validQuery())return;window.open('https://simkl.com/search/?type=all&q='+encodeURIComponent(query()),'_blank','noopener,noreferrer')});
 $('randomize').addEventListener('click',()=>{let i;do{i=Math.floor(Math.random()*picks.length)}while(i===lastPick);lastPick=i;titleEl.value=picks[i][0];yearEl.value=picks[i][1];renderPreview();spins+=360;$('randomize').querySelector('svg').style.transform='rotate('+spins+'deg)';toast('Try: '+picks[i][0]+' ('+picks[i][1]+')')});
 $('clear').addEventListener('click',()=>{titleEl.value='';yearEl.value='';renderPreview();titleEl.focus()});
 $('filter').addEventListener('input',()=>{if($('filter').value.trim())setDirectoryOpen(true);renderAll()});
