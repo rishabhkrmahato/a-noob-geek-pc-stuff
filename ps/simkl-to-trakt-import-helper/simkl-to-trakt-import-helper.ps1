@@ -2,18 +2,20 @@ $ErrorActionPreference = 'Stop'
 
 $script:ClientId = $null
 $AppName = 'simkl-to-trakt-import-helper'
-$AppVersion = '1.0'
+$AppVersion = '1.1'
 $ApiBase = 'https://api.simkl.com'
 $OutputFolder = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Simkl to Trakt Import Helper Exports'
 $StateRoot = Join-Path $env:LOCALAPPDATA 'SimklToTraktImportHelper'
 $script:TokenFolder = $null
 $script:RefreshFile = $null
 $script:ActivitiesFile = $null
+$script:StateVersionFile = $null
 $script:AccessToken = $null
 $script:ExportNotes = New-Object 'System.Collections.Generic.List[string]'
 $script:SkippedEpisodes = 0
 $script:FallbackCompletedShows = 0
 $script:HistoryDataIncluded = $false
+$script:ExportStateVersion = '2'
 
 function Initialize-ClientSettings {
     $clientId = Read-Host 'Paste your Simkl AUTH V2 Client ID (public ID only; not a token or secret)'
@@ -28,6 +30,7 @@ function Initialize-ClientSettings {
     $script:TokenFolder = Join-Path $StateRoot $appKey
     $script:RefreshFile = Join-Path $script:TokenFolder 'refresh-token.dpapi'
     $script:ActivitiesFile = Join-Path $script:TokenFolder 'activities.json'
+    $script:StateVersionFile = Join-Path $script:TokenFolder 'export-state-version.txt'
 
     New-Item -ItemType Directory -Force -Path $script:TokenFolder | Out-Null
     New-Item -ItemType Directory -Force -Path $OutputFolder | Out-Null
@@ -230,11 +233,9 @@ function Get-ItemsCall {
     param([string]$Type, [string]$Status = '', [string]$EpisodeMode = 'yes')
     $path = "sync/all-items/$Type"
     if ($Status) { $path += "/$Status" }
-    if ($Type -eq 'movies') {
-        $query = @{ extended = 'ids_only' }
-    }
-    elseif ($EpisodeMode -eq 'summary') {
-        $query = @{ extended = 'ids_only' }
+    if ($EpisodeMode -eq 'summary') {
+        # The default item shape keeps status, watched dates, and ratings; ids_only strips them.
+        $query = @{}
     }
     else {
         $includeMode = if ($EpisodeMode -eq 'original') { 'original' } else { 'yes' }
@@ -253,9 +254,16 @@ function Get-SimklLibrary {
 
     $all = @{}
     $savedActivities = $null
-    if (Test-Path -LiteralPath $ActivitiesFile) {
+    $savedStateVersion = $null
+    if (Test-Path -LiteralPath $script:StateVersionFile) {
+        try { $savedStateVersion = [System.IO.File]::ReadAllText($script:StateVersionFile).Trim() } catch { }
+    }
+    if ($savedStateVersion -eq $script:ExportStateVersion -and (Test-Path -LiteralPath $ActivitiesFile)) {
         try { $savedActivities = Get-Content -LiteralPath $ActivitiesFile -Raw | ConvertFrom-Json }
         catch { throw 'The saved Simkl activity file could not be read. Keep the helper folder and ask for help before deleting anything.' }
+    }
+    elseif (Test-Path -LiteralPath $ActivitiesFile) {
+        Write-Host 'This helper version needs a fresh full-library export. Your saved Simkl sign-in will be kept.' -ForegroundColor Yellow
     }
 
     if ($savedActivities) {
@@ -292,7 +300,6 @@ function Get-SimklLibrary {
             Write-Host 'Reading Simkl rating changes...'
             $ratingResponse = Invoke-SimklRequest -Path 'sync/ratings' -Query @{
                 date_from = [string]$savedActivities.all
-                extended = 'ids_only'
             } -Method GET
             foreach ($type in @('shows', 'movies', 'anime')) {
                 $all[$type] = @(@($all[$type]) + @(Get-ItemsFromResponse -Response $ratingResponse -Type $type))
@@ -549,6 +556,7 @@ function Save-ActivitiesSnapshot {
     New-Item -ItemType Directory -Force -Path $TokenFolder | Out-Null
     $snapshot = ConvertTo-Json -InputObject $Activities -Depth 20
     [System.IO.File]::WriteAllText($ActivitiesFile, $snapshot, [System.Text.UTF8Encoding]::new($false))
+    [System.IO.File]::WriteAllText($script:StateVersionFile, $script:ExportStateVersion, [System.Text.UTF8Encoding]::new($false))
 }
 
 try {
